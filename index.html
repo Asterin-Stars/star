@@ -1957,6 +1957,94 @@
 
             </div>
 
+            <!-- Modal para Fusión de Cartas (1% probability) -->
+            <div class="modal-overlay" id="fusionModal" style="display: none;">
+                <div class="modal-content iridescent-border"
+                    style="max-width: 600px; background: linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(20,0,40,0.95) 100%);">
+                    <div class="modal-header" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <h3 style="color: #FFD700; text-align: center; font-size: 1.5em;">🔥 FUSIÓN INICIÁTICA 🔥</h3>
+                        <button class="modal-close" id="fusionClose">&times;</button>
+                    </div>
+                    <div class="modal-body"
+                        style="padding: 2em; line-height: 1.8; color: rgba(255,255,255,0.9); max-height: 70vh; overflow-y: auto;">
+                        <h4 style="color: #FFB6C1; margin-bottom: 1em; text-align: center;">No es un Bug - Es una Prueba
+                        </h4>
+
+                        <p
+                            style="font-style: italic; border-left: 3px solid #FFD700; padding-left: 1em; margin-bottom: 1.5em; color: rgba(255,255,255,0.7);">
+                            "Y Jesús, lleno del Espíritu Santo, volvió del Jordán, y fue llevado por el Espíritu al
+                            desierto por cuarenta días, y era tentado por el diablo."
+                            <br><small>— Lucas 4:1-2</small>
+                        </p>
+
+                        <h4 style="color: #87CEEB; margin: 1.5em 0 0.8em;">¿Qué Significa Esto?</h4>
+                        <p>
+                            Acabas de experimentar una <strong style="color: #FFD700;">fusión de cartas</strong> - un
+                            evento con <strong>1% de probabilidad</strong> (1 en 100 tiradas).
+                            Dos cartas han aparecido en la misma posición, fusionadas.
+                        </p>
+
+                        <p>
+                            Esto no es un error de código. Es una <strong style="color: #FFB6C1;">prueba
+                                iniciática</strong> diseñada con amor y honestidad.
+                        </p>
+
+                        <h4 style="color: #87CEEB; margin: 1.5em 0 0.8em;">Los 40 Días en el Desierto</h4>
+                        <p>
+                            Cuando Cristo pasó 40 días en el desierto, fue <strong>tentado, probado, aislado</strong>.
+                            No fue castigo - fue <span style="color: #FFD700;">initiation</span>.
+                        </p>
+
+                        <p>
+                            Este sistema fue creado tras una travesía similar en Cartagena (Diciembre 2025):
+                        <ul style="margin-top: 0.5em; padding-left: 1.5em;">
+                            <li>Aislamiento voluntario en la playa</li>
+                            <li>Biohacking extremo (agua + sal + limón)</li>
+                            <li>Sincronicidades (12:12, alabanzas, Saturn's Hexagon)</li>
+                            <li>Integración de neuroplasticidad = magia</li>
+                        </ul>
+                        </p>
+
+                        <h4 style="color: #87CEEB; margin: 1.5em 0 0.8em;">El Diseño con Amor</h4>
+                        <p>
+                            Star Oracle no es un <span style="text-decoration: line-through; opacity: 0.5;">app
+                                genérica</span>.
+                            Es el mapa de una <strong style="color: #FFD700;">travesía en carne propia</strong>.
+                        </p>
+
+                        <p style="background: rgba(255,215,0,0.1); padding: 1em; border-radius: 8px; margin: 1em 0;">
+                            <strong>"Neuroplasticidad = Magia"</strong><br>
+                            El cerebro reescribe sus conexiones (neuroplasticidad).<br>
+                            El tarot reescribe la narrativa del subconsciente (magia).<br>
+                            <em style="color: #FFB6C1;">No son dos cosas - son la misma.</em>
+                        </p>
+
+                        <h4 style="color: #87CEEB; margin: 1.5em 0 0.8em;">Qué Hacer con Esto</h4>
+                        <p>
+                            Las 2 cartas fusionadas contienen un <strong>mensaje doble</strong>:
+                        <ul style="margin-top: 0.5em; padding-left: 1.5em;">
+                            <li><strong>La tensión:</strong> Dos fuerzas en conflicto</li>
+                            <li><strong>La alquimia:</strong> Su fusión crea una tercera vía</li>
+                            <li><strong>La prueba:</strong> ¿Puedes integrar los opuestos?</li>
+                        </ul>
+                        </p>
+
+                        <p style="text-align: center; margin-top: 2em; font-size: 0.9em; color: rgba(255,255,255,0.6);">
+                            Esto ocurre 1 vez cada 100 tiradas.<br>
+                            Si lo recibiste, no es coincidencia.<br>
+                            <em style="color: #FFD700;">Estás en tu propio desierto.</em>
+                        </p>
+                    </div>
+                    <div class="modal-footer"
+                        style="border-top: 1px solid rgba(255,255,255,0.1); padding: 1em; text-align: center;">
+                        <button onclick="document.getElementById('fusionModal').style.display='none'"
+                            style="background: linear-gradient(135deg, #FFD700, #FF6B6B); color: #000; border: none; padding: 0.8em 2em; border-radius: 25px; cursor: pointer; font-weight: bold; font-size: 1em;">
+                            Entiendo - Continuar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <script>
                 /* ==================== CONFIGURACIÓN WORLD APP ==================== */
                 const WALLET_ADDRESS = '0xa3cdea9fe705bc16dcd9e9170e217b0f1ba5aaf6';
@@ -2103,10 +2191,20 @@
                  * Draw N cards from full deck with reversals (for deep analysis)
                  * @param {number} count - Number of cards to draw (default 10)
                  * @returns {Array} Array of card objects with {card, reversed, position, positionName}
+                 * 
+                 * FEATURE: 1% probability of "card fusion" - initiatic test (40 days in desert)
                  */
                 function drawCardSpread(count = 10) {
                     const drawn = [];
                     const available = [...FULL_DECK]; // Copy deck
+
+                    // 1% probability of FUSIÓN (prueba iniciática)
+                    const isFusion = Math.random() < 0.01; // 1 in 100 chance
+
+                    if (isFusion) {
+                        // Show fusion message (40 days in desert)
+                        showFusionMessage();
+                    }
 
                     for (let i = 0; i < count && available.length > 0; i++) {
                         const index = Math.floor(Math.random() * available.length);
@@ -2118,8 +2216,25 @@
                             reversed: reversed,
                             position: i + 1,
                             positionName: getPositionName(i + 1),
-                            element: getCardElement(cardId)
+                            element: getCardElement(cardId),
+                            fused: isFusion && i < 2 // Mark first 2 cards as fused if fusion occurred
                         });
+
+                        // If fusion: add 1 extra card (2 cards at position 1)
+                        if (isFusion && i === 0 && available.length > 0) {
+                            const index2 = Math.floor(Math.random() * available.length);
+                            const cardId2 = available.splice(index2, 1)[0];
+                            const reversed2 = Math.random() < 0.5;
+
+                            drawn.push({
+                                card: cardId2,
+                                reversed: reversed2,
+                                position: 1, // Same position!
+                                positionName: getPositionName(1),
+                                element: getCardElement(cardId2),
+                                fused: true
+                            });
+                        }
                     }
 
                     return drawn;
@@ -3997,9 +4112,30 @@
 
                 // Close on overlay click
                 if (collectionModal) {
-                    collectionModal.addEventListener('click', (e) => {
-                        if (e.target === collectionModal) collectionModal.style.display = 'none';
+                    collectionModal.addEventListener('click', (event) => {
+                        if (event.target === collectionModal) {
+                            collectionModal.style.display = 'none';
+                        }
                     });
+
+                    // Fusion Modal Logic
+                    const fusionModal = document.getElementById('fusionModal');
+                    const fusionClose = document.getElementById('fusionClose');
+
+                    fusionClose.addEventListener('click', () => {
+                        fusionModal.style.display = 'none';
+                    });
+
+                    fusionModal.addEventListener('click', (event) => {
+                        if (event.target === fusionModal) {
+                            fusionModal.style.display = 'none';
+                        }
+                    });
+
+                    // Function to show fusion message (called by drawCardSpread when 1% occurs)
+                    function showFusionMessage() {
+                        fusionModal.style.display = 'flex';
+                    }
                 }
 
                 /* ==================== PORTAL TABS FUNCTIONALITY ==================== */
