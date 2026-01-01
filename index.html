@@ -6,18 +6,272 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Star ✦</title>
     <meta name="description" content="Oráculo de Tarot y Numerología del presente.">
-    <!-- World App MiniKit -->
-    <!-- World App MiniKit Wrapper (Local Fallback) -->
-    <script src="./public/libs/minikit-wrapper.js"></script>
-    <!-- i18n Translation Module -->
-    <script src="./public/i18n.js"></script>
+
+    <!-- Preconnect to external domains for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="./public/i18n.js" as="script">
+    <link rel="preload" href="./public/keywords.json" as="fetch" crossorigin>
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" as="style">
+
+    <!-- i18n Translation Module - Deferred -->
+    <script src="./public/i18n.js" defer></script>
+
     <style>
+        /* =====================================================
+           PRELOADER - ORGANIC TREE RAMIFICATIONS
+           Frosted glass / hospital window effect
+        ===================================================== */
+        #starPreloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            /* Frosted glass background - opaque, humid feeling */
+            background: radial-gradient(circle at center,
+                    rgba(250, 250, 252, 0.97),
+                    rgba(240, 240, 245, 0.99));
+            backdrop-filter: blur(40px) saturate(120%);
+            -webkit-backdrop-filter: blur(40px) saturate(120%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999999;
+            overflow: hidden;
+            transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        #starPreloader.loaded {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Canvas for organic ramifications */
+        .ramification-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.6;
+        }
+
+        /* Veins spreading organically - VISIBLE water-like liquid */
+        .vein {
+            position: absolute;
+            background: linear-gradient(var(--vein-angle, 45deg),
+                    rgba(255, 255, 255, 0.9) 0%,
+                    var(--vein-color) 50%,
+                    rgba(255, 255, 255, 0.4) 100%);
+            opacity: 0;
+            filter: blur(3px) drop-shadow(0 0 10px var(--vein-color));
+            animation: flowLiquid 4s cubic-bezier(0.34, 0, 0.1, 1) forwards;
+            mix-blend-mode: normal;
+            transform-origin: left center;
+            border-radius: 50%;
+        }
+
+        /* Color palette from card colors (VIBRANT and VISIBLE) */
+        .vein:nth-child(1) {
+            --vein-color: var(--color1, rgba(147, 51, 234, 0.7));
+            --vein-angle: 25deg;
+            width: 350px;
+            height: 8px;
+            top: 50%;
+            left: 50%;
+            animation-delay: 0.2s;
+        }
+
+        .vein:nth-child(2) {
+            --vein-color: var(--color2, rgba(79, 70, 229, 0.7));
+            --vein-angle: 85deg;
+            width: 320px;
+            height: 7px;
+            top: 48%;
+            left: 51%;
+            animation-delay: 0.4s;
+        }
+
+        .vein:nth-child(3) {
+            --vein-color: var(--color3, rgba(6, 182, 212, 0.7));
+            --vein-angle: 140deg;
+            width: 280px;
+            height: 6px;
+            top: 52%;
+            left: 49%;
+            animation-delay: 0.6s;
+        }
+
+        .vein:nth-child(4) {
+            --vein-color: var(--color4, rgba(139, 92, 246, 0.7));
+            --vein-angle: 200deg;
+            width: 300px;
+            height: 7px;
+            top: 49%;
+            left: 50%;
+            animation-delay: 0.8s;
+        }
+
+        .vein:nth-child(5) {
+            --vein-color: var(--color1, rgba(99, 102, 241, 0.6));
+            --vein-angle: 315deg;
+            width: 260px;
+            height: 6px;
+            top: 51%;
+            left: 51%;
+            animation-delay: 1.0s;
+        }
+
+        .vein:nth-child(6) {
+            --vein-color: var(--color2, rgba(168, 85, 247, 0.6));
+            --vein-angle: 260deg;
+            width: 240px;
+            height: 5px;
+            top: 50%;
+            left: 49%;
+            animation-delay: 1.2s;
+        }
+
+        @keyframes flowLiquid {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scaleX(0);
+                filter: blur(8px) drop-shadow(0 0 20px var(--vein-color));
+            }
+
+            15% {
+                opacity: 0.4;
+            }
+
+            40% {
+                /* Acceleration phase */
+                opacity: 0.9;
+                transform: translate(-50%, -50%) scaleX(0.7);
+                filter: blur(2px) drop-shadow(0 0 15px var(--vein-color));
+            }
+
+            85% {
+                /* Slow motion begins */
+                opacity: 0.85;
+                transform: translate(-50%, -50%) scaleX(0.95);
+                filter: blur(3px) drop-shadow(0 0 12px var(--vein-color));
+            }
+
+            100% {
+                /* Final slow motion at edges */
+                opacity: 0.7;
+                transform: translate(-50%, -50%) scaleX(1);
+                filter: blur(4px) drop-shadow(0 0 10px var(--vein-color));
+            }
+        }
+
+        /* Central seed/nucleus */
+        .tree-seed {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 14px;
+            height: 14px;
+            background: radial-gradient(circle,
+                    rgba(255, 255, 255, 1),
+                    rgba(147, 51, 234, 0.5),
+                    rgba(255, 255, 255, 0.2));
+            border-radius: 50%;
+            box-shadow:
+                0 0 25px rgba(255, 255, 255, 0.9),
+                0 0 45px rgba(147, 51, 234, 0.3),
+                0 0 65px rgba(79, 70, 229, 0.15);
+            animation: pulseSeed 2.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseSeed {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.15);
+                opacity: 1;
+            }
+        }
+
+        /* Fog/humidity layer */
+        .humidity-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 25% 25%, rgba(255, 255, 255, 0.5), transparent 45%),
+                radial-gradient(ellipse at 75% 75%, rgba(147, 51, 234, 0.08), transparent 45%);
+            opacity: 0.4;
+            animation: breatheFog 5s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes breatheFog {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(1.03);
+            }
+        }
+
+        /* Logo overlay */
+        .preloader-logo {
+            position: relative;
+            z-index: 10;
+            font-size: 3rem;
+            font-weight: 300;
+            color: rgba(29, 29, 31, 0.6);
+            text-shadow:
+                0 1px 2px rgba(255, 255, 255, 0.9),
+                0 0 35px rgba(147, 51, 234, 0.4),
+                0 2px 10px rgba(0, 0, 0, 0.5);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0.25em;
+            animation: fadeInLogo 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInLogo {
+            from {
+                opacity: 0;
+                filter: blur(10px);
+            }
+
+            to {
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        /* Hide main content until loaded */
+        body.loading>*:not(#starPreloader) {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+
         /* =====================================================
            ORÁCULO WHITESUR - PROYECTO 7.41
            Fusión: Glassmorphism Apple Music Style + Misticismo
         ===================================================== */
-
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
         :root {
             /* GLASSMORPHISM - Ajustado para fondos dinámicos claros */
@@ -1182,6 +1436,52 @@
             -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.5);
         }
 
+        /* =====================================================
+           STICKY AD BANNER - Mobile Monetization
+        ===================================================== */
+        .sticky-ad-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(15px);
+            border-top: 1px solid rgba(147, 51, 234, 0.3);
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: translateY(100%);
+            animation: slideUpAd 1s ease-out 5s forwards;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideUpAd {
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        /* Adjust social buttons to not overlap with ad */
+        .patreon-btn {
+            bottom: 90px !important;
+        }
+
+        .instagram-btn {
+            bottom: 160px !important;
+        }
+
+        @media (max-width: 768px) {
+            .patreon-btn {
+                bottom: 80px !important;
+            }
+
+            .instagram-btn {
+                bottom: 140px !important;
+            }
+        }
+
 
 
         /* ==================== ESTILOS BOTÓN IA ==================== */
@@ -1395,9 +1695,39 @@
 
         /* TIP DE INTERACCIÓN ELIMINADO */
     </style>
+
+    <!-- Async font loading (non-blocking) -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    </noscript>
 </head>
 
-<body>
+<body class="loading">
+
+    <!-- PRELOADER - Shown while page loads -->
+    <div id="starPreloader">
+        <!-- Humidity/fog layer for hospital window feel -->
+        <div class="humidity-layer"></div>
+
+        <!-- Organic veins spreading from center -->
+        <div class="ramification-canvas">
+            <div class="vein"></div>
+            <div class="vein"></div>
+            <div class="vein"></div>
+            <div class="vein"></div>
+            <div class="vein"></div>
+            <div class="vein"></div>
+        </div>
+
+        <!-- Central seed -->
+        <div class="tree-seed"></div>
+
+        <!-- Logo -->
+        <div class="preloader-logo">Star ✦</div>
+    </div>
 
     <!-- 3-Card Collection Notification -->
     <div class="card-collection-notification" id="cardCollectionNotif">
@@ -2973,6 +3303,80 @@
                     }
                 }
 
+                async function initOracle() {
+                    try {
+                        // 1. Select Card Immediately
+                        const cardIndex = Math.floor(Math.random() * 22); // 0-21 (Major Arcana)
+                        const cardFileName = `ar${String(cardIndex).padStart(2, '0')}.jpg`;
+                        const cardPath = `./public/cards/${cardFileName}`;
+
+                        console.log(`🔮 Preloading card: ${cardFileName}`);
+
+                        // 2. Preload Main Image
+                        const img = new Image();
+                        img.crossOrigin = "Anonymous";
+
+                        await new Promise((resolve, reject) => {
+                            img.onload = () => {
+                                console.log('✅ Card image loaded');
+                                resolve();
+                            };
+                            img.onerror = () => {
+                                console.error('❌ Failed to load card image');
+                                // Fallback but resolve to continue
+                                resolve();
+                            };
+                            img.src = cardPath;
+                        });
+
+                        // 3. Extract Colors & Apply to UI (Veins/Bulbs)
+                        // Simulate extraction or use ColorThief if available, 
+                        // for now we set CSS variables compatible with the card.
+                        // We'll use a simple mapping or random vibrant palette for now to ensure visibility
+                        // In future: use ColorThief on 'img'
+
+                        // Set the image sources
+                        const cardFront = document.getElementById('cardFront');
+                        const cardBack = document.querySelector('.card-back'); // Actually the container or front img
+
+                        if (cardFront) {
+                            // Pre-set the image so it's ready
+                            cardFront.style.backgroundImage = `url('${cardPath}')`;
+                            // Save for reveal logic
+                            window.currentCardPath = cardPath;
+                            window.currentCardIndex = cardIndex;
+                        }
+
+                        // 4. Update Preloader Colors (The "Ramification")
+                        // Apply extracted colors to CSS variables
+                        const root = document.documentElement;
+                        // Example: Mocking extraction for stability/speed (or implement real extraction)
+                        // For 'ar00' (Fool) -> Yellow/Orange tones?
+                        // Randomizing for organic feel for now as ColorThief might be heavy
+                        const hues = [260, 280, 190, 220]; // Purple/Blue base
+                        const primaryHue = hues[Math.floor(Math.random() * hues.length)];
+
+                        root.style.setProperty('--color1', `hsl(${primaryHue}, 70%, 60%)`);
+                        root.style.setProperty('--color2', `hsl(${primaryHue + 30}, 70%, 60%)`);
+                        root.style.setProperty('--color3', `hsl(${primaryHue - 30}, 80%, 65%)`);
+                        root.style.setProperty('--color4', `hsl(${primaryHue + 60}, 60%, 55%)`);
+
+                        // 5. Hide Preloader with Liquid Transition
+                        console.log('💧 Colors set. Hiding preloader...');
+                        setTimeout(() => {
+                            const preloader = document.getElementById('starPreloader');
+                            document.body.classList.remove('loading');
+                            if (preloader) preloader.classList.add('loaded');
+                        }, 1000); // Small delay to let user see the colored veins
+
+                    } catch (error) {
+                        console.error("Oracle initialization error:", error);
+                        // Force hide preloader on error
+                        const preloader = document.getElementById('starPreloader');
+                        if (preloader) preloader.classList.add('loaded');
+                    }
+                }
+
                 /* ==================== CAMBIAR IDIOMA ==================== */
                 function toggleLanguage() {
                     // Todos los idiomas con traducciones completas
@@ -3646,6 +4050,26 @@
                 /* ==================== INICIALIZACIÓN ==================== */
                 // Cargar la primera carta al cargar la página
                 window.addEventListener('load', () => {
+                    // Hide preloader
+                    // const preloader = document.getElementById('starPreloader');
+                    // const body = document.body;
+                    // body.classList.remove('loading');
+                    // setTimeout(() => {
+                    //     if (preloader) {
+                    //         preloader.classList.add('loaded');
+                    //     }
+                    // }, 1500); // Longer delay to see liquid animation
+
+                    // Disable 3D Tilt for stability
+                    // const cardContainer = document.querySelector('.card-container');
+                    // if (cardContainer) {
+                    //     cardContainer.addEventListener('mousemove', handleCardTilt);
+                    //     cardContainer.addEventListener('mouseleave', resetCardTilt);
+                    // }
+
+                    // Preloader will be hidden AFTER card selection and color extraction
+                    // (See initOracle function)
+
                     // Aplicar traducciones según idioma del navegador
                     if (window.i18n) {
                         const detectedLang = window.i18n.getBrowserLanguage();
@@ -4171,9 +4595,8 @@
                         } else {
                             hospitalInput.style.display = 'none';
                             mapInput.style.display = 'block';
-                            // TODO: Initialize Google Maps here when API key is available
-                            // initializeGoogleMaps();
                         }
+
                     });
                 });
 
@@ -4488,9 +4911,28 @@
                         }
 
                         personalityProfileBtn.disabled = true;
-                        personalityProfileBtn.innerHTML = '<span class="btn-icon">⏳</span> Generando...';
-                        resultDiv.innerHTML = '<p style="text-align:center; opacity:0.7;">📊 Conectando con Google AI para generar perfil...</p>';
+                        // personalityProfileBtn.innerHTML = '<span class="btn-icon">⏳</span> Generando...';
+                        resultDiv.innerHTML = '<p style="text-align:center; opacity:0.7;">✨ Revelando sabiduría arcana...</p>';
                         resultDiv.style.display = 'block';
+
+                        // Simulate delay for effect
+                        setTimeout(() => {
+                            if (currentCardData) {
+                                resultDiv.innerHTML = `
+                                    <div class="static-analysis fade-in">
+                                        <h3>${currentCardData.name}</h3>
+                                        <div class="keywords-box" style="margin: 15px 0; font-size: 0.9em; opacity: 0.8;">
+                                            ${currentCardData.keywords ? currentCardData.keywords.join(' • ') : ''}
+                                        </div>
+                                        <p style="margin-bottom: 1em;">${currentCardData.desc || "El misterio de esta carta se revela ante ti."}</p>
+                                        <p><strong>Significado:</strong> ${currentCardData.meaning_up || "Meditación profunda requerida."}</p>
+                                    </div>
+                                `;
+                            }
+                            personalityProfileBtn.disabled = false;
+                            // personalityProfileBtn.innerHTML = ... (reset button text if needed)
+                        }, 800);
+                        return; // Stop here, no AI call
 
                         try {
                             const response = await callDeepAnalysisAPI('personality');
@@ -4560,9 +5002,25 @@
                         }
 
                         natalChartBtn.disabled = true;
-                        natalChartBtn.innerHTML = '<span class="btn-icon">⏳</span> Calculando...';
-                        resultDiv.innerHTML = '<p style="text-align:center; opacity:0.7;">⭐ Conectando con Google AI para síntesis completa...</p>';
+                        // natalChartBtn.innerHTML = '<span class="btn-icon">⏳</span> Calculando...';
+                        resultDiv.innerHTML = '<p style="text-align:center; opacity:0.7;">⭐ Sintetizando destino...</p>';
                         resultDiv.style.display = 'block';
+
+                        setTimeout(() => {
+                            if (currentCardData) {
+                                resultDiv.innerHTML = `
+                                    <div class="static-analysis fade-in">
+                                        <h3>${currentCardData.name} - Síntesis</h3>
+                                        <p><strong>Consejo:</strong> ${currentCardData.advice || "Reflexiona sobre este arquetipo en tu camino actual."}</p>
+                                        <div style="margin-top:15px; padding:10px; background:rgba(255,255,255,0.1); border-radius:8px;">
+                                            <small>Arcano #${currentCardData.number || "?"}</small>
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                            natalChartBtn.disabled = false;
+                        }, 1000);
+                        return; // Stop here, no AI call
 
                         try {
                             // Call complete analysis API (Prompt 4) - integrates everything
@@ -4596,7 +5054,15 @@
 
             </script>
 
-
+            <!-- Social Buttons -->
+            <a href="https://www.instagram.com/star_oracle/" target="_blank" rel="noopener noreferrer"
+                class="social-btn instagram-btn" aria-label="Síguenos en Instagram">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.281.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                        fill="#555" />
+                </svg>
+            </a>
 
             <a href="https://www.patreon.com/cw/star_loop" target="_blank" rel="noopener noreferrer"
                 class="social-btn patreon-btn" aria-label="Apóyanos en Patreon">
@@ -4630,7 +5096,7 @@
                 }
 
                 .instagram-btn {
-                    display: none;
+                    bottom: 100px;
                 }
 
                 .patreon-btn {
@@ -4666,83 +5132,32 @@
                     }
 
                     .instagram-btn {
-                        bottom: 20px;
+                        bottom: 80px;
                     }
 
                     .patreon-btn {
-                        bottom: 80px;
-                        /* 20px + 48px + 12px gap */
+                        bottom: 20px;
                     }
 
                     .social-btn svg {
-                        width: 28px;
-                        height: 28px;
+                        width: 22px;
+                        height: 22px;
                     }
 
                     .patreon-btn svg {
-                        width: 22px;
-                        height: 22px;
+                        width: 20px;
+                        height: 20px;
                     }
                 }
             </style>
 
-            <!-- Google Maps API with Places Library -->
-            <script>
-                // Google Maps initialization (called by API callback)
-                let map, marker, autocomplete;
-
-                function initGoogleMaps() {
-                    const mapElement = document.getElementById('googleMap');
-                    if (!mapElement) return;
-
-                    // Dark mode map styles
-                    const darkStyles = [
-                        { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
-                        { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
-                        { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#17263c' }] }
-                    ];
-
-                    map = new google.maps.Map(mapElement, {
-                        center: { lat: -34.6037, lng: -58.3816 },
-                        zoom: 12,
-                        styles: darkStyles
-                    });
-
-                    const searchInput = document.getElementById('locationSearch');
-                    if (searchInput) {
-                        autocomplete = new google.maps.places.Autocomplete(searchInput);
-                        autocomplete.bindTo('bounds', map);
-
-                        autocomplete.addListener('place_changed', () => {
-                            const place = autocomplete.getPlace();
-                            if (place.geometry) {
-                                map.setCenter(place.geometry.location);
-                                map.setZoom(15);
-                                placeMarker(place.geometry.location);
-                                updateCoords(place.geometry.location.lat(), place.geometry.location.lng());
-                            }
-                        });
-                    }
-
-                    map.addListener('click', (e) => {
-                        placeMarker(e.latLng);
-                        updateCoords(e.latLng.lat(), e.latLng.lng());
-                    });
-                }
-
-                function placeMarker(loc) {
-                    if (marker) marker.setMap(null);
-                    marker = new google.maps.Marker({ position: loc, map: map });
-                }
-
-                function updateCoords(lat, lng) {
-                    document.getElementById('selectedLat').textContent = lat.toFixed(6);
-                    document.getElementById('selectedLng').textContent = lng.toFixed(6);
-                }
-            </script>
-            <script
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz9Tzlklickh_1Psmz0n8yxOG9j8sxvDs&libraries=places&callback=initGoogleMaps"
-                async defer></script>
+            <!-- Sticky Ad Banner -->
+            <div class="sticky-ad-banner">
+                <div
+                    style="width: 320px; height: 50px; background: rgba(0,0,0,0.2); color: rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 0.8em; border: 1px dashed rgba(255,255,255,0.3);">
+                    Anuncio (320x50) - Espacio para AdSense
+                </div>
+            </div>
 
 </body>
 
