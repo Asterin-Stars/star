@@ -1776,7 +1776,42 @@
     </div>
     <div class="noise-overlay"></div>
 
-    <!-- Buttons removed -->
+    <!-- Botón de Idioma -->
+    <button class="lang-btn iridescent-border-subtle" id="langBtn" onclick="toggleLanguage()"
+        aria-label="Change Language">
+        🌐
+    </button>
+
+    <!-- Collection Button (Top-Left, Transparent) -->
+    <button class="collection-btn" id="collectionBtn" aria-label="Ver Colección">
+        🃏
+    </button>
+    <style>
+        .collection-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            background: transparent;
+            border: none;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 2rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .collection-btn:hover {
+            transform: scale(1.15);
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        }
+    </style>
 
     <div class="interface">
         <div class="card-stage" id="cardStage">
@@ -1785,40 +1820,7 @@
                     <div class="symbol">☾</div>
                 </div>
                 <div class="card-face back iridescent-border">
-                    <!-- SETTINGS INTERFACE -->
-                    <div class="settings-container"
-                        style="width: 100%; height: 100%; padding: 25px; display: flex; flex-direction: column; justify-content: center; gap: 20px; color: white; background: rgba(0,0,0,0.4);">
-                        <h3 style="text-align: center; margin-bottom: 10px; font-weight: 300; letter-spacing: 2px;">
-                            CONFIG</h3>
-
-                        <div class="setting-item">
-                            <label
-                                style="font-size: 0.8rem; letter-spacing: 1px; opacity: 0.8; display: block; margin-bottom: 5px;">HOLO
-                                INTENSITY</label>
-                            <input type="range" min="0" max="100" value="70" class="holo-slider" id="holoIntensity"
-                                style="width: 100%;">
-                        </div>
-
-                        <div class="setting-item">
-                            <label
-                                style="font-size: 0.8rem; letter-spacing: 1px; opacity: 0.8; display: block; margin-bottom: 5px;">LIQUID
-                                SPEED</label>
-                            <input type="range" min="0" max="100" value="50" class="holo-slider" id="liquidSpeed"
-                                style="width: 100%;">
-                        </div>
-
-                        <div class="setting-item">
-                            <label
-                                style="font-size: 0.8rem; letter-spacing: 1px; opacity: 0.8; display: block; margin-bottom: 5px;">NOISE
-                                OPACITY</label>
-                            <input type="range" min="0" max="100" value="30" class="holo-slider" id="noiseOpacity"
-                                style="width: 100%;">
-                        </div>
-
-                        <div style="margin-top: 10px; text-align: center; font-size: 0.7rem; opacity: 0.5;">
-                            STAR ORACLE v2.0
-                        </div>
-                    </div>
+                    <img id="cardImg" src="" alt="Arcano del Tarot" class="tarot-img">
                 </div>
 
                 <!-- Video Overlay (activated on long-press) -->
@@ -1835,7 +1837,60 @@
 
         <div class="insight-panel iridescent-border" id="insightPanel">
             <h2 id="cardTitle"></h2>
-            <!-- Content removed for minimal config flow -->
+
+            <div class="intro-section" id="introSection" style="display:none;">
+                <p class="intro-text"><em id="introExample"></em></p>
+            </div>
+
+            <div class="section" id="seccionSignificado">
+                <div class="section-title" id="titleArquetipo"></div>
+                <p class="section-content" id="textoSignificado"></p>
+            </div>
+
+            <div class="section" id="seccionAmpliado" style="display:none;">
+                <div class="section-title" id="titleMisticismo"></div>
+                <p class="section-content" id="textoAmpliado"></p>
+            </div>
+
+            <div class="section" id="seccionNegativo" style="display:none;">
+                <div class="section-title" id="titleSombra"></div>
+                <p class="section-content" id="textoNegativo"></p>
+            </div>
+
+            <div class="section" id="seccionBotanica" style="display:none;">
+                <div class="section-title" id="titleBotanica"></div>
+                <p class="section-content" id="textoBotanica"></p>
+            </div>
+
+            <div class="section" id="seccionCotidiano" style="display:none;">
+                <div class="section-title" id="titleCotidiano"></div>
+                <p class="section-content" id="textoCotidiano"></p>
+            </div>
+
+            <div class="section" id="seccionMistico" style="display:none;">
+                <div class="section-title" id="titleGnosis"></div>
+                <p class="section-content" id="textoMistico"></p>
+            </div>
+
+            <div class="section" id="seccionBiblico" style="display:none;">
+                <div class="section-title" id="titleResonanciaBiblica"></div>
+                <div class="section-content">
+                    <div class="biblical-verse" id="textoBiblico"></div>
+                </div>
+            </div>
+
+            <!-- Botón de Síntesis IA -->
+            <div class="ai-synthesis-container">
+                <button class="ai-btn iridescent-border-subtle" id="aiBtn" aria-label="Sintetizar Numerología">
+                    <span class="ai-btn-icon">✦</span>
+                </button>
+                <div class="ai-result" id="aiResult" style="display:none;">
+                    <div class="ai-header">
+                        <span class="ai-icon-small">✦</span> Numerología
+                    </div>
+                    <p id="aiText"></p>
+                </div>
+            </div>
         </div>
 
         <!-- Modal para ejemplos de los 22 conceptos -->
@@ -2791,8 +2846,22 @@
                             resonancia_biblica: Math.floor(Math.random() * allCards.length)
                         };
 
-                        // Configurar imagen local skipped (Settings Mode)
-                        console.log('✨ Carta preparada (Config Only):', currentCardData.name);
+                        // Configurar imagen local (./public/cards/arXX.jpg)
+                        const cardSlug = currentCardData.name_short;
+                        const imageUrl = `./public/cards/${cardSlug}.jpg`;
+
+                        // Precarga de imagen
+                        const img = new Image();
+                        img.onload = () => {
+                            cardImg.src = imageUrl;
+                        };
+                        img.onerror = () => {
+                            // Fallback: usar imagen del Loco si falla la carga
+                            cardImg.src = './public/cards/ar00.jpg';
+                        };
+                        img.src = imageUrl;
+
+                        console.log('✨ Carta preparada:', currentCardData.name);
                         isProcessing = false;
 
                         // Si la carta ya estaba revelada (cambio de idioma en caliente), actualizar textos
@@ -2802,18 +2871,21 @@
 
                     } catch (error) {
                         console.error('🌙 Error cargando cartas locales:', error);
-                        // Fallback data only, no image
+                        // En caso de error, crear carta de fallback
                         currentCardData = {
                             name: window.i18n ? window.i18n.t('silenceCard') : 'El Silencio',
                             name_short: 'ar00',
                             fullData: {
-                                arquetipo: [window.i18n ? window.i18n.t('silenceMessage') : 'El éter está turbio en este momento.'],
+                                arquetipo: [window.i18n ? window.i18n.t('silenceMessage') : 'El éter está turbio en este momento. Respira, centra tu intención y consulta nuevamente.'],
                                 misticismo: [], sombra: [], gnosis: [], cotidiano: [],
                                 resonancia_biblica: {
-                                    cita: '...', referencia: '', conexion: ''
+                                    cita: window.i18n ? window.i18n.t('silenceConnection') : 'En este momento de silencio, escucha tu corazón.',
+                                    referencia: window.i18n ? window.i18n.t('silenceReference') : '1 Reyes 19:12',
+                                    conexion: window.i18n ? window.i18n.t('silenceConnection') : 'El murmullo de una brisa suave señala la presencia divina en el silencio.'
                                 }
                             }
                         };
+                        cardImg.src = './public/cards/ar00.jpg';
                     }
                 }
 
@@ -2854,26 +2926,73 @@
                         cardInner.classList.remove('is-flipping');
                     }, 850);
 
-                    // 3. MOSTRAR TÍTULO (Opcional, ahora es Settings)
-                    cardTitle.textContent = "CONFIGURATION";
+                    // 3. MOSTRAR TÍTULO
+                    cardTitle.textContent = currentCardData.name;
 
-                    // REMOVED: Section Filling logic as sections were deleted.
+                    // 3.5. MOSTRAR INTRODUCCIÓN CON EJEMPLO
+                    const introSection = document.getElementById('introSection');
+                    const introExample = document.getElementById('introExample');
+                    const datos = currentCardData.fullData;
+
+
+                    // Usar el campo cotidiano como introducción (experiencia práctica, sin prefijo)
+                    const lang = window.i18n ? window.i18n.currentLanguage : 'es';
+                    // Performance: Defer keyword highlighting to reduce blocking
+                    setTimeout(() => {
+                        introExample.innerHTML = datos.cotidiano ? highlightKeywords(datos.cotidiano, lang) : 'La experiencia de vida práctica.';
+                    }, 100);
+                    introSection.style.display = 'block';
+
+                    // 4. LLENAR LAS SECCIONES CON DATOS ALEATORIOS
+
+                    // Función auxiliar with keyword highlighting
+                    const getRandomItem = (category) => {
+                        const item = datos[category];
+                        if (!item || typeof item !== 'string') return '';
+                        return highlightKeywords(item, lang);
+                    };
+
+                    // Llenar todas las categorías del JSON - LA SECCIÓN SIGNIFICADO USA SOMBRA (ASPECTOS TEMIBLES)
+                    textoSignificado.innerHTML = getRandomItem('sombra');
+
+                    textoAmpliado.innerHTML = getRandomItem('misticismo');
+                    seccionAmpliado.style.display = textoAmpliado.innerHTML ? 'block' : 'none';
+
+                    textoNegativo.innerHTML = getRandomItem('arquetipo');
+                    seccionNegativo.style.display = textoNegativo.innerHTML ? 'block' : 'none';
+
+                    // Nueva sección Botánica
+                    textoBotanica.innerHTML = getRandomItem('botanica');
+                    seccionBotanica.style.display = textoBotanica.innerHTML ? 'block' : 'none';
+
+                    textoCotidiano.innerHTML = getRandomItem('cotidiano');
+                    seccionCotidiano.style.display = textoCotidiano.innerHTML ? 'block' : 'none';
+
+                    textoMistico.innerHTML = getRandomItem('gnosis');
+                    seccionMistico.style.display = textoMistico.innerHTML ? 'block' : 'none';
+
+                    // Versículo Bíblico
+                    textoBiblico.innerHTML = getTemporalBiblicalVerse();
+                    seccionBiblico.style.display = 'block';
 
                     // 5. MOSTRAR PANEL (con delay dramático)
                     setTimeout(() => {
-                        const insightPanel = document.getElementById('insightPanel');
-                        if (insightPanel) insightPanel.classList.add('active');
+                        insightPanel.classList.add('active');
+                        // Actualizar aria-label
+                        cardStage.setAttribute('aria-label', window.i18n.t('newConsultation'));
 
-                        // Auto-play video logic removed or commented out as cardImg is gone
-                        /*
-                       // 6. ADD TO 3-CARD COLLECTION
-                       addCardToCollection(currentCardData);
+                        // Re-observe elements for reading unit animations
+                        if (typeof observeElements === 'function') {
+                            setTimeout(() => observeElements(), 300);
+                        }
 
-                       // 7. AUTO-PLAY VIDEO ONCE (non-loop, single playback)
+                        // 6. ADD TO 3-CARD COLLECTION
+                        addCardToCollection(currentCardData);
+
+                        // 7. AUTO-PLAY VIDEO ONCE (non-loop, single playback)
                         setTimeout(() => {
-                           playCardVideoOnce();
-                       }, 800);
-                       */
+                            playCardVideoOnce();
+                        }, 800);
                     }, 650);
                 }
 
@@ -3172,7 +3291,7 @@
                         // La imagen NO cambia (mismo ID)
                         const cardSlug = currentCardData.name_short;
                         const imageUrl = `./public/cards/${cardSlug}.jpg`;
-                        // cardImg.src = imageUrl; <-- REMOVED (Settings Mode)
+                        cardImg.src = imageUrl;
 
                         // Si la carta está revelada, actualizar los textos
                         if (cardStage.classList.contains('flipped')) {
@@ -3525,7 +3644,13 @@
                 //     }
 
                 // The original aiBtn.addEventListener block is replaced by this
-                /* Removed aiBtn listener */
+                if (aiBtn) {
+                    aiBtn.addEventListener('click', async () => {
+                        // 1. Solicitar Pago (2.22 WLD)
+                        // requestAIPayment now handles calling generateAIReading internally
+                        await requestAIPayment();
+                    });
+                }
 
 
                 /* ==================== EVENT LISTENERS ==================== */
@@ -3970,48 +4095,7 @@
 
                     // Start Gyroscope Border Effects
                     initGyroscopeBorders();
-
-                    // INIT SETTINGS LISTENERS
-                    initSettingsControls();
                 });
-
-                function initSettingsControls() {
-                    const holoSlider = document.getElementById('holoIntensity');
-                    const liquidSlider = document.getElementById('liquidSpeed');
-                    const noiseSlider = document.getElementById('noiseOpacity');
-
-                    if (holoSlider) {
-                        holoSlider.addEventListener('input', (e) => {
-                            const val = e.target.value / 100; // 0.0 to 1.0
-                            document.documentElement.style.setProperty('--iridescent-opacity', val);
-                            // Also affect the border opacity directly if needed
-                            const borders = document.querySelectorAll('.iridescent-border::before');
-                            borders.forEach(el => el.style.opacity = val);
-                        });
-                    }
-
-                    if (liquidSlider) {
-                        liquidSlider.addEventListener('input', (e) => {
-                            // Inverse logic: Higher value = Lower duration (Faster)
-                            // Range 0-100. 100 = fast (5s), 0 = slow (60s)
-                            const val = e.target.value;
-                            const duration = 60 - (val * 0.55); // max 60s, min ~5s
-
-                            const blobs = document.querySelectorAll('.blob');
-                            blobs.forEach(blob => {
-                                blob.style.animationDuration = `${duration}s`;
-                            });
-                        });
-                    }
-
-                    if (noiseSlider) {
-                        noiseSlider.addEventListener('input', (e) => {
-                            const val = e.target.value / 100; // 0.0 to 1.0
-                            const noise = document.querySelector('.noise-overlay');
-                            if (noise) noise.style.opacity = val;
-                        });
-                    }
-                }
 
                 /* ==================== GYROSCOPE IRIDESCENT BORDERS ==================== */
                 function initGyroscopeBorders() {
@@ -4971,7 +5055,109 @@
             </script>
 
             <!-- Social Buttons -->
-            <!-- Social Buttons and Ads removed -->
+            <a href="https://www.instagram.com/star_oracle/" target="_blank" rel="noopener noreferrer"
+                class="social-btn instagram-btn" aria-label="Síguenos en Instagram">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.281.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                        fill="#555" />
+                </svg>
+            </a>
+
+            <a href="https://www.patreon.com/cw/star_loop" target="_blank" rel="noopener noreferrer"
+                class="social-btn patreon-btn" aria-label="Apóyanos en Patreon">
+                <!-- Patreon Logo SVG -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M15.32 5.56C15.32 8.63 12.83 11.12 9.76 11.12C6.69 11.12 4.2 8.63 4.2 5.56C4.2 2.49 6.69 0 9.76 0C12.83 0 15.32 2.49 15.32 5.56ZM0 24H3.2V0H0V24Z"
+                        fill="#555" />
+                </svg>
+            </a>
+
+            <style>
+                .social-btn {
+                    position: fixed;
+                    right: 30px;
+                    width: 56px;
+                    height: 56px;
+                    /* Ajustado al nuevo estilo glassmorphism */
+                    background: rgba(255, 255, 255, 0.5);
+                    backdrop-filter: blur(15px);
+                    -webkit-backdrop-filter: blur(15px);
+                    border: 1.5px solid rgba(255, 255, 255, 0.6);
+                    border-radius: 16px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.3s ease;
+                    z-index: 1000;
+                    text-decoration: none;
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+                }
+
+                .instagram-btn {
+                    bottom: 100px;
+                }
+
+                .patreon-btn {
+                    bottom: 30px;
+                }
+
+                .social-btn:hover {
+                    background: rgba(255, 255, 255, 0.7);
+                    transform: translateY(-4px) scale(1.05);
+                    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+                    border-color: rgba(255, 255, 255, 0.8);
+                }
+
+                .social-btn svg {
+                    transition: transform 0.3s ease;
+                }
+
+                .social-btn:hover svg {
+                    transform: scale(1.1);
+                }
+
+                /* Ajuste específico para el logo de Patreon que suele ser más pequeño visualmente */
+                .patreon-btn svg {
+                    width: 24px;
+                    height: 24px;
+                }
+
+                @media (max-width: 768px) {
+                    .social-btn {
+                        right: 20px;
+                        width: 48px;
+                        height: 48px;
+                    }
+
+                    .instagram-btn {
+                        bottom: 80px;
+                    }
+
+                    .patreon-btn {
+                        bottom: 20px;
+                    }
+
+                    .social-btn svg {
+                        width: 22px;
+                        height: 22px;
+                    }
+
+                    .patreon-btn svg {
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+            </style>
+
+            <!-- Sticky Ad Banner -->
+            <div class="sticky-ad-banner">
+                <div
+                    style="width: 320px; height: 50px; background: rgba(0,0,0,0.2); color: rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 0.8em; border: 1px dashed rgba(255,255,255,0.3);">
+                    Anuncio (320x50) - Espacio para AdSense
+                </div>
+            </div>
 
 </body>
 
