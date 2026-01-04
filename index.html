@@ -2537,8 +2537,73 @@
         </div>
 
         <div class="insight-panel iridescent-border" id="insightPanel" style="display:none;">
-            <h2 id="cardTitle"></h2>
-            <!-- Content removed for minimal config flow -->
+            <h2 id="cardTitle" style="text-align: center; margin-bottom: 20px; font-size: 1.8rem; background: linear-gradient(135deg, #fff 0%, var(--color3) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></h2>
+            
+            <!-- Cotidiano (Intro) -->
+            <div id="introSection" style="margin-bottom: 30px; text-align: center;">
+                <p id="introExample" style="font-size: 1.1rem; line-height: 1.6; color: rgba(255,255,255,0.95); font-style: italic;"></p>
+            </div>
+
+            <div class="reading-grid" style="display: flex; flex-direction: column; gap: 25px;">
+                
+                <!-- Sombra -->
+                <div id="seccionSombra" class="reading-unit" style="display:none;">
+                    <h3 id="titleSombra" class="section-title">Sombra</h3>
+                    <p id="textoSignificado" class="section-text"></p>
+                </div>
+
+                <!-- Arquetipo (Negativo) -->
+                <div id="seccionNegativo" class="reading-unit" style="display:none;">
+                    <h3 id="titleArquetipo" class="section-title">Arquetipo</h3>
+                    <p id="textoNegativo" class="section-text"></p>
+                </div>
+
+                <!-- Misticismo (Ampliado) -->
+                <div id="seccionAmpliado" class="reading-unit" style="display:none;">
+                    <h3 id="titleMisticismo" class="section-title">Misticismo</h3>
+                    <p id="textoAmpliado" class="section-text"></p>
+                </div>
+
+                <!-- Botanica -->
+                <div id="seccionBotanica" class="reading-unit" style="display:none;">
+                    <h3 id="titleBotanica" class="section-title">Botánica</h3>
+                    <p id="textoBotanica" class="section-text"></p>
+                </div>
+
+                <!-- Cotidiano (Detail) -->
+                <div id="seccionCotidiano" class="reading-unit" style="display:none;">
+                    <h3 id="titleCotidiano" class="section-title">Cotidiano</h3>
+                    <p id="textoCotidiano" class="section-text"></p>
+                </div>
+
+                <!-- Gnosis (Mistico) -->
+                <div id="seccionMistico" class="reading-unit" style="display:none;">
+                    <h3 id="titleGnosis" class="section-title">Gnosis</h3>
+                    <p id="textoMistico" class="section-text"></p>
+                </div>
+
+                <!-- Resonancia Biblica -->
+                <div id="seccionBiblico" class="reading-unit" style="display:none;">
+                    <h3 id="titleResonanciaBiblica" class="section-title">Resonancia Bíblica</h3>
+                    <p id="textoBiblico" class="section-text" style="font-family: 'Times New Roman', serif; font-style: italic; opacity: 0.8;"></p>
+                </div>
+
+            </div>
+
+            <!-- AI Synthesis Button -->
+            <div style="margin-top: 40px; text-align: center;">
+                <button id="aiBtn" class="ai-magic-btn" onclick="requestAIPayment()">
+                    <span class="btn-icon">✨</span> SÍNTESIS NUMEROLÓGICA IA
+                </button>
+            </div>
+
+            <!-- AI Result Container -->
+            <div id="aiResult" class="ai-result-container" style="display:none; margin-top: 20px;">
+                <div class="ai-header">
+                    <h4>✦ Oráculo Digital</h4>
+                </div>
+                <div id="aiText" class="ai-text-content"></div>
+            </div>
         </div>
 
         <!-- Modal para ejemplos de los 22 conceptos -->
