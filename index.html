@@ -692,6 +692,12 @@
             z-index: 10;
             filter: blur(30px);
             animation: rainbowPrism 3s ease-in-out infinite;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Enhanced glare when card is flipped */
+        .card-stage.flipped .card-face::after {
+            --glare-opacity: 0.6;
         }
 
         @keyframes rainbowPrism {
@@ -818,6 +824,78 @@
             box-shadow:
                 inset 0 2px 4px rgba(255, 255, 255, 0.8),
                 inset 0 -2px 4px rgba(0, 0, 0, 0.15);
+            position: relative;
+            isolation: isolate;
+        }
+
+        /* PREMIUM HOLO EFFECT 1: Rainbow Foil Shimmer */
+        .back::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 0, 255, 0.3) 0%,
+                rgba(0, 255, 255, 0.3) 25%,
+                rgba(255, 255, 0, 0.3) 50%,
+                rgba(255, 0, 255, 0.3) 75%,
+                rgba(0, 255, 255, 0.3) 100%
+            );
+            background-size: 200% 200%;
+            mix-blend-mode: color-dodge;
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 2;
+            animation: rainbowFoilShift 6s linear infinite;
+            border-radius: 11px;
+        }
+
+        /* PREMIUM HOLO EFFECT 2: Prism Edge Glow (Iridescent Border) */
+        .back::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(
+                var(--holo-angle, 45deg),
+                #ff00ff 0%,
+                #00ffff 20%,
+                #ffff00 40%,
+                #00ff00 60%,
+                #ff00ff 80%,
+                #00ffff 100%
+            );
+            border-radius: 11px;
+            opacity: 0.5;
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(8px);
+            animation: prismRotate 8s linear infinite;
+        }
+
+        @keyframes rainbowFoilShift {
+            0% {
+                background-position: 0% 50%;
+                filter: hue-rotate(0deg);
+            }
+            50% {
+                background-position: 100% 50%;
+                filter: hue-rotate(180deg);
+            }
+            100% {
+                background-position: 0% 50%;
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        @keyframes prismRotate {
+            0% {
+                --holo-angle: 0deg;
+                filter: blur(8px) hue-rotate(0deg);
+            }
+            100% {
+                --holo-angle: 360deg;
+                filter: blur(8px) hue-rotate(360deg);
+            }
         }
 
         .tarot-img {
@@ -2496,6 +2574,29 @@
                 </div>
             </div>
 
+        <!-- MODAL DE CONFIRMACIÓN: Voltear Carta -->
+        <div class="modal-overlay" id="hideCardModal" style="display: none;">
+            <div class="modal-content iridescent-border" style="max-width: 400px;">
+                <div class="modal-header">
+                    <h3>¿Voltear la carta?</h3>
+                </div>
+                <div class="modal-body">
+                    <p style="margin: 0; line-height: 1.6; color: var(--text-primary);">
+                        La carta volverá a su estado oculto y se cargará una nueva lectura.
+                    </p>
+                </div>
+                <div class="modal-footer" style="display: flex; gap: 12px; justify-content: flex-end; padding-top: 20px;">
+                    <button class="glass-btn" onclick="closeHideModal()" style="background: rgba(255, 255, 255, 0.3);">
+                        Cancelar
+                    </button>
+                    <button class="glass-btn iridescent-border-subtle" onclick="confirmHideCard()" 
+                            style="background: rgba(147, 51, 234, 0.4); color: white; font-weight: 600;">
+                        Sí, voltear
+                    </button>
+                </div>
+            </div>
+        </div>
+
             <script>
                 /* ==================== CONFIGURACIÓN WORLD APP ==================== */
                 const WALLET_ADDRESS = '0xa3cdea9fe705bc16dcd9e9170e217b0f1ba5aaf6';
@@ -3113,6 +3214,24 @@
                     document.body.style.overflow = 'auto'; // Restaurar scroll del body
                 }
 
+                /* ==================== MODAL DE CONFIRMACIÓN PARA VOLTEAR CARTA ==================== */
+                function showHideConfirmationModal() {
+                    const hideCardModal = document.getElementById('hideCardModal');
+                    hideCardModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                }
+
+                function closeHideModal() {
+                    const hideCardModal = document.getElementById('hideCardModal');
+                    hideCardModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+
+                function confirmHideCard() {
+                    closeHideModal();
+                    resetOracle();
+                }
+
                 /* ==================== RESET DEL ORÁCULO ==================== */
                 function resetOracle() {
                     if (isProcessing) return;
@@ -3692,17 +3811,16 @@
                 // Performance: Click debouncing
                 let clickDebounce = false;
 
-                // Click Pattern State Machine: 1/2/3 clicks
+                // Click Pattern State Machine: 1/2 clicks (simplified - removed triple-click)
                 let clickCount = 0;
                 let clickTimer = null;
-                const CLICK_WINDOW = 800; // 800ms window (faster response)
-                const FINAL_WAIT = 1200; // 1.2s wait for triple click (faster)
+                const CLICK_WINDOW = 600; // 600ms window for detecting double click
 
                 cardStage.addEventListener('click', (e) => {
                     // Reduced debounce to avoid interfering with multi-clicks
                     if (clickDebounce) return;
                     clickDebounce = true;
-                    setTimeout(() => clickDebounce = false, 150); // Reduced from 300ms
+                    setTimeout(() => clickDebounce = false, 150);
 
                     if (isProcessing) return;
 
@@ -3720,30 +3838,33 @@
                         clickTimer = null;
                     }
 
-                    // STATE 1: First click (wait for more clicks or timeout)
+                    // STATE 1: First click
                     if (clickCount === 1) {
                         clickTimer = setTimeout(() => {
-                            console.log('✅ Single click confirmed - revealing card');
-                            // Single click confirmed: REVEAL CARD
-                            // Defer async work to avoid blocking UI (fixes INP issue)
-                            requestAnimationFrame(async () => {
-                                if (!isRevealed && currentCardData) {
+                            // Single click confirmed
+                            if (!isRevealed && currentCardData) {
+                                console.log('✅ Single click - revealing card');
+                                // REVEAL CARD
+                                requestAnimationFrame(async () => {
                                     const paymentSuccess = await requestPayment();
                                     if (paymentSuccess) {
                                         revealDestiny();
                                     }
-                                }
-                            });
+                                });
+                            } else if (isRevealed) {
+                                console.log('✅ Single click on revealed card - showing confirmation modal');
+                                // SHOW CONFIRMATION MODAL (simplified - no more triple-click!)
+                                showHideConfirmationModal();
+                            }
                             clickCount = 0;
                         }, CLICK_WINDOW);
                     }
 
-                    // STATE 2: Double click (wait for 3rd click or timeout)
+                    // STATE 2: Double click
                     else if (clickCount === 2) {
                         clickTimer = setTimeout(() => {
                             console.log('✅ Double click confirmed - playing video');
                             // Double click confirmed: PLAY VIDEO
-                            // Defer async work to avoid blocking UI (fixes INP issue)
                             requestAnimationFrame(async () => {
                                 if (isRevealed && !isVideoPlaying) {
                                     await playCardVideo();
@@ -3753,23 +3874,8 @@
                         }, CLICK_WINDOW);
                     }
 
-                    // STATE 3: Triple click (final action with shorter wait)
-                    else if (clickCount === 3) {
-                        clickTimer = setTimeout(() => {
-                            console.log('✅ Triple click confirmed - resetting oracle');
-                            // Triple click confirmed: FLIP BACK
-                            // Defer work to avoid blocking UI (fixes INP issue)
-                            requestAnimationFrame(() => {
-                                if (isRevealed) {
-                                    resetOracle();
-                                }
-                            });
-                            clickCount = 0;
-                        }, FINAL_WAIT);
-                    }
-
-                    // Ignore additional clicks beyond 3
-                    else if (clickCount > 3) {
+                    // Ignore additional clicks beyond 2
+                    else if (clickCount > 2) {
                         console.log('⚠️ Too many clicks, resetting count');
                         clickCount = 0;
                     }
