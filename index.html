@@ -20,6 +20,24 @@
     <!-- i18n Translation Module - Deferred -->
     <script src="./public/i18n.js" defer></script>
 
+    <!-- Theme Loader - CRITICAL: Load BEFORE rendering to prevent flash -->
+    <script>
+        (function() {
+            // Detect system preference
+            function getSystemTheme() {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            }
+
+            // Load and apply theme immediately
+            const savedTheme = localStorage.getItem('theme');
+            const theme = savedTheme || getSystemTheme();
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
     <style>
         /* =====================================================
            PRELOADER - ORGANIC TREE RAMIFICATIONS
@@ -31,10 +49,8 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            /* Frosted glass background - opaque, humid feeling */
-            background: radial-gradient(circle at center,
-                    rgba(250, 250, 252, 0.97),
-                    rgba(240, 240, 245, 0.99));
+            /* Frosted glass background - theme-aware */
+            background: var(--theme-preloader-bg);
             backdrop-filter: blur(40px) saturate(120%);
             -webkit-backdrop-filter: blur(40px) saturate(120%);
             display: flex;
@@ -42,7 +58,7 @@
             justify-content: center;
             z-index: 999999;
             overflow: hidden;
-            transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), background var(--theme-transition);
         }
 
         #starPreloader.loaded {
@@ -66,10 +82,10 @@
             position: absolute;
             background: linear-gradient(var(--vein-angle, 45deg),
                     rgba(255, 255, 255, 0.9) 0%,
-                    var(--vein-color) 50%,
+                    var(--theme-vein-color) 50%,
                     rgba(255, 255, 255, 0.4) 100%);
             opacity: 0;
-            filter: blur(3px) drop-shadow(0 0 10px var(--vein-color));
+            filter: blur(3px) drop-shadow(0 0 10px var(--theme-vein-color));
             animation: flowLiquid 4s cubic-bezier(0.34, 0, 0.1, 1) forwards;
             mix-blend-mode: normal;
             transform-origin: left center;
@@ -274,17 +290,55 @@
         ===================================================== */
 
         :root {
+            /* ==================== THEME SYSTEM ==================== */
+            /* Default: Light Mode */
+            
+            /* Backgrounds */
+            --theme-bg-primary: #ffffff;
+            --theme-bg-secondary: rgba(255, 255, 255, 0.95);
+            --theme-bg-interface: rgba(255, 255, 255, 0.3);
+            
+            /* Glass Effects */
+            --theme-glass-bg: rgba(255, 255, 255, 0.5);
+            --theme-glass-border: rgba(255, 255, 255, 0.6);
+            --theme-glass-tint: rgba(255, 255, 255, 0.15);
+            --theme-modal-bg: rgba(255, 255, 255, 0.85);
+            
+            /* Text Colors */
+            --theme-text-primary: #1d1d1f;
+            --theme-text-secondary: #424245;
+            --theme-text-tertiary: rgba(0, 0, 0, 0.5);
+            --theme-text-inverted: #ffffff;
+            
+            /* Wallpaper & Blobs */
+            --theme-wallpaper-opacity: 1;
+            --theme-blob-opacity: 0.6;
+            --theme-wallpaper-blend: normal;
+            
+            /* Borders & Shadows */
+            --theme-border-color: rgba(255, 255, 255, 0.6);
+            --theme-shadow-soft: 0 12px 42px rgba(0, 0, 0, 0.1);
+            --theme-shadow-card: 0 8px 32px rgba(0, 0, 0, 0.15);
+            
+            /* Preloader */
+            --theme-preloader-bg: radial-gradient(circle at center,
+                rgba(250, 250, 255, 0.98) 0%,
+                rgba(245, 245, 250, 0.95) 50%,
+                rgba(240, 240, 248, 0.92) 100%);
+            --theme-vein-color: rgba(147, 51, 234, 0.25);
+            
+            /* ==================== LEGACY VARIABLES (preserved for compatibility) ==================== */
             /* GLASSMORPHISM - Ajustado para fondos dinámicos claros */
-            --glass-surface: rgba(255, 255, 255, 0.5);
-            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-surface: var(--theme-glass-bg);
+            --glass-border: var(--theme-glass-border);
             --glass-blur: 35px;
-            --shadow-soft: 0 12px 42px rgba(0, 0, 0, 0.1);
-            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.15);
+            --shadow-soft: var(--theme-shadow-soft);
+            --shadow-card: var(--theme-shadow-card);
 
             /* TIPOGRAFÍA - Ajustada a oscuro para legibilidad sobre cristal claro */
-            --text-primary: #1d1d1f;
-            --text-secondary: #424245;
-            --text-tertiary: rgba(0, 0, 0, 0.5);
+            --text-primary: var(--theme-text-primary);
+            --text-secondary: var(--theme-text-secondary);
+            --text-tertiary: var(--theme-text-tertiary);
 
             /* ANIMACIONES - Basadas en principios de Apple HIG */
             --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
@@ -308,6 +362,53 @@
             --gyro-y: 0;
             --gyro-z: 0;
             --gyro-hue: 0deg;
+            
+            /* Smooth transitions for theme changes */
+            --theme-transition: 0.3s ease;
+        }
+
+        /* ==================== DARK MODE THEME ==================== */
+        [data-theme="dark"] {
+            /* Backgrounds */
+            --theme-bg-primary: #000000;
+            --theme-bg-secondary: rgba(0, 0, 0, 0.95);
+            --theme-bg-interface: rgba(0, 0, 0, 0.4);
+            
+            /* Glass Effects - Darker tints */
+            --theme-glass-bg: rgba(0, 0, 0, 0.4);
+            --theme-glass-border: rgba(255, 255, 255, 0.15);
+            --theme-glass-tint: rgba(0, 0, 0, 0.3);
+            --theme-modal-bg: rgba(0, 0, 0, 0.75);
+            
+            /* Text Colors - Inverted */
+            --theme-text-primary: #f5f5f7;
+            --theme-text-secondary: #d1d1d6;
+            --theme-text-tertiary: rgba(255, 255, 255, 0.5);
+            --theme-text-inverted: #000000;
+            
+            /* Wallpaper & Blobs - Dimmed */
+            --theme-wallpaper-opacity: 0.4;
+            --theme-blob-opacity: 0.3;
+            --theme-wallpaper-blend: multiply;
+            
+            /* Borders & Shadows - Lighter for visibility */
+            --theme-border-color: rgba(255, 255, 255, 0.2);
+            --theme-shadow-soft: 0 12px 42px rgba(0, 0, 0, 0.6);
+            --theme-shadow-card: 0 8px 32px rgba(0, 0, 0, 0.8);
+            
+            /* Preloader - Dark variant */
+            --theme-preloader-bg: radial-gradient(circle at center,
+                rgba(10, 10, 15, 0.98) 0%,
+                rgba(5, 5, 10, 0.95) 50%,
+                rgba(0, 0, 5, 0.92) 100%);
+            --theme-vein-color: rgba(147, 51, 234, 0.4);
+            
+            /* Legacy compatibility updates */
+            --glass-surface: var(--theme-glass-bg);
+            --glass-border: var(--theme-glass-border);
+            --text-primary: var(--theme-text-primary);
+            --text-secondary: var(--theme-text-secondary);
+            --text-tertiary: var(--theme-text-tertiary);
         }
 
         * {
@@ -374,8 +475,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #ffffff;
-            /* Inicia en blanco */
+            background: var(--theme-bg-primary);
+            /* Theme-aware background */
             z-index: -2;
             overflow: hidden;
             /* Contiene las manchas de color */
@@ -383,8 +484,8 @@
         }
 
         .wallpaper.active {
-            /* Un ligero tinte cuando está activo para mejorar el efecto */
-            background: #f9f9f9;
+            /* Theme-aware tint when active */
+            background: var(--theme-bg-secondary);
         }
 
         /* Manchas de color (Blobs) */
@@ -398,13 +499,13 @@
             transition: opacity 1.5s ease-in-out;
             width: 65vmax;
             height: 65vmax;
-            /* Mejora la mezcla de colores sobre fondo claro */
-            mix-blend-mode: multiply;
+            /* Theme-aware blend mode */
+            mix-blend-mode: var(--theme-wallpaper-blend);
         }
 
         .wallpaper.active .blob {
-            /* Opacidad ajustada para un efecto sutil */
-            opacity: 0.7;
+            /* Theme-aware opacity */
+            opacity: var(--theme-blob-opacity);
         }
 
         /* Asignación de colores dinámicos y animaciones únicas */
@@ -1232,17 +1333,16 @@
             z-index: 10000;
             animation: modalFadeIn 0.3s ease-out;
             padding: 20px;
+            transition: background var(--theme-transition);
         }
 
         .modal-content {
-            background: rgba(255, 255, 255, 0.85);
+            background: var(--theme-modal-bg);
             backdrop-filter: blur(40px) saturate(180%);
             -webkit-backdrop-filter: blur(40px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid var(--theme-border-color);
             border-radius: 16px;
-            box-shadow:
-                0 25px 50px rgba(0, 0, 0, 0.15),
-                0 0 0 1px rgba(255, 255, 255, 0.1);
+            box-shadow: var(--theme-shadow-soft);
             max-width: 700px;
             width: 100%;
             /* FIX SCROLL: Limitar altura y usar flex column */
@@ -1250,11 +1350,12 @@
             display: flex;
             flex-direction: column;
             animation: modalSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: background var(--theme-transition), border-color var(--theme-transition);
         }
 
         .modal-header {
             padding: 24px 28px 20px 28px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid var(--theme-border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1266,7 +1367,8 @@
             margin: 0;
             font-size: 1.4rem;
             font-weight: 600;
-            color: #2c2c2c;
+            color: var(--theme-text-primary);
+            transition: color var(--theme-transition);
         }
 
         .ai-btn {
@@ -2164,6 +2266,49 @@
         .card-face.back[data-sparkles="false"] .sparkle {
             display: none;
         }
+
+        /* ==================== THEME TOGGLE BUTTON ==================== */
+        .theme-toggle-btn {
+            position: fixed;
+            bottom: 110px; /* Above holo settings button */
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--theme-glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1.5px solid var(--theme-border-color);
+            color: var(--theme-text-primary);
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--theme-shadow-soft);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: var(--theme-shadow-card);
+            background: var(--theme-modal-bg);
+        }
+
+        .theme-toggle-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Icon container for smooth rotation */
+        .theme-icon {
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: inline-block;
+        }
+
+        .theme-toggle-btn:hover .theme-icon {
+            transform: rotate(180deg);
+        }
     </style>
 
     <!-- Async font loading (non-blocking) -->
@@ -2830,7 +2975,14 @@
             ✨
         </button>
 
-        <!-- MODAL: Configuración de Efectos Holográficos -->
+        <!-- BOTÓN FLOTANTE: Theme Toggle (Dark/Light Mode) -->
+        <button id="themeToggleBtn" class="theme-toggle-btn" 
+                onclick="toggleTheme()" 
+                title="Cambiar tema">
+            <span class="theme-icon" id="themeIcon">🌙</span>
+        </button>
+        
+        <!--  MODAL: Configuración de Efectos Holográficos -->
         <div class="modal-overlay" id="holoSettingsModal" style="display: none;">
             <div class="modal-content iridescent-border" style="max-width: 450px;">
                 <div class="modal-header">
@@ -3667,6 +3819,74 @@
                     } else {
                         btn.style.display = 'none';
                     }
+                }
+
+                /* ==================== THEME SYSTEM (DARK/LIGHT MODE) ==================== */
+                
+                // Detect system preference
+                function getSystemTheme() {
+                    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        return 'dark';
+                    }
+                    return 'light';
+                }
+
+                // Load theme from localStorage or use system preference
+                function loadTheme() {
+                    const savedTheme = localStorage.getItem('theme');
+                    const theme = savedTheme || getSystemTheme();
+                    applyTheme(theme, false); // false = no transition on load
+                }
+
+                // Apply theme to DOM
+                function applyTheme(theme, withTransition = true) {
+                    const htmlRoot = document.getElementById('htmlRoot') || document.documentElement;
+                    
+                    // Add/remove transition class for smooth changes
+                    if (!withTransition) {
+                        htmlRoot.style.transition = 'none';
+                    }
+                    
+                    // Set data-theme attribute
+                    htmlRoot.setAttribute('data-theme', theme);
+                    
+                    // Update icon
+                    const themeIcon = document.getElementById('themeIcon');
+                    if (themeIcon) {
+                        themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+                    }
+                    
+                    // Restore transition
+                    if (!withTransition) {
+                        setTimeout(() => {
+                            htmlRoot.style.transition = '';
+                        }, 50);
+                    }
+                }
+
+                // Toggle theme
+                function toggleTheme() {
+                    const htmlRoot = document.getElementById('htmlRoot') || document.documentElement;
+                    const currentTheme = htmlRoot.getAttribute('data-theme') || 'light';
+                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    
+                    // Apply and save
+                    applyTheme(newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    
+                    // Optional: Log for debugging
+                    console.log(`🎨 Theme changed to: ${newTheme}`);
+                }
+
+                // Listen for system theme changes (optional enhancement)
+                if (window.matchMedia) {
+                    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                        // Only auto-switch if user hasn't set a preference
+                        if (!localStorage.getItem('theme')) {
+                            const newTheme = e.matches ? 'dark' : 'light';
+                            applyTheme(newTheme);
+                        }
+                    });
                 }
 
                 /* ==================== RESET DEL ORÁCULO ==================== */
@@ -4633,6 +4853,9 @@
                 window.addEventListener('load', () => {
                     // Initialize Oracle (CRITICAL - this was missing causing stuck preloader)
                     initOracle();
+
+                    // Initialize theme (sync icon with current theme)
+                    loadTheme();
 
                     // Old preloader hide code - NOW HANDLED BY initOracle()
                     // const preloader = document.getElementById('starPreloader');
