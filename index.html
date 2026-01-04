@@ -2500,9 +2500,8 @@
                 /* ==================== CONFIGURACIÓN WORLD APP ==================== */
                 const WALLET_ADDRESS = '0xa3cdea9fe705bc16dcd9e9170e217b0f1ba5aaf6';
 
-                // Detectar modo "Amigos" (Gratis) vía URL: ?mode=friends
-                const urlParams = new URLSearchParams(window.location.search);
-                const IS_FRIENDS_MODE = urlParams.get('mode') === 'friends';
+                // Forzar modo "Amigos" (Gratis) como experiencia principal
+                const IS_FRIENDS_MODE = true;
 
                 // Inicializar MiniKit
                 try {
@@ -4840,17 +4839,8 @@
 
                 /* ==================== PAYMENT VERIFICATION (10 WLD with Friends Bypass) ==================== */
                 async function verifyDeepAnalysisPayment() {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const isFriendsMode = urlParams.get('mode') === 'friends';
-
-                    if (isFriendsMode) {
-                        console.log('✅ Friends mode - payment bypassed for deep analysis');
-                        return true;
-                    }
-
-                    // Request 10 WLD payment
-                    const paymentSuccess = await requestPayment(10);
-                    return paymentSuccess;
+                    console.log('✅ Friends mode - payment bypassed for deep analysis');
+                    return true;
                 }
 
                 /* ==================== NEW ANALYSIS HANDLERS (10-Card Spreads from Full Deck) ==================== */
