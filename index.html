@@ -4631,7 +4631,10 @@
                 /* ==================== INICIALIZACIÓN ==================== */
                 // Cargar la primera carta al cargar la página
                 window.addEventListener('load', () => {
-                    // Hide preloader
+                    // Initialize Oracle (CRITICAL - this was missing causing stuck preloader)
+                    initOracle();
+
+                    // Old preloader hide code - NOW HANDLED BY initOracle()
                     // const preloader = document.getElementById('starPreloader');
                     // const body = document.body;
                     // body.classList.remove('loading');
