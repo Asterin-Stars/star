@@ -4052,80 +4052,10 @@
                     }, 900); // This is the original 900ms timeout for the resetOracle function
                 }
 
-                /* ==================== LÓGICA DE VERIFICACIÓN Y PAGO ==================== */
+                /* ==================== LÓGICA DE ACCESO (OPEN SOURCE) ==================== */
                 async function requestPayment() {
-                    // 1. Si es modo amigos, pase directo
-                    if (IS_FRIENDS_MODE) {
-                        console.log(window.i18n ? window.i18n.t('friendsMode') : 'Modo Amigos: Pago omitido.');
-                        return true;
-                    }
-
-                    // 2. Si no está en World App (y no es modo amigos), mostrar advertencia o simulación local
-                    // 2. Verificación de entorno (Relaxed for Simulator)
-                    if (!window.MiniKit || !window.MiniKit.isInstalled()) {
-                        console.log('⚠️ MiniKit not detected via isInstalled(). Attempting lazy install...');
-                        // Intento de último de recurso
-                        try {
-                            if (window.MiniKit) window.MiniKit.install();
-                        } catch (e) { console.error(e); }
-
-                        // Fallback solo para localhost real
-                        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-                        if (isLocalhost) {
-                            return confirm(window.i18n.t('devMode').replace('1 WLD', '1.11 WLD'));
-                        }
-
-                        // EN LUGAR DE BLOQUEAR, LOGUEAMOS Y CONTINUAMOS
-                        // Muchas veces el simulador tarda en inyectar el objeto, pero el comando funciona.
-                        console.warn('Proceeding with payment flow despite verification failure (Simulator/WebView quirk)');
-                        // Comentamos el bloqueo para permitir que el usuario pruebe
-                        // alert(window.i18n.t('openInWorld'));
-                        // return false; 
-                    }
-
-                    // 3. Solicitar Pago Real (1.11 WLD)
-                    const paymentPayload = {
-                        reference: "star_card_" + Date.now(),
-                        to: WALLET_ADDRESS,
-                        tokens: [
-                            {
-                                symbol: "WLD",
-                                token_amount: "1.11", // Cobro de 1.11 WLD
-                            },
-                        ],
-                        description: window.i18n.t('paymentDescription'),
-                    };
-
-                    try {
-                        // FORCE INSTALL IF COMMANDS MISSING (Critical Fix)
-                        if (!window.MiniKit.commands) {
-                            console.log('🔄 Commands missing. Forcing install()...');
-                            window.MiniKit.install();
-                        }
-
-                        // Llamada al comando de pago de MiniKit
-                        const response = await window.MiniKit.commands.pay(paymentPayload);
-
-                        // Verificar respuesta
-                        if (response && response.finalPayload && response.finalPayload.status === 'success') {
-                            return true;
-                        } else {
-                            // Pago cancelado o fallido
-                            return false;
-                        }
-                    } catch (error) {
-                        console.error('Payment failed', error);
-
-                        // FALLBACK DE SEGURIDAD:
-                        // Si falla el SDK (por timeout, no injected, etc), NO bloquear la app.
-                        // Permitir que el usuario continúe para que el revisor no vea "nada que hacer".
-                        console.warn('⚠️ Payment error caught. Assuming simulation/fallback to allow UI progression.');
-
-                        // Opcional: Mostrar feedback visual no intrusivo
-                        // showToast('Error de conexión. Modo simulación activado.');
-
-                        return true; // Permitir continuar (fake success) en caso de fallo técnico catastrófico
-                    }
+                    console.log('🔓 Open Access: Payment skipped.');
+                    return true; 
                 }
 
                 /* ==================== RECARGAR CARTA POR ID (PRESERVAR SELECCIÓN) ==================== */
@@ -4427,57 +4357,11 @@
                 const aiText = document.getElementById('aiText');
 
                 // Función de pago específica para AI Synthesis (2.22 WLD)
+                // Función de acceso directo para AI Synthesis
                 async function requestAIPayment() {
-                    // 1. Si es modo amigos, pase directo
-                    if (IS_FRIENDS_MODE) {
-                        console.log('Modo Amigos: Pago IA omitido.');
-                        await generateAIReading('sim_friends_bypass');
-                        return true;
-                    }
-
-                    // 2. Si no está en World App, fallback
-                    if (!window.MiniKit || !window.MiniKit.isInstalled()) {
-                        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-                        if (isLocalhost) {
-                            return confirm('💎 [DEV MODE] Simular pago de 2.22 WLD para Síntesis IA?');
-                        }
-                        alert(window.i18n.t('openInWorld'));
-                        return false;
-                    }
-
-                    // 3. Solicitar Pago Real (2.22 WLD)
-                    const paymentPayload = {
-                        reference: "star_ai_" + Date.now(),
-                        to: WALLET_ADDRESS,
-                        tokens: [
-                            {
-                                symbol: "WLD",
-                                token_amount: "2.22", // Cobro de 2.22 WLD para IA
-                            },
-                        ],
-                        description: "⭐ Síntesis Numerológica IA - Star Oracle",
-                    };
-
-                    try {
-                        const response = await window.MiniKit.commands.pay(paymentPayload);
-
-                        if (!response || !response.finalPayload) {
-                            throw new Error('Payment response invalid');
-                        }
-
-                        if (response.finalPayload.status === 'success') {
-                            // Pago exitoso! Procedemos a generar la lectura
-                            // Importante: Pasamos el transaction_id para que el backend lo verifique
-                            await generateAIReading(response.finalPayload.transaction_id);
-                            return true; // Indicate success
-                        } else {
-                            throw new Error('Payment failed status: ' + response.finalPayload.status);
-                        }
-                    } catch (error) {
-                        console.error("Error en el pago IA:", error);
-                        alert(window.i18n.t('paymentError'));
-                        return false;
-                    }
+                     console.log('🔓 Open Access: AI Generation authorized.');
+                     await generateAIReading('open_access_granted');
+                     return true;
                 }
 
                 // Función para generar la lectura de IA
@@ -4502,8 +4386,8 @@
                             misticismo: document.getElementById('textoAmpliado').textContent
                         },
                         examples: currentExampleIndices, // Enviamos los índices para referencia
-                        transactionId: transactionId, // Enviar transactionId verificado
-                        mode: IS_FRIENDS_MODE ? 'friends' : 'normal'
+                        transactionId: 'open_access', // Bypass ID
+                        mode: 'open_access'
                     };
 
                     try {

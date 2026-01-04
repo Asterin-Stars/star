@@ -3,15 +3,12 @@ import json
 import os
 import time
 from datetime import datetime, timedelta
-import requests  # Import requests for RPC calls
+import time
+from datetime import datetime, timedelta
 
 # Configuration
 PROJECT_ID = 'gen-lang-client-0438257778'
 LOCATION = 'us-central1'
-# World Chain RPC - Public Mainnet Endpoint
-WORLD_CHAIN_RPC = "https://worldchain-mainnet.g.alchemy.com/public"
-# Wallet Address that receives payments (from index.html)
-WALLET_ADDRESS = "0xa3cdea9fe705bc16dcd9e9170e217b0f1ba5aaf6"
 
 # Global cache for responses (survives across requests in warm containers)
 # Format: {cache_key: (response_text, timestamp)}
@@ -51,57 +48,6 @@ def set_cached_response(cache_key, response_text):
     """Store response in cache"""
     response_cache[cache_key] = (response_text, datetime.now())
     print(f"💾 Cached response (total cached: {len(response_cache)})")
-
-def verify_transaction(tx_hash, expected_recipient):
-    """
-    Verify a World Chain transaction on the blockchain.
-    Returns (is_valid, error_message)
-    """
-    # SKIP verification for Simulation IDs (dev mode)
-    if tx_hash.startswith("sim_"):
-        print(f"🧪 Simulation ID detected: {tx_hash}. Allowing access.")
-        return True, None
-
-    if not tx_hash or len(tx_hash) < 60: # Simple format check
-        return False, "Invalid transaction format"
-
-    try:
-        print(f"🔍 Verifying transaction {tx_hash} on World Chain...")
-        
-        payload = {
-            "jsonrpc": "2.0",
-            "method": "eth_getTransactionReceipt",
-            "params": [tx_hash],
-            "id": 1
-        }
-        
-        response = requests.post(WORLD_CHAIN_RPC, json=payload, timeout=5)
-        data = response.json()
-        
-        if "result" not in data or data["result"] is None:
-            print("❌ Transaction not found on chain")
-            return False, "Transaction not found"
-            
-        receipt = data["result"]
-        
-        # 1. Check status (0x1 = success)
-        if receipt["status"] != "0x1":
-            print(f"❌ Transaction failed on chain (status {receipt['status']})")
-            return False, "Transaction failed"
-            
-        # 2. Check recipient (logs or to address)
-        # Note: If it's a token transfer (ERC20), 'to' is the contract, logs contain the transfer.
-        # Ideally we parse logs, but for native/direct formatting we check 'to'.
-        # For robustness in MVP we verify the transaction exists and succeeded. 
-        # Advanced: Decode log for specific amount and recipient.
-        
-        print("✅ Transaction verified on chain!")
-        return True, None
-        
-    except Exception as e:
-        print(f"⚠️ RPC Verification error: {e}")
-        # Fail open or closed? For high security fail closed.
-        return False, f"Verification error: {str(e)}"
 
 def initialize_vertex_ai():
     """Initialize Vertex AI once and reuse the client"""
@@ -174,42 +120,8 @@ class handler(BaseHTTPRequestHandler):
             # Parse JSON
             data = json.loads(post_data)
             
-            # --- SECURITY CHECK ---
-            mode = data.get('mode', 'normal')
-            tx_id = data.get('transactionId')
-            
-            # Allow 'friends' mode bypass
-            is_friends_mode = mode == 'friends'
-            
-            if not is_friends_mode:
-                if not tx_id:
-                     print("⛔ Blocked: No transaction ID provided")
-                     self.send_response(402) # Payment Required
-                     self._set_cors_headers()
-                     self.send_header('Content-type', 'application/json')
-                     self.end_headers()
-                     self.wfile.write(json.dumps({
-                         'error': 'Payment Required',
-                         'details': 'Missing transaction ID'
-                     }).encode('utf-8'))
-                     return
-
-                # Verify Transaction
-                is_valid, verify_error = verify_transaction(tx_id, WALLET_ADDRESS)
-                if not is_valid:
-                     print(f"⛔ Blocked: Invalid transaction {tx_id} - {verify_error}")
-                     self.send_response(400)
-                     self._set_cors_headers()
-                     self.send_header('Content-type', 'application/json')
-                     self.end_headers()
-                     self.wfile.write(json.dumps({
-                         'error': 'Payment Verification Failed',
-                         'details': verify_error
-                     }).encode('utf-8'))
-                     return
-            else:
-                 print("🔓 Access granted via Friends Mode")
-
+            # --- OPEN ACCESS (No Payment Verification) ---
+            print("🔓 Access granted (Open Pipeline)")
             # --- END SECURITY CHECK ---
             
             # Validate input
