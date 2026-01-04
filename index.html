@@ -2309,7 +2309,64 @@
         .theme-toggle-btn:hover .theme-icon {
             transform: rotate(180deg);
         }
-    </style>
+
+        /* ==================== TOP BAR (New Structure) ==================== */
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            z-index: 100;
+        }
+
+        .top-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px; /* Pill shape for text, circle for icon */
+            height: 44px;
+            min-width: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--theme-text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 0 15px; /* Pill padding */
+        }
+
+        .top-btn.icon-only {
+            padding: 0;
+            width: 44px;
+            border-radius: 50%;
+        }
+
+        .top-btn:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            border-color: var(--theme-text-primary);
+        }
+
+        .top-btn span {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        /* Centrar imagen de carta */
+        .card-face.front {
+            padding: 10px; /* Marco blanco */
+        }
+        
+        .tarot-img {
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
 
     <!-- Async font loading (non-blocking) -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
@@ -2394,6 +2451,23 @@
     <!-- Buttons removed -->
 
     <div class="interface">
+        <!-- TOP BAR: Botones Superiores -->
+        <div class="top-bar">
+            <!-- Izquierda: Historial/Colección -->
+            <button class="top-btn icon-only" id="historyBtn" onclick="openCollection()" title="Ver mi colección">
+                🃏
+            </button>
+
+            <!-- Centro: Idioma -->
+            <button class="top-btn" id="langToggleBtn" onclick="toggleLanguage()" title="Cambiar idioma">
+                🌐 <span id="currentLangDisplay">ES</span>
+            </button>
+
+            <!-- Derecha: Tema (Claro/Oscuro) -->
+            <button class="top-btn icon-only" id="themeToggleBtn" onclick="toggleTheme()" title="Cambiar tema">
+                <span class="theme-icon" id="themeIcon">🌙</span>
+            </button>
+        </div>
         <div class="card-stage" id="cardStage">
             <div class="card-inner">
                 <div class="card-face front iridescent-border" id="cardFront">
@@ -6027,22 +6101,7 @@
 
             </script>
 
-            <!-- BOTONES FLOTANTES: Movidos aquí para estar SIEMPRE visibles -->
-            <button id="holoSettingsBtn" class="holo-settings-btn iridescent-border-subtle" 
-                    onclick="openHoloSettings()" 
-                    style="display: none;">
-                ✨
-            </button>
-
-            <button id="themeToggleBtn" class="theme-toggle-btn" 
-                    onclick="toggleTheme()" 
-                    title="Cambiar tema"
-                    style="display: flex; width: 60px; height: 60px;">
-                <span class="theme-icon" id="themeIcon">🌙</span>
-            </button>
-
-            <!-- Social Buttons -->
-            <!-- Social Buttons and Ads removed -->
+            <!-- Botones flotantes eliminados (movidos al top-bar) -->
 
 </body>
 
