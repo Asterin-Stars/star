@@ -2396,10 +2396,10 @@
     <div class="interface">
         <div class="card-stage" id="cardStage">
             <div class="card-inner">
-                <div class="card-face front iridescent-border">
+                <div class="card-face front iridescent-border" id="cardFront">
                     <div class="symbol">☾</div>
                 </div>
-                <div class="card-face back iridescent-border">
+                <div class="card-face back iridescent-border" id="cardBack">
                     <!-- SETTINGS INTERFACE (Hidden by default) -->
                     <div class="settings-container"
                         style="width: 100%; height: 100%; padding: 25px; display: none; flex-direction: column; justify-content: center; gap: 20px; color: white; background: rgba(0,0,0,0.4);">
@@ -4868,12 +4868,13 @@
                     //     }
                     // }, 1500); // Longer delay to see liquid animation
 
-                    // Disable 3D Tilt for stability
-                    // const cardContainer = document.querySelector('.card-container');
-                    // if (cardContainer) {
-                    //     cardContainer.addEventListener('mousemove', handleCardTilt);
-                    //     cardContainer.addEventListener('mouseleave', resetCardTilt);
-                    // }
+                    // ENABLE 3D Tilt for premium card effects
+                    init3DCardEffect();
+                    const cardContainer = document.querySelector('.card-container');
+                    if (cardContainer) {
+                        cardContainer.addEventListener('mousemove', handleCardTilt);
+                        cardContainer.addEventListener('mouseleave', resetCardTilt);
+                    }
 
                     // Preloader will be hidden AFTER card selection and color extraction
                     // (See initOracle function)
@@ -6024,6 +6025,20 @@
 
 
             </script>
+
+            <!-- BOTONES FLOTANTES: Movidos aquí para estar SIEMPRE visibles -->
+            <button id="holoSettingsBtn" class="holo-settings-btn iridescent-border-subtle" 
+                    onclick="openHoloSettings()" 
+                    style="display: none;">
+                ✨
+            </button>
+
+            <button id="themeToggleBtn" class="theme-toggle-btn" 
+                    onclick="toggleTheme()" 
+                    title="Cambiar tema"
+                    style="display: flex; width: 60px; height: 60px;">
+                <span class="theme-icon" id="themeIcon">🌙</span>
+            </button>
 
             <!-- Social Buttons -->
             <!-- Social Buttons and Ads removed -->
