@@ -227,9 +227,15 @@ class handler(BaseHTTPRequestHandler):
             
             # Extract data
             card_name = data.get('cardName', 'Unknown Card')
+            card_id = data.get('cardId', 0)  # Get card ID to detect Major vs Minor
             language = data.get('language', 'es')
             definitions = data.get('definitions', {})
             examples = data.get('examples', {})
+            
+            # Detect Major (0-21) vs Minor (22-77) Arcana
+            is_major_arcana = card_id <= 21
+            word_target = "300-400" if is_major_arcana else "150-200"
+            max_tokens = 800 if is_major_arcana else 400
             
             # Check cache first
             cache_key = get_cache_key(card_name, language, definitions)
@@ -256,32 +262,33 @@ class handler(BaseHTTPRequestHandler):
             
             # Build multilingual prompts
             prompts = {
-                'es': f"""Eres un oráculo profesional especializado en orientación personal y desarrollo humano.
-Analiza la carta "{card_name}" con esta configuración numerológica única:
+                'es': f"""Eres un oráculo que habla directo y claro, sin rodeos místicos. Tu trabajo es conectar el tarot con la vida REAL de las personas.
 
-CONTEXTO:
-- Arquetipo (Var. {examples.get('arquetipo', '?')}/22): "{definitions.get('arquetipo', '')}"
-- Sombra (Var. {examples.get('sombra', '?')}/22): "{definitions.get('sombra', '')}"
-- Misticismo (Var. {examples.get('misticismo', '?')}/22): "{definitions.get('misticismo', '')}"
+LA CARTA QUE SACÓ:
+"{card_name}"
 
-TAREA (400 palabras - IMPORTANTE: Genera un texto COMPLETO de al menos 400 palabras):
-Genera una lectura continua, fluida y EXTENSIVA que integre naturalmente:
+LO QUE ESTA CARTA SIGNIFICA:
+- Su energía actual (Arquetipo): {definitions.get('arquetipo', '')}
+- Lo que está evitando (Sombra): {definitions.get('sombra', '')}
+- Su búsqueda interior (Misticismo): {definitions.get('misticismo', '')}
 
-1. El objetivo principal de desarrollo personal según esta carta
-2. La profundidad psicológica del arquetipo y cómo se manifiesta en la vida diaria
-3. Acciones concretas y específicas basadas en las variantes recibidas
-4. Aspectos vitales que requieren atención inmediata
-5. Una reflexión final sobre el camino de transformación
+TU TAREA ({word_target} palabras) - HABLA COMO PERSONA NORMAL:
 
-REQUISITOS ESTRICTOS:
-- Lenguaje: Formal, directo, orientado a la acción. Usa "usted" o tercera persona.
-- Formato: PÁRRAFOS CONTINUOS (3-4 párrafos), narrativa fluida y profunda.
-- NO uses listas numeradas, asteriscos ni estructuras rígidas.
-- Sé específico, detallado, profundo y EXTENSO en tu análisis.
-- Incluye metáforas y simbolismos que resuenen con el arquetipo.
-- Conecta los conceptos de manera orgánica y filosófica.
+Explícale EN CONCRETO qué significa esta carta en su vida COTIDIANA:
 
-Escribe como si fueras un oráculo sabio narrando una guía personalizada y completa.""",
+1. ¿Qué le está pasando AHORA MISMO que se refleja aquí?
+2. ¿Qué está evitando hacer o enfrentar? (sin sermones)
+3. ¿Qué acción ESPECÍFICA puede tomar ESTA SEMANA?
+4. ¿En qué área de su vida aplica esto? (trabajo/amor/familia/decisiones)
+
+REGLAS:
+- USA "TÚ" (segunda persona directa)
+- Ejemplos COTIDIANOS: "Es como cuando estás en el trabajo y...", "Imagina que tienes que decidir entre..."
+- SIN frases genéricas tipo "el universo te llama"
+- ESPECÍFICO y práctico, no filosófico
+- Si es Arcano Menor: más breve y directo al grano
+
+Habla como un amigo que sabe del tema y te explica sin pretensiones.""",
                 
                 'en': f"""You are a professional oracle specialized in personal guidance and human development.
 Analyze the card "{card_name}" with this unique numerological configuration:
@@ -481,7 +488,7 @@ Schreiben Sie, als wären Sie ein weises Orakel, das personalisierte und vollst�
             responses = model.generate_content(
                 [prompt],
                 generation_config={
-                    "max_output_tokens": 800,  # Optimized: ~400 words = ~600-800 tokens
+                    "max_output_tokens": max_tokens,  # Dynamic: 800 for Major, 400 for Minor
                     "temperature": 1.0,  # Gemini default - best performance
                     "top_p": 0.95,
                     "top_k": 40,
