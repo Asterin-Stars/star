@@ -828,73 +828,128 @@
             isolation: isolate;
         }
 
-        /* PREMIUM HOLO EFFECT 1: Rainbow Foil Shimmer */
+        /* ==================== PREMIUM HOLOGRAPHIC EFFECTS ==================== */
+        /* Sistema de capas aislado - NO afecta calidad de imagen base */
+
+        /* LAYER 1: Rainbow Foil Gradient - Arcoíris visible animado */
         .back::before {
             content: '';
             position: absolute;
             inset: 0;
             background: linear-gradient(
-                135deg,
-                rgba(255, 0, 255, 0.3) 0%,
-                rgba(0, 255, 255, 0.3) 25%,
-                rgba(255, 255, 0, 0.3) 50%,
-                rgba(255, 0, 255, 0.3) 75%,
-                rgba(0, 255, 255, 0.3) 100%
+                115deg,
+                transparent 0%,
+                rgba(255, 0, 255, 0.7) 10%,
+                rgba(0, 255, 255, 0.7) 20%,
+                rgba(255, 255, 0, 0.7) 30%,
+                rgba(255, 100, 200, 0.7) 40%,
+                transparent 50%,
+                rgba(100, 200, 255, 0.7) 60%,
+                rgba(255, 200, 100, 0.7) 70%,
+                rgba(200, 100, 255, 0.7) 80%,
+                rgba(100, 255, 200, 0.7) 90%,
+                transparent 100%
             );
-            background-size: 200% 200%;
+            background-size: 300% 300%;
             mix-blend-mode: color-dodge;
-            opacity: 0.4;
+            opacity: 0.8;
             pointer-events: none;
-            z-index: 2;
-            animation: rainbowFoilShift 6s linear infinite;
+            z-index: 3;
             border-radius: 11px;
+            animation: rainbowSweep 4s linear infinite;
         }
 
-        /* PREMIUM HOLO EFFECT 2: Prism Edge Glow (Iridescent Border) */
+        /* LAYER 2: Metallic Grain Texture - Grano dorado/plateado */
         .back::after {
             content: '';
             position: absolute;
-            inset: -2px;
-            background: linear-gradient(
-                var(--holo-angle, 45deg),
-                #ff00ff 0%,
-                #00ffff 20%,
-                #ffff00 40%,
-                #00ff00 60%,
-                #ff00ff 80%,
-                #00ffff 100%
-            );
-            border-radius: 11px;
-            opacity: 0.5;
-            z-index: -1;
+            inset: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    rgba(255, 215, 0, 0.03) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(255, 215, 0, 0.03) 3px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    rgba(192, 192, 192, 0.03) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(192, 192, 192, 0.03) 3px
+                );
+            mix-blend-mode: overlay;
+            opacity: 0.6;
             pointer-events: none;
-            filter: blur(8px);
-            animation: prismRotate 8s linear infinite;
+            z-index: 2;
+            border-radius: 11px;
+            animation: grainShift 8s linear infinite;
         }
 
-        @keyframes rainbowFoilShift {
+        /* LAYER 3: Radial Shimmer - Brillo central que rota */
+        .card-stage.flipped .back {
+            position: relative;
+        }
+
+        .card-stage.flipped .back .tarot-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                circle at var(--shimmer-x, 50%) var(--shimmer-y, 50%),
+                rgba(255, 255, 255, 0.8) 0%,
+                rgba(255, 255, 255, 0.4) 20%,
+                transparent 50%
+            );
+            mix-blend-mode: screen;
+            opacity: 0.7;
+            pointer-events: none;
+            animation: shimmerRotate 6s linear infinite;
+        }
+
+        /* Animaciones */
+        @keyframes rainbowSweep {
             0% {
-                background-position: 0% 50%;
-                filter: hue-rotate(0deg);
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 300% 300%;
+            }
+        }
+
+        @keyframes grainShift {
+            0% {
+                transform: translateX(0) translateY(0);
             }
             50% {
-                background-position: 100% 50%;
-                filter: hue-rotate(180deg);
+                transform: translateX(2px) translateY(2px);
             }
             100% {
-                background-position: 0% 50%;
-                filter: hue-rotate(360deg);
+                transform: translateX(0) translateY(0);
             }
         }
 
-        @keyframes prismRotate {
+        @keyframes shimmerRotate {
             0% {
-                --holo-angle: 0deg;
-                filter: blur(8px) hue-rotate(0deg);
+                --shimmer-x: 30%;
+                --shimmer-y: 30%;
+            }
+            25% {
+                --shimmer-x: 70%;
+                --shimmer-y: 30%;
+            }
+            50% {
+                --shimmer-x: 70%;
+                --shimmer-y: 70%;
+            }
+            75% {
+                --shimmer-x: 30%;
+                --shimmer-y: 70%;
             }
             100% {
-                --holo-angle: 360deg;
-                filter: blur(8px) hue-rotate(360deg);
+                --shimmer-x: 30%;
+                --shimmer-y: 30%;
             }
         }
 
@@ -905,7 +960,7 @@
             object-position: center center;
             /* ELIMINACIÓN DE FONDO BLANCO (Importante si las imágenes lo tienen) */
             mix-blend-mode: darken;
-            filter: contrast(1.1) saturate(1.1) brightness(1.05);
+            /* REMOVED filter for crisp card quality */
             transition: transform 4s var(--ease-smooth);
         }
 
