@@ -829,37 +829,34 @@
         }
 
         /* ==================== PREMIUM HOLOGRAPHIC EFFECTS ==================== */
-        /* Sistema de capas aislado - NO afecta calidad de imagen base */
+        /* INTENSOS Y VISIBLES - Optimizados para fondo claro */
 
-        /* LAYER 1: Rainbow Foil Gradient - Arcoíris visible animado */
+        /* LAYER 1: Rainbow Foil Intensity - ARCOÍRIS MUY VISIBLE */
         .back::before {
             content: '';
             position: absolute;
             inset: 0;
             background: linear-gradient(
-                115deg,
-                transparent 0%,
-                rgba(255, 0, 255, 0.7) 10%,
-                rgba(0, 255, 255, 0.7) 20%,
-                rgba(255, 255, 0, 0.7) 30%,
-                rgba(255, 100, 200, 0.7) 40%,
-                transparent 50%,
-                rgba(100, 200, 255, 0.7) 60%,
-                rgba(255, 200, 100, 0.7) 70%,
-                rgba(200, 100, 255, 0.7) 80%,
-                rgba(100, 255, 200, 0.7) 90%,
-                transparent 100%
+                135deg,
+                rgba(255, 0, 255, 0.9) 0%,
+                rgba(0, 200, 255, 0.9) 15%,
+                rgba(255, 200, 0, 0.9) 30%,
+                rgba(255, 50, 150, 0.9) 45%,
+                rgba(100, 255, 100, 0.9) 60%,
+                rgba(255, 100, 0, 0.9) 75%,
+                rgba(150, 50, 255, 0.9) 90%,
+                rgba(0, 255, 255, 0.9) 100%
             );
-            background-size: 300% 300%;
-            mix-blend-mode: color-dodge;
-            opacity: 0.8;
+            background-size: 200% 200%;
+            mix-blend-mode: screen; /* screen es más visible que color-dodge en blancos */
+            opacity: 0.7;
             pointer-events: none;
             z-index: 3;
             border-radius: 11px;
-            animation: rainbowSweep 4s linear infinite;
+            animation: rainbowSweep 3s linear infinite;
         }
 
-        /* LAYER 2: Metallic Grain Texture - Grano dorado/plateado */
+        /* LAYER 2: Metall ic Grain VISIBLE - Alto contraste */
         .back::after {
             content: '';
             position: absolute;
@@ -867,45 +864,52 @@
             background-image: 
                 repeating-linear-gradient(
                     45deg,
-                    rgba(255, 215, 0, 0.03) 0px,
+                    rgba(255, 215, 0, 0.25) 0px,
                     transparent 1px,
                     transparent 2px,
-                    rgba(255, 215, 0, 0.03) 3px
+                    rgba(255, 215, 0, 0.25) 3px
                 ),
                 repeating-linear-gradient(
                     -45deg,
-                    rgba(192, 192, 192, 0.03) 0px,
+                    rgba(192, 192, 192, 0.25) 0px,
                     transparent 1px,
                     transparent 2px,
-                    rgba(192, 192, 192, 0.03) 3px
+                    rgba(192, 192, 192, 0.25) 3px
                 );
-            mix-blend-mode: overlay;
-            opacity: 0.6;
+            mix-blend-mode: multiply; /* multiply es más visible que overlay */
+            opacity: 0.8;
             pointer-events: none;
             z-index: 2;
             border-radius: 11px;
-            animation: grainShift 8s linear infinite;
+            animation: grainShift 2s linear infinite;
         }
 
-        /* LAYER 3: Radial Shimmer - Brillo central que rota */
-        .card-stage.flipped .back {
+        /* LAYER 3: Radial Shimmer INTENSO */
+        .card-stage.flipped .card-face.back {
             position: relative;
         }
 
-        .card-stage.flipped .back .tarot-img::after {
+        /* Brillo radial que se mueve */
+        .card-stage.flipped .card-face.back .tarot-img {
+            position: relative;
+        }
+
+        .card-stage.flipped .card-face.back .tarot-img::before {
             content: '';
             position: absolute;
             inset: 0;
             background: radial-gradient(
-                circle at var(--shimmer-x, 50%) var(--shimmer-y, 50%),
-                rgba(255, 255, 255, 0.8) 0%,
-                rgba(255, 255, 255, 0.4) 20%,
-                transparent 50%
+                circle at 50% 50%,
+                rgba(255, 255, 255, 0.95) 0%,
+                rgba(255, 255, 255, 0.6) 10%,
+                rgba(255, 255, 255, 0.3) 30%,
+                transparent 60%
             );
-            mix-blend-mode: screen;
-            opacity: 0.7;
+            mix-blend-mode: overlay;
+            opacity: 0.9;
             pointer-events: none;
-            animation: shimmerRotate 6s linear infinite;
+            z-index: 10;
+            animation: shimmerPulse 2.5s ease-in-out infinite;
         }
 
         /* Animaciones */
@@ -914,42 +918,30 @@
                 background-position: 0% 0%;
             }
             100% {
-                background-position: 300% 300%;
+                background-position: 200% 200%;
             }
         }
 
         @keyframes grainShift {
             0% {
-                transform: translateX(0) translateY(0);
+                transform: translate(0, 0);
             }
             50% {
-                transform: translateX(2px) translateY(2px);
+                transform: translate(3px, 3px);
             }
             100% {
-                transform: translateX(0) translateY(0);
+                transform: translate(0, 0);
             }
         }
 
-        @keyframes shimmerRotate {
-            0% {
-                --shimmer-x: 30%;
-                --shimmer-y: 30%;
-            }
-            25% {
-                --shimmer-x: 70%;
-                --shimmer-y: 30%;
+        @keyframes shimmerPulse {
+            0%, 100% {
+                opacity: 0.7;
+                transform: scale(1);
             }
             50% {
-                --shimmer-x: 70%;
-                --shimmer-y: 70%;
-            }
-            75% {
-                --shimmer-x: 30%;
-                --shimmer-y: 70%;
-            }
-            100% {
-                --shimmer-x: 30%;
-                --shimmer-y: 30%;
+                opacity: 0.95;
+                transform: scale(1.1);
             }
         }
 

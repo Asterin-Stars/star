@@ -1,4 +1,2 @@
-google-cloud-aiplatform
-google-auth
-google-generativeai
-requests
+# Star Oracle - Sin Dependencies de Python
+# App es puro HTML/CSS/JS
