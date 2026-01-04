@@ -839,6 +839,11 @@
                 inset 0 2px 4px rgba(255, 255, 255, 0.6),
                 inset 0 -2px 4px rgba(0, 0, 0, 0.2),
                 0 0 40px rgba(147, 51, 234, 0.3);
+            
+            /* CENTERING FIX: Ensure full image visibility */
+            background-size: cover; 
+            background-repeat: no-repeat;
+            background-position: center;
         }
 
         .keyword-highlight {
@@ -4284,6 +4289,12 @@
                     const nextLang = langs[nextIndex];
                     window.i18n.currentLanguage = nextLang;
 
+                    // Actualizar UI del botón
+                    const langDisplay = document.getElementById('currentLangDisplay');
+                    if (langDisplay) {
+                        langDisplay.textContent = nextLang.toUpperCase();
+                    }
+
                     // Actualizar textos de la interfaz
                     window.i18n.applyTranslations();
 
@@ -4298,6 +4309,23 @@
                         reloadCardById(currentCardData.id);
                     } else {
                         // Si no hay carta actual (primera carga), generar una aleatoria
+                        // initOracle(); // NO reiniciar si estamos en estado inicial
+                    }
+                }
+
+                // ==================== NEW: OPEN COLLECTION ====================
+                window.openCollection = function() {
+                    const modal = document.getElementById('collectionModal');
+                    if (modal) {
+                        modal.style.display = 'flex';
+                        // Render collection if function exists
+                        if (typeof renderCollectionList === 'function') {
+                            renderCollectionList();
+                        }
+                    } else {
+                        alert("Colección vacía por ahora.");
+                    }
+                };
                         prepareOracle();
                     }
                 }
