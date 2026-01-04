@@ -1985,6 +1985,185 @@
         .hada-tooltip-close:hover {
             color: rgba(255, 255, 255, 0.9);
         }
+
+        /* ==================== HOLO EFFECTS SETTINGS SYSTEM ==================== */
+        
+        /* Floating Settings Button */
+        .holo-settings-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(147, 51, 234, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 4px 15px rgba(147, 51, 234, 0.4),
+                inset 0 1px 2px rgba(255, 255, 255, 0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .holo-settings-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 
+                0 6px 25px rgba(147, 51, 234, 0.6),
+                inset 0 1px 3px rgba(255, 255, 255, 0.4);
+            background: rgba(147, 51, 234, 0.8);
+        }
+
+        .holo-settings-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Intensity Preset Buttons */
+        .intensity-preset-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .intensity-preset-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(147, 51, 234, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .intensity-preset-btn.active {
+            background: rgba(147, 51, 234, 0.4);
+            border-color: rgba(147, 51, 234, 0.8);
+            color: white;
+            font-weight: 600;
+        }
+
+        /* ==================== ADVANCED HOLO EFFECTS ==================== */
+
+        /* EFFECT: Horizontal Bars (Yu-Gi-Oh Secret Rare Style) */
+        .holo-bars {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0px,
+                rgba(255, 255, 255, 0.15) 1px,
+                transparent 2px,
+                transparent 8px
+            );
+            background-size: 100% 20px;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 4;
+            border-radius: 11px;
+            animation: barsMove 2s linear infinite;
+        }
+
+        @keyframes barsMove {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 0 20px;
+            }
+        }
+
+        /* EFFECT: Sparkle Particles (Pokémon Rainbow Style) */
+        .sparkle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 5;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+            animation: sparkleFade 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkleFade {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Sparkle positioning with stagger */
+        .sparkle:nth-child(1) { top: 15%; left: 20%; animation-delay: 0s; }
+        .sparkle:nth-child(2) { top: 35%; left: 70%; animation-delay: 0.3s; }
+        .sparkle:nth-child(3) { top: 60%; left: 30%; animation-delay: 0.6s; }
+        .sparkle:nth-child(4) { top: 80%; left: 65%; animation-delay: 0.9s; }
+        .sparkle:nth-child(5) { top: 25%; left: 85%; animation-delay: 1.2s; }
+        .sparkle:nth-child(6) { top: 50%; left: 15%; animation-delay: 1.5s; }
+        .sparkle:nth-child(7) { top: 70%; left: 50%; animation-delay: 1.8s; }
+        .sparkle:nth-child(8) { top: 40%; left: 40%; animation-delay: 0.4s; }
+        .sparkle:nth-child(9) { top: 10%; left: 55%; animation-delay: 0.7s; }
+        .sparkle:nth-child(10) { top: 90%; left: 25%; animation-delay: 1s; }
+
+        /* Intensity Variations */
+        .card-face.back[data-intensity="low"] .holo-bars {
+            opacity: 0.3;
+            animation-duration: 3s;
+        }
+
+        .card-face.back[data-intensity="medium"] .holo-bars {
+            opacity: 0.6;
+            animation-duration: 2s;
+        }
+
+        .card-face.back[data-intensity="high"] .holo-bars {
+            opacity: 0.9;
+            animation-duration: 1.5s;
+        }
+
+        /* Rainbow intensity variations */
+        .card-face.back[data-intensity="low"] .back::before {
+            opacity: 0.4;
+            animation-duration: 4s;
+        }
+
+        .card-face.back[data-intensity="medium"] .back::before {
+            opacity: 0.7;
+            animation-duration: 3s;
+        }
+
+        .card-face.back[data-intensity="high"] .back::before {
+            opacity: 0.95;
+            animation-duration: 2s;
+        }
+
+        /* Hide effects when toggled off */
+        .card-face.back[data-rainbow="false"] .back::before {
+            display: none;
+        }
+
+        .card-face.back[data-bars="false"] .holo-bars {
+            display: none;
+        }
+
+        .card-face.back[data-sparkles="false"] .sparkle {
+            display: none;
+        }
     </style>
 
     <!-- Async font loading (non-blocking) -->
@@ -2076,9 +2255,9 @@
                     <div class="symbol">☾</div>
                 </div>
                 <div class="card-face back iridescent-border">
-                    <!-- SETTINGS INTERFACE -->
+                    <!-- SETTINGS INTERFACE (Hidden by default) -->
                     <div class="settings-container"
-                        style="width: 100%; height: 100%; padding: 25px; display: flex; flex-direction: column; justify-content: center; gap: 20px; color: white; background: rgba(0,0,0,0.4);">
+                        style="width: 100%; height: 100%; padding: 25px; display: none; flex-direction: column; justify-content: center; gap: 20px; color: white; background: rgba(0,0,0,0.4);">
                         <h3 style="text-align: center; margin-bottom: 10px; font-weight: 300; letter-spacing: 2px;">
                             CONFIG</h3>
 
@@ -2644,6 +2823,86 @@
             </div>
         </div>
 
+        <!-- BOTÓN FLOTANTE: Configuración Holo Effects -->
+        <button id="holoSettingsBtn" class="holo-settings-btn iridescent-border-subtle" 
+                onclick="openHoloSettings()" 
+                style="display: none;">
+            ✨
+        </button>
+
+        <!-- MODAL: Configuración de Efectos Holográficos -->
+        <div class="modal-overlay" id="holoSettingsModal" style="display: none;">
+            <div class="modal-content iridescent-border" style="max-width: 450px;">
+                <div class="modal-header">
+                    <h3>✨ Efectos Holográficos</h3>
+                    <button class="modal-close" onclick="closeHoloSettings()">&times;</button>
+                </div>
+                <div class="modal-body" style="padding: 25px;">
+                    
+                    <!-- Presets de Intensidad -->
+                    <div style="margin-bottom: 25px;">
+                        <label style="font-size: 0.9rem; font-weight: 500; margin-bottom: 12px; display: block; color: var(--text-primary);">
+                            Intensidad General
+                        </label>
+                        <div style="display: flex; gap: 10px; justify-content: space-between;">
+                            <button class="intensity-preset-btn" data-intensity="low" onclick="setHoloIntensity('low')">
+                                Bajo
+                            </button>
+                            <button class="intensity-preset-btn active" data-intensity="medium" onclick="setHoloIntensity('medium')">
+                                Medio
+                            </button>
+                            <button class="intensity-preset-btn" data-intensity="high" onclick="setHoloIntensity('high')">
+                                Alto
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Toggles de Efectos Individuales -->
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        
+                        <div class="effect-toggle-item">
+                            <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
+                                <span style="font-size: 0.85rem; color: var(--text-primary);">
+                                    🌈 Rainbow Sweep
+                                </span>
+                                <input type="checkbox" id="toggleRainbow" checked 
+                                       onchange="toggleEffect('rainbow', this.checked)" 
+                                       style="width: 20px; height: 20px; cursor: pointer;">
+                            </label>
+                        </div>
+
+                        <div class="effect-toggle-item">
+                            <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
+                                <span style="font-size: 0.85rem; color: var(--text-primary);">
+                                    ▬ Horizontal Bars
+                                </span>
+                                <input type="checkbox" id="toggleBars" checked 
+                                       onchange="toggleEffect('bars', this.checked)" 
+                                       style="width: 20px; height: 20px; cursor: pointer;">
+                            </label>
+                        </div>
+
+                        <div class="effect-toggle-item">
+                            <label style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
+                                <span style="font-size: 0.85rem; color: var(--text-primary);">
+                                    ✨ Sparkles
+                                </span>
+                                <input type="checkbox" id="toggleSparkles" checked 
+                                       onchange="toggleEffect('sparkles', this.checked)" 
+                                       style="width: 20px; height: 20px; cursor: pointer;">
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.75rem; opacity: 0.5;">
+                        Los cambios se aplican en tiempo real
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
             <script>
                 /* ==================== CONFIGURACIÓN WORLD APP ==================== */
                 const WALLET_ADDRESS = '0xa3cdea9fe705bc16dcd9e9170e217b0f1ba5aaf6';
@@ -3182,6 +3441,12 @@
                     setTimeout(() => {
                         spawnHadas(currentCardData);
                     }, 700);
+
+                    // 4. SHOW HOLO SETTINGS BUTTON & APPLY EFFECTS
+                    setTimeout(() => {
+                        updateHoloButton();
+                        updateHoloEffects();
+                    }, 900);
                 }
 
                 /* ==================== MODAL DE EJEMPLOS ==================== */
@@ -3279,6 +3544,131 @@
                     resetOracle();
                 }
 
+                /* ==================== HOLO EFFECTS SETTINGS SYSTEM ==================== */
+                
+                // State management
+                let holoSettings = {
+                    intensity: 'medium',
+                    rainbow: true,
+                    bars: true,
+                    sparkles: true
+                };
+
+                // Load settings from localStorage
+                function loadHoloSettings() {
+                    const saved = localStorage.getItem('holoSettings');
+                    if (saved) {
+                        holoSettings = {...holoSettings, ...JSON.parse(saved)};
+                    }
+                    applyHoloSettings();
+                }
+
+                // Save settings to localStorage
+                function saveHoloSettings() {
+                    localStorage.setItem('holoSettings', JSON.stringify(holoSettings));
+                }
+
+                // Open settings modal
+                function openHoloSettings() {
+                    const modal = document.getElementById('holoSettingsModal');
+                    modal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Update UI to reflect current settings
+                    document.querySelectorAll('.intensity-preset-btn').forEach(btn => {
+                        btn.classList.toggle('active', btn.dataset.intensity === holoSettings.intensity);
+                    });
+                    
+                    document.getElementById('toggleRainbow').checked = holoSettings.rainbow;
+                    document.getElementById('toggleBars').checked = holoSettings.bars;
+                    document.getElementById('toggleSparkles').checked = holoSettings.sparkles;
+                }
+
+                // Close settings modal
+                function closeHoloSettings() {
+                    const modal = document.getElementById('holoSettingsModal');
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+
+                // Set intensity level
+                function setHoloIntensity(level) {
+                    holoSettings.intensity = level;
+                    
+                    // Update active button
+                    document.querySelectorAll('.intensity-preset-btn').forEach(btn => {
+                        btn.classList.toggle('active', btn.dataset.intensity === level);
+                    });
+                    
+                    applyHoloSettings();
+                    saveHoloSettings();
+                }
+
+                // Toggle individual effect
+                function toggleEffect(effect, enabled) {
+                    holoSettings[effect] = enabled;
+                    applyHoloSettings();
+                    saveHoloSettings();
+                }
+
+                // Apply settings to card
+                function applyHoloSettings() {
+                    const cardBack = document.querySelector('.card-face.back');
+                    if (!cardBack) return;
+                    
+                    // Set data attributes for intensity
+                    cardBack.setAttribute('data-intensity', holoSettings.intensity);
+                    cardBack.setAttribute('data-rainbow', holoSettings.rainbow);
+                    cardBack.setAttribute('data-bars', holoSettings.bars);
+                    cardBack.setAttribute('data-sparkles', holoSettings.sparkles);
+                    
+                    // Inject or remove effects
+                    updateHoloEffects();
+                }
+
+                // Inject/update DOM elements for effects
+                function updateHoloEffects() {
+                    const cardBack = document.querySelector('.card-face.back');
+                    if (!cardBack) return;
+                    
+                    // Remove old effects
+                    const oldBars = cardBack.querySelector('.holo-bars');
+                    const oldSparkles = cardBack.querySelectorAll('.sparkle');
+                    if (oldBars) oldBars.remove();
+                    oldSparkles.forEach(s => s.remove());
+                    
+                    // Add horizontal bars if enabled
+                    if (holoSettings.bars) {
+                        const bars = document.createElement('div');
+                        bars.className = 'holo-bars';
+                        cardBack.appendChild(bars);
+                    }
+                    
+                    // Add sparkles if enabled
+                    if (holoSettings.sparkles) {
+                        const sparkleCount = holoSettings.intensity === 'low' ? 5 : 
+                                            holoSettings.intensity === 'medium' ? 7 : 10;
+                        
+                        for (let i = 0; i < sparkleCount; i++) {
+                            const sparkle = document.createElement('div');
+                            sparkle.className = 'sparkle';
+                            cardBack.appendChild(sparkle);
+                        }
+                    }
+                }
+
+                // Show/hide settings button when card is flipped
+                function updateHoloButton() {
+                    const btn = document.getElementById('holoSettingsBtn');
+                    const cardStage = document.getElementById('cardStage');
+                    
+                    if (cardStage && cardStage.classList.contains('flipped')) {
+                        btn.style.display = 'flex';
+                    } else {
+                        btn.style.display = 'none';
+                    }
+                }
+
                 /* ==================== RESET DEL ORÁCULO ==================== */
                 function resetOracle() {
                     if (isProcessing) return;
@@ -3328,6 +3718,7 @@
                         }, 850);
 
                         isRevealed = false;
+                        updateHoloButton(); // Hide settings button
                     }, 200);
 
                     // 4. Cargar nueva carta (con delay para fluidez)
@@ -3574,6 +3965,9 @@
                             document.body.classList.remove('loading');
                             if (preloader) preloader.classList.add('loaded');
                         }, 1000); // Small delay to let user see the colored veins
+
+                        // 6. Load holo effects settings
+                        loadHoloSettings();
 
                     } catch (error) {
                         console.error("Oracle initialization error:", error);
