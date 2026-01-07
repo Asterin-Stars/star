@@ -2441,6 +2441,19 @@
                 ];
 
                 function spawnHadas(cardData) {
+                    console.log('🧚 Hadas (Fairy Particles) system disabled by optimization protocol.');
+                    return; // Force exit
+                    /* CONTENIDO PREVIO DESHABILITADO
+                    const container = document.getElementById('hadaContainer');
+                    const concepts = [
+                        { label: 'arquetipo', text: cardData.fullData.arquetipo, color: 'var(--color1)' },
+                        { label: 'misticismo', text: cardData.fullData.misticismo, color: 'var(--color2)' },
+                        { label: 'sombra', text: cardData.fullData.sombra, color: 'var(--color3)' }
+                        // ...
+                    ];
+                    // ... Lógica de spawn ...
+                    */
+                }
                     const container = document.getElementById('hadaContainer');
                     if (!container || !cardData || !cardData.fullData) {
                         console.warn('🧚 Hada spawn skipped: missing data');
