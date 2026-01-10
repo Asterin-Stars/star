@@ -630,16 +630,25 @@
         filter: contrast(var(--layer-base-contrast));
       }
 
-      .layer-img {
+      /* === SISTEMA DE WRAPPERS PARA EFECTOS HOLO === */
+      .layer-wrapper {
         position: absolute;
-        /* Un poco más grande para el parallax */
         top: -5%;
         left: -5%;
         width: 110%;
         height: 110%;
-        object-fit: cover;
         transition: transform 0.1s cubic-bezier(0.1, 0.5, 0.1, 1);
         will-change: transform;
+        pointer-events: none;
+      }
+
+      /* Clase genérica para la imagen dentro del wrapper */
+      .layer-content {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: var(--card-img-radius);
       }
 
       /* APLICACIÓN DE EFECTOS (Conectado a las perillas) */
@@ -663,15 +672,47 @@
         z-index: 4;
         mix-blend-mode: var(--layer-ink-blend);
         opacity: var(--layer-ink-opacity);
-        filter: contrast(1.1);
       }
 
+      /* === GOLD HOLO ENGINE === */
+      /* El wrapper define la mezcla pero NO la opacidad (para salvar el brillo) */
       .layer-gold {
         z-index: 5;
         mix-blend-mode: var(--layer-gold-blend);
-        opacity: var(--layer-gold-opacity);
         filter: brightness(var(--layer-gold-brightness));
-        transition: opacity 0.2s, transform 0.1s;
+      }
+
+      /* La tinta dorada SI tiene transparencia */
+      .layer-gold .layer-content {
+        opacity: var(--layer-gold-opacity);
+      }
+
+      /* El Holograma fluye encima, siempre visible */
+      .layer-gold::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* Patrón por defecto (puede ser sobreescrito por perillas si se conectara JS, aquí es fijo) */
+        background: linear-gradient(
+          135deg,
+          transparent 40%,
+          rgba(255, 255, 255, 0.9) 50%,
+          transparent 60%
+        );
+        background-size: 200% 200%;
+
+        /* MASCARA MAGICA (Inyectada por JS en --mask-url) */
+        -webkit-mask-image: var(--mask-url);
+        mask-image: var(--mask-url);
+        -webkit-mask-size: cover;
+        mask-size: cover;
+
+        mix-blend-mode: overlay;
+        opacity: 0.8;
+        pointer-events: none;
       }
 
       .layer-spirit {
