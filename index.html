@@ -3478,13 +3478,9 @@
           clickTimer = setTimeout(() => {
             console.log("✅ Single click confirmed - revealing card");
             // Single click confirmed: REVEAL CARD
-            // Defer async work to avoid blocking UI (fixes INP issue)
-            requestAnimationFrame(async () => {
+            requestAnimationFrame(() => {
               if (!isRevealed && currentCardData) {
-                const paymentSuccess = await requestPayment();
-                if (paymentSuccess) {
-                  revealDestiny();
-                }
+                revealDestiny();
               }
             });
             clickCount = 0;
