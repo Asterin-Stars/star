@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Holo-Lab 4.0: All Layers Control</title>
+    <title>Holo-Lab 4.1: Final Polish</title>
     <style>
       :root {
         --bg-color: #0f172a;
@@ -15,7 +15,7 @@
         --card-img-radius: 4px;
         --layer-zoom: 1.1;
 
-        /* Capas Individuales */
+        /* Capas */
         --layer-base-contrast: 1;
 
         --layer-nature-opacity: 1;
@@ -78,8 +78,6 @@
         padding: var(--card-frame-padding);
         box-sizing: border-box;
         border-radius: 12px;
-
-        /* Clip path to ensure nothing spills out */
         overflow: hidden;
       }
 
@@ -91,21 +89,15 @@
         border-radius: var(--card-img-radius);
         border: 1px solid rgba(0, 0, 0, 0.1);
         background: #fff;
-
-        /* Force isolation to manage blends */
         isolation: isolate;
       }
 
-      /* WRAPPER PARA CAPAS */
       .layer-wrapper {
         position: absolute;
         top: 50%;
         left: 50%;
-
-        /* Importante: Tamaño exacto de la imagen interna para que la máscara coincida */
         width: 100%;
         height: 100%;
-
         transform: translate(-50%, -50%) scale(var(--layer-zoom));
         pointer-events: none;
       }
@@ -122,19 +114,16 @@
         z-index: 1;
         filter: contrast(var(--layer-base-contrast));
       }
-
       .layer-nature {
         z-index: 2;
         mix-blend-mode: var(--layer-nature-blend);
         opacity: var(--layer-nature-opacity);
       }
-
       .layer-passion {
         z-index: 3;
         mix-blend-mode: var(--layer-passion-blend);
         opacity: var(--layer-passion-opacity);
       }
-
       .layer-ink {
         z-index: 4;
         mix-blend-mode: var(--layer-ink-blend);
@@ -159,23 +148,15 @@
         left: 0;
         width: 100%;
         height: 100%;
-
         background: var(--layer-gold-pattern);
-
-        /* MÁSCARA AJUSTADA */
         -webkit-mask-image: var(--gold-mask-url);
         mask-image: var(--gold-mask-url);
-
-        /* Asegurar que la máscara cubra exactamente el espacio de la imagen */
         -webkit-mask-size: 100% 100%;
         mask-size: 100% 100%;
-
         -webkit-mask-repeat: no-repeat;
         mask-repeat: no-repeat;
-
         -webkit-mask-position: center;
         mask-position: center;
-
         mix-blend-mode: overlay;
         opacity: 0.8;
         pointer-events: none;
@@ -207,11 +188,14 @@
         margin-bottom: 4px;
         color: #94a3b8;
       }
+
       input[type="range"] {
         height: 4px;
         border-radius: 2px;
         -webkit-appearance: none;
+        appearance: none; /* Standard property added */
         background: #334155;
+        width: 100%;
       }
       input[type="range"]::-webkit-slider-thumb {
         -webkit-appearance: none;
@@ -229,6 +213,7 @@
         padding: 4px;
         font-size: 0.8rem;
         border-radius: 4px;
+        width: 100%;
       }
 
       .value-display {
@@ -270,22 +255,59 @@
         padding-bottom: 2px;
       }
 
+      /* Utility Classes for Layer Sections */
       .layer-section {
         border-left: 2px solid #334155;
         padding-left: 10px;
         margin-bottom: 15px;
       }
-      .layer-section.gold {
+      .border-gold {
         border-left-color: #fbbf24;
       }
-      .layer-section.ink {
-        border-left-color: #1e293b;
-      }
-      .layer-section.passion {
+      .border-passion {
         border-left-color: #f87171;
       }
-      .layer-section.spirit {
+      .border-ink {
+        border-left-color: #1e293b;
+      }
+      .border-spirit {
         border-left-color: #c084fc;
+      }
+      .border-nature {
+        border-left-color: #4ade80;
+      }
+
+      .text-gold {
+        color: #fbbf24;
+        font-weight: bold;
+      }
+      .text-passion {
+        color: #f87171;
+        font-weight: bold;
+      }
+      .text-ink {
+        color: #94a3b8;
+        font-weight: bold;
+      }
+      .text-spirit {
+        color: #c084fc;
+        font-weight: bold;
+      }
+      .text-nature {
+        color: #4ade80;
+        font-weight: bold;
+      }
+
+      .flex-between {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .check-label {
+        margin: 0;
+      }
+      .check-input {
+        width: auto;
       }
     </style>
   </head>
@@ -322,7 +344,6 @@
                 alt="Ink"
               />
             </div>
-            <!-- GOLD WRAPPER -->
             <div class="layer-wrapper wrapper-gold">
               <img
                 src="./public/cards_layered/ar13/gold.png"
@@ -343,7 +364,7 @@
     </div>
 
     <div class="controls">
-      <h2>🎛️ Holo-Lab 4.0</h2>
+      <h2>🎛️ Holo-Lab 4.1</h2>
 
       <h3>Geometría</h3>
       <div class="control-group">
@@ -376,10 +397,8 @@
       <h3>Capas (Layers)</h3>
 
       <!-- GOLD -->
-      <div class="layer-section gold">
-        <label style="color: #fbbf24; font-weight: bold"
-          >GOLD LAYER (Holo)</label
-        >
+      <div class="layer-section border-gold">
+        <label class="text-gold">GOLD LAYER (Holo)</label>
         <div class="control-group">
           <label for="inp-gold-op"
             >Opacidad <span id="v-g-op" class="value-display">0.1</span></label
@@ -447,13 +466,14 @@
       </div>
 
       <!-- PASSION -->
-      <div class="layer-section passion">
-        <label style="color: #f87171; font-weight: bold">PASSION LAYER</label>
+      <div class="layer-section border-passion">
+        <label class="text-passion">PASSION LAYER</label>
         <div class="control-group">
-          <label
+          <label for="inp-pass-op"
             >Opacidad <span id="v-pass" class="value-display">0.6</span></label
           >
           <input
+            id="inp-pass-op"
             type="range"
             min="0"
             max="1"
@@ -463,8 +483,11 @@
           />
         </div>
         <div class="control-group">
-          <label>Blend</label>
-          <select onchange="upd('--layer-passion-blend', this.value)">
+          <label for="sel-pass-blend">Blend</label>
+          <select
+            id="sel-pass-blend"
+            onchange="upd('--layer-passion-blend', this.value)"
+          >
             <option value="soft-light" selected>Soft Light</option>
             <option value="multiply">Multiply</option>
             <option value="overlay">Overlay</option>
@@ -474,13 +497,14 @@
       </div>
 
       <!-- INK -->
-      <div class="layer-section ink">
-        <label style="color: #94a3b8; font-weight: bold">INK LAYER</label>
+      <div class="layer-section border-ink">
+        <label class="text-ink">INK LAYER</label>
         <div class="control-group">
-          <label
+          <label for="inp-ink-op"
             >Opacidad <span id="v-ink" class="value-display">0.9</span></label
           >
           <input
+            id="inp-ink-op"
             type="range"
             min="0"
             max="1"
@@ -490,8 +514,11 @@
           />
         </div>
         <div class="control-group">
-          <label>Blend</label>
-          <select onchange="upd('--layer-ink-blend', this.value)">
+          <label for="sel-ink-blend">Blend</label>
+          <select
+            id="sel-ink-blend"
+            onchange="upd('--layer-ink-blend', this.value)"
+          >
             <option value="multiply" selected>Multiply</option>
             <option value="normal">Normal</option>
             <option value="darken">Darken</option>
@@ -500,13 +527,14 @@
       </div>
 
       <!-- SPIRIT -->
-      <div class="layer-section spirit">
-        <label style="color: #c084fc; font-weight: bold">SPIRIT LAYER</label>
+      <div class="layer-section border-spirit">
+        <label class="text-spirit">SPIRIT LAYER</label>
         <div class="control-group">
-          <label
+          <label for="inp-spi-op"
             >Opacidad <span id="v-spi" class="value-display">0.4</span></label
           >
           <input
+            id="inp-spi-op"
             type="range"
             min="0"
             max="1"
@@ -516,8 +544,11 @@
           />
         </div>
         <div class="control-group">
-          <label>Blend</label>
-          <select onchange="upd('--layer-spirit-blend', this.value)">
+          <label for="sel-spi-blend">Blend</label>
+          <select
+            id="sel-spi-blend"
+            onchange="upd('--layer-spirit-blend', this.value)"
+          >
             <option value="screen" selected>Screen</option>
             <option value="lighten">Lighten</option>
             <option value="normal">Normal</option>
@@ -526,13 +557,14 @@
       </div>
 
       <!-- NATURE -->
-      <div class="layer-section" style="border-left-color: #4ade80">
-        <label style="color: #4ade80; font-weight: bold">NATURE LAYER</label>
+      <div class="layer-section border-nature">
+        <label class="text-nature">NATURE LAYER</label>
         <div class="control-group">
-          <label
+          <label for="inp-nat-op"
             >Opacidad <span id="v-nat" class="value-display">1.0</span></label
           >
           <input
+            id="inp-nat-op"
             type="range"
             min="0"
             max="1"
@@ -545,19 +577,15 @@
 
       <h3>Debug Mode</h3>
       <div class="control-group">
-        <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          "
-        >
-          <label for="chk-debug" style="margin: 0">Mostrar Máscara Roja</label>
+        <div class="flex-between">
+          <label for="chk-debug" class="check-label"
+            >Mostrar Máscara Roja</label
+          >
           <input
             id="chk-debug"
+            class="check-input"
             type="checkbox"
             onchange="toggleDebug(this.checked)"
-            style="width: auto"
           />
         </div>
         <span class="help-text"
@@ -566,6 +594,7 @@
       </div>
 
       <h3>Salida CSS</h3>
+      <label for="cssOut" style="display: none">CSS Output</label>
       <textarea id="cssOut" class="css-output"></textarea>
     </div>
 
@@ -590,7 +619,7 @@
 
       function toggleDebug(enabled) {
         if (enabled) {
-          // DEBUG: Rojo intenso, debe respetar mascara
+          // DEBUG: Rojo intenso
           root.style.setProperty(
             "--layer-gold-pattern",
             "repeating-linear-gradient(45deg, red, red 10px, yellow 10px, yellow 20px)"
@@ -598,14 +627,12 @@
           root.style.setProperty("--layer-gold-blend", "normal");
           root.style.setProperty("--layer-gold-opacity", "1");
 
-          // Forzar opacidad visual en imagen
           const style = document.createElement("style");
           style.id = "debug-css";
           style.textContent = `
                     .wrapper-gold::after {
                        opacity: 1 !important;
                        mix-blend-mode: normal !important;
-                       /* Importante: NO quitamos mask-image aqui para probar si funciona */
                     }
                     .wrapper-gold .layer-img {
                         opacity: 0.2 !important; 
@@ -617,7 +644,7 @@
           const style = document.getElementById("debug-css");
           if (style) style.remove();
 
-          // Restaurar variables desde UI
+          // Restaurar
           upd("--layer-gold-blend", document.getElementById("sel-blend").value);
           upd(
             "--layer-gold-pattern",
@@ -633,7 +660,7 @@
       function genCSS() {
         const s = getComputedStyle(root);
         out.value = `
-/* Configuración Holo-Lab 4.0 */
+/* Configuración Holo-Lab 4.1 */
 :root {
   --card-frame-padding: ${s.getPropertyValue("--card-frame-padding").trim()};
   --card-img-radius: ${s.getPropertyValue("--card-img-radius").trim()};
