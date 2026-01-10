@@ -3128,15 +3128,16 @@
           return highlightKeywords(item, lang);
         };
 
-        // Llenar todas las categorías del JSON - LA SECCIÓN SIGNIFICADO USA SOMBRA (ASPECTOS TEMIBLES)
-        textoSignificado.innerHTML = getRandomItem("sombra");
+        // Llenar todas las categorías del JSON - CORREGIDO: Significado muestra Arquetipo
+        textoSignificado.innerHTML = getRandomItem("arquetipo");
 
         textoAmpliado.innerHTML = getRandomItem("misticismo");
         seccionAmpliado.style.display = textoAmpliado.innerHTML
           ? "block"
           : "none";
 
-        textoNegativo.innerHTML = getRandomItem("arquetipo");
+        // Sombra muestra los aspectos oscuros/advertencias
+        textoNegativo.innerHTML = getRandomItem("sombra");
         seccionNegativo.style.display = textoNegativo.innerHTML
           ? "block"
           : "none";
@@ -3623,13 +3624,13 @@
         }
 
         // Actualizar secciones y asegurar que sean visibles si tienen contenido
-        textoSignificado.innerHTML = getRandomItem("sombra");
+        textoSignificado.innerHTML = getRandomItem("arquetipo");
 
         textoAmpliado.innerHTML = getRandomItem("misticismo");
         if (seccionAmpliado && textoAmpliado.innerHTML)
           seccionAmpliado.style.display = "block";
 
-        textoNegativo.innerHTML = getRandomItem("arquetipo");
+        textoNegativo.innerHTML = getRandomItem("sombra");
         if (seccionNegativo && textoNegativo.innerHTML)
           seccionNegativo.style.display = "block";
 
@@ -3786,8 +3787,8 @@
           cardName: currentCardData ? currentCardData.name : "Arcano",
           language: currentLang, // Enviar idioma detectado
           definitions: {
-            arquetipo: document.getElementById("textoNegativo").textContent,
-            sombra: document.getElementById("textoSignificado").textContent,
+            arquetipo: document.getElementById("textoSignificado").textContent,
+            sombra: document.getElementById("textoNegativo").textContent,
             misticismo: document.getElementById("textoAmpliado").textContent,
           },
           examples: currentExampleIndices, // Enviamos los índices para referencia
