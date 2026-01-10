@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Star Architect ✦ Clean Core v8</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        /* --- 1. GEOMETRY & PHYSICS DEFAULTS --- */
+        --star-size: 171px;
+        --star-rotation: 0deg;
+
+        --global-speed: 1;
+        --source-scale: 1.7;
+        --source-chaos: 0.5;
+
+        --bg-speed: 19s;
+        --bg-direction: 45deg;
+
+        /* --- 2. APPEARANCE DEFAULTS --- */
+        /* Palette: White/Silver (User Preference) */
+        --c-1: #cccccc;
+        --c-2: #888888;
+        --c-3: #ffffff;
+        --c-4: #eeeeee;
+        --c-5: #ffffff;
+
+        /* Atmosphere */
+        --vapor-size: 199%;
+        --vapor-opacity: 0.2;
+        --vapor-blur: 73px;
+
+        /* Depth / Texture */
+        --noise-opacity: 0.19;
+        --shine-opacity: 1;
+        --vignette-str: 0;
+
+        /* Life (Breathing) */
+        --breath-speed: 6s;
+        --breath-depth: 0.2;
+        --breath-scale: 0.04;
+      }
+
+      /* --- RESET & LAYOUT --- */
+      * {
+        box-sizing: border-box;
+        user-select: none;
+        scrollbar-width: thin;
+        scrollbar-color: #333 #111;
+      }
+      body {
+        background: #050505;
+        color: #eee;
+        font-family: "Inter", sans-serif;
+        height: 100vh;
+        display: flex;
+        overflow: hidden;
+        margin: 0;
+      }
+
+      /* --- STAGE (CENTER) --- */
+      #stage {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: radial-gradient(circle at center, #111 0%, #000 70%);
+      }
+
+      /* --- 1. VAPOR LAYER (Behind Star) --- */
+      .vapor-layer {
+        position: absolute;
+        width: var(--vapor-size);
+        height: var(--vapor-size);
+        background: radial-gradient(circle, var(--c-3) 0%, transparent 60%);
+        filter: blur(var(--vapor-blur));
+        opacity: var(--vapor-opacity);
+        mix-blend-mode: screen;
+        pointer-events: none;
+        /* Simple Pulse for Vapor independent of Star Breath */
+        animation: vapor-pulse 8s infinite ease-in-out;
+      }
+      @keyframes vapor-pulse {
+        0%,
+        100% {
+          transform: scale(0.95);
+          opacity: calc(var(--vapor-opacity) * 0.8);
+        }
+        50% {
+          transform: scale(1.05);
+          opacity: var(--vapor-opacity);
+        }
+      }
+
+      /* --- 2. LIVING WRAPPER (Applies Breathing) --- */
+      .living-wrapper {
+        position: relative;
+        width: var(--star-size);
+        height: var(--star-size);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: breath-anim var(--breath-speed) ease-in-out infinite;
+        will-change: transform, filter;
+      }
+      @keyframes breath-anim {
+        0%,
+        100% {
+          transform: scale(1);
+          filter: brightness(1);
+        }
+        50% {
+          transform: scale(calc(1 - var(--breath-scale)));
+          filter: brightness(calc(1 - var(--breath-depth)));
+        }
+      }
+
+      /* --- 3. STAR PORTAL (Masked Container) --- */
+      .star-portal {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform: rotate(var(--star-rotation));
+        z-index: 10;
+        /* STAR SHAPE MASK */
+        -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 C50 35 65 50 100 50 C65 50 50 65 50 100 C50 65 35 50 0 50 C35 50 50 35 50 0 Z' fill='black'/%3E%3C/svg%3E");
+        mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 C50 35 65 50 100 50 C65 50 50 65 50 100 C50 65 35 50 0 50 C35 50 50 35 50 0 Z' fill='black'/%3E%3C/svg%3E");
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+      }
+
+      /* --- 4. INTERNAL LAYERS --- */
+      .portal-inner {
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* A. VOID BG */
+      .portal-bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          var(--bg-direction),
+          var(--c-1),
+          var(--c-2),
+          var(--c-1)
+        );
+        background-size: 200% 200%;
+        animation: bg-pan var(--bg-speed) ease infinite;
+      }
+      @keyframes bg-pan {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* B. MATTER (The Particles) */
+      .matter-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+      .entity {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -500px;
+        margin-top: -500px;
+        width: 1000px;
+        height: 1000px;
+        will-change: transform;
+        mix-blend-mode: hard-light; /* Default, overridden by JS */
+      }
+
+      /* C. OVERLAYS (Depth Stack) */
+      .depth-noise {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 15;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+        mix-blend-mode: overlay;
+        opacity: var(--noise-opacity);
+        pointer-events: none;
+      }
+      .depth-shine {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 21;
+        background: radial-gradient(
+          circle at 30% 30%,
+          rgba(255, 255, 255, var(--shine-opacity)) 0%,
+          transparent 60%
+        );
+        mix-blend-mode: soft-light;
+        pointer-events: none;
+      }
+      .depth-vignette {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 20;
+        background: radial-gradient(
+          circle,
+          transparent 30%,
+          rgba(0, 0, 0, var(--vignette-str)) 70%
+        );
+        pointer-events: none;
+      }
+
+      /* --- ANIMATIONS --- */
+      @keyframes rotate-center {
+        from {
+          transform: rotate(0deg) scale(var(--source-scale));
+        }
+        to {
+          transform: rotate(360deg) scale(var(--source-scale));
+        }
+      }
+      /* Vortex Pulse: chaos affects XY translation */
+      @keyframes vortex-pulse {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(var(--source-scale));
+          opacity: 0.5;
+        }
+        50% {
+          transform: translate(var(--tx), var(--ty))
+            scale(calc(var(--source-scale) * 1.1));
+          opacity: 1;
+        }
+      }
+      @keyframes tidal-sweep {
+        0%,
+        100% {
+          transform: translateX(calc(-20% * var(--source-chaos)))
+            scale(var(--source-scale));
+        }
+        50% {
+          transform: translateX(calc(20% * var(--source-chaos)))
+            scale(var(--source-scale));
+        }
+      }
+
+      /* --- GOD PANEL UI --- */
+      #god-panel {
+        width: 380px;
+        background: #0b0b0d;
+        border-left: 1px solid #222;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        font-size: 11px;
+        z-index: 100;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+      }
+      .header {
+        padding: 20px;
+        background: #0f0f11;
+        border-bottom: 1px solid #222;
+        flex-shrink: 0;
+      }
+      h1 {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        color: #fff;
+        margin: 0;
+        letter-spacing: -0.5px;
+      }
+      .sub {
+        color: #555;
+        font-size: 10px;
+        margin-top: 4px;
+      }
+      .scroll-area {
+        flex: 1;
+        overflow-y: auto;
+        padding-bottom: 50px;
+      }
+
+      .group {
+        padding: 15px 20px;
+        border-bottom: 1px solid #1a1a1a;
+      }
+      .g-title {
+        display: block;
+        color: #00ccff;
+        font-weight: 700;
+        margin-bottom: 12px;
+        font-family: "JetBrains Mono";
+        font-size: 9px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: 80px 1fr 40px;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+      label {
+        color: #888;
+        text-align: right;
+        font-size: 10px;
+        font-weight: 500;
+      }
+      .val {
+        color: #ccc;
+        font-family: monospace;
+        font-size: 10px;
+        text-align: right;
+      }
+
+      /* CONTROLS */
+      input[type="range"] {
+        width: 100%;
+        accent-color: #00ccff;
+        height: 4px;
+        background: #222;
+        appearance: none;
+        border-radius: 2px;
+        cursor: ew-resize;
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        appearance: none;
+        width: 12px;
+        height: 12px;
+        background: #ddd;
+        border-radius: 50%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      }
+
+      .btn-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+        margin-bottom: 12px;
+      }
+      .btn {
+        background: #151517;
+        border: 1px solid #333;
+        color: #666;
+        padding: 8px 0;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 10px;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+      .btn:hover {
+        background: #222;
+        color: #ccc;
+      }
+      .btn.active {
+        background: rgba(0, 204, 255, 0.1);
+        border-color: #00ccff;
+        color: #fff;
+      }
+
+      select {
+        background: #151517;
+        color: #eee;
+        border: 1px solid #333;
+        width: 100%;
+        font-size: 10px;
+        padding: 6px;
+        border-radius: 4px;
+        outline: none;
+      }
+
+      .color-row {
+        display: flex;
+        gap: 4px;
+        margin-top: 10px;
+      }
+      input[type="color"] {
+        flex: 1;
+        height: 24px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- SVG ENGINE (Filters) -->
+    <svg style="position: absolute; width: 0; height: 0">
+      <defs>
+        <filter id="liquid-engine">
+          <feGaussianBlur
+            in="SourceGraphic"
+            stdDeviation="46.5"
+            result="blur"
+            id="svg-blur"
+          />
+          <feColorMatrix
+            in="blur"
+            mode="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -9"
+            result="gooey"
+            id="svg-contrast"
+          />
+          <feComposite in="SourceGraphic" in2="gooey" operator="atop" />
+        </filter>
+      </defs>
+    </svg>
+
+    <!-- VISUAL STAGE -->
+    <div id="stage">
+      <div class="vapor-layer"></div>
+      <div class="living-wrapper">
+        <div class="star-portal">
+          <div class="portal-inner">
+            <div class="portal-bg"></div>
+            <div class="matter-container" id="matter"></div>
+            <!-- Depth Stack -->
+            <div class="depth-noise"></div>
+            <div class="depth-shine"></div>
+            <div class="depth-vignette"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTROL PANEL -->
+    <div id="god-panel">
+      <div class="header">
+        <h1>STAR ARCHITECT v8</h1>
+        <div class="sub">Clean Core &bull; Ordered System</div>
+      </div>
+
+      <div class="scroll-area">
+        <!-- 1. ENGINE SELECTOR -->
+        <div class="group">
+          <span class="g-title">1. Engine Class</span>
+          <div class="btn-grid">
+            <div
+              class="btn active"
+              id="btn-mode-nebula"
+              onclick="selectMode('nebula')"
+            >
+              NEBULA
+            </div>
+            <div class="btn" id="btn-mode-orbs" onclick="selectMode('orbs')">
+              ORBS
+            </div>
+            <div class="btn" id="btn-mode-dots" onclick="selectMode('dots')">
+              DOTS
+            </div>
+          </div>
+          <!-- SUBMODES (Only for Nebula) -->
+          <div class="btn-grid" id="submode-grid">
+            <div class="btn" id="btn-sub-aurora" onclick="selectSub('aurora')">
+              AURORA
+            </div>
+            <div class="btn" id="btn-sub-tidal" onclick="selectSub('tidal')">
+              TIDAL
+            </div>
+            <div
+              class="btn active"
+              id="btn-sub-vortex"
+              onclick="selectSub('vortex')"
+            >
+              VORTEX
+            </div>
+          </div>
+
+          <div class="row">
+            <label>Particles</label>
+            <input
+              type="range"
+              id="inp-qty"
+              min="1"
+              max="60"
+              value="44"
+              oninput="updateGen('qty', this.value)"
+            />
+            <span class="val" id="val-qty">44</span>
+          </div>
+          <div class="row">
+            <label>Scale</label>
+            <input
+              type="range"
+              min="0.5"
+              max="3.0"
+              step="0.1"
+              value="1.7"
+              oninput="updateCss('--source-scale', this.value)"
+            />
+            <span class="val" id="val-scale">1.7</span>
+          </div>
+          <div class="row">
+            <label>Chaos</label>
+            <input
+              type="range"
+              min="0"
+              max="2.0"
+              step="0.1"
+              value="0.5"
+              oninput="updateCss('--source-chaos', this.value)"
+            />
+            <span class="val" id="val-chaos">0.5</span>
+          </div>
+        </div>
+
+        <!-- 2. FLUID PHYSICS -->
+        <div class="group">
+          <span class="g-title">2. Fluid Physics</span>
+          <div class="row">
+            <label>Blend</label>
+            <select id="inp-blend" onchange="updateGen('blend', this.value)">
+              <option value="hard-light" selected>Hard Light (Deep)</option>
+              <option value="screen">Screen (Light)</option>
+              <option value="overlay">Overlay (Contrast)</option>
+              <option value="normal">Normal (Paint)</option>
+              <option value="color-dodge">Color Dodge (Burn)</option>
+            </select>
+          </div>
+          <div class="row">
+            <label>Viscosity</label>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              step="0.5"
+              value="46.5"
+              oninput="updateSvg('blur', this.value)"
+            />
+            <span class="val" id="val-visc">46.5</span>
+          </div>
+          <div class="row">
+            <label>Contrast</label>
+            <input
+              type="range"
+              min="1"
+              max="50"
+              step="0.5"
+              value="18"
+              oninput="updateSvg('contrast', this.value)"
+            />
+            <span class="val" id="val-cont">18.0</span>
+          </div>
+          <div class="row">
+            <label>Speed</label>
+            <input
+              type="range"
+              min="0.1"
+              max="4.0"
+              step="0.1"
+              value="1.0"
+              oninput="updateGlobalSpeed(this.value)"
+            />
+            <span class="val" id="val-speed">1.0x</span>
+          </div>
+        </div>
+
+        <!-- 3. LIFE ENGINE (BREATH) -->
+        <div class="group">
+          <span class="g-title" style="color: #00ffaa">3. Life Engine</span>
+          <div class="row">
+            <label>Rate</label>
+            <input
+              type="range"
+              min="1"
+              max="10"
+              step="0.5"
+              value="6"
+              oninput="updateCss('--breath-speed', this.value+'s')"
+            />
+            <span class="val" id="val-br-rate">6s</span>
+          </div>
+          <div class="row">
+            <label>Depth</label>
+            <input
+              type="range"
+              min="0"
+              max="0.8"
+              step="0.05"
+              value="0.2"
+              oninput="updateCss('--breath-depth', this.value)"
+            />
+            <span class="val" id="val-br-dep">0.2</span>
+          </div>
+          <div class="row">
+            <label>Phys-Scale</label>
+            <input
+              type="range"
+              min="0"
+              max="0.3"
+              step="0.01"
+              value="0.04"
+              oninput="updateCss('--breath-scale', this.value)"
+            />
+            <span class="val" id="val-br-scl">0.04</span>
+          </div>
+        </div>
+
+        <!-- 4. ATMOSPHERE & DEPTH -->
+        <div class="group">
+          <span class="g-title">4. Atmosphere</span>
+          <div class="row">
+            <label>Star Size</label>
+            <input
+              type="range"
+              min="100"
+              max="600"
+              value="171"
+              oninput="updateCss('--star-size', this.value+'px')"
+            />
+            <span class="val" id="val-size">171</span>
+          </div>
+          <div class="row">
+            <label>Noise</label>
+            <input
+              type="range"
+              min="0"
+              max="0.5"
+              step="0.01"
+              value="0.19"
+              oninput="updateCss('--noise-opacity', this.value)"
+            />
+            <span class="val" id="val-noise">0.19</span>
+          </div>
+          <div class="row">
+            <label>Shine</label>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value="1.0"
+              oninput="updateCss('--shine-opacity', this.value)"
+            />
+            <span class="val" id="val-shine">1.0</span>
+          </div>
+          <div class="row">
+            <label>Vignette</label>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value="0.0"
+              oninput="updateCss('--vignette-str', this.value)"
+            />
+            <span class="val" id="val-vig">0.0</span>
+          </div>
+          <div class="row">
+            <label>Vapor Op</label>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value="0.2"
+              oninput="updateCss('--vapor-opacity', this.value)"
+            />
+            <span class="val" id="val-vop">0.2</span>
+          </div>
+          <div class="row">
+            <label>Vapor Size</label>
+            <input
+              type="range"
+              min="100"
+              max="300"
+              step="10"
+              value="199"
+              oninput="updateCss('--vapor-size', this.value+'%')"
+            />
+            <span class="val" id="val-vsz">199</span>
+          </div>
+        </div>
+
+        <!-- 5. PALETTE -->
+        <div class="group">
+          <span class="g-title">5. Palette</span>
+          <div class="btn-grid">
+            <div class="btn active" onclick="setPalette('white')">WHITE</div>
+            <div class="btn" onclick="setPalette('cyber')">CYBER</div>
+            <div class="btn" onclick="setPalette('fire')">FIRE</div>
+          </div>
+          <div class="color-row">
+            <input
+              type="color"
+              id="cp-1"
+              value="#cccccc"
+              oninput="setColor(1, this.value)"
+            />
+            <input
+              type="color"
+              id="cp-2"
+              value="#888888"
+              oninput="setColor(2, this.value)"
+            />
+            <input
+              type="color"
+              id="cp-3"
+              value="#ffffff"
+              oninput="setColor(3, this.value)"
+            />
+            <input
+              type="color"
+              id="cp-4"
+              value="#eeeeee"
+              oninput="setColor(4, this.value)"
+            />
+            <input
+              type="color"
+              id="cp-5"
+              value="#ffffff"
+              oninput="setColor(5, this.value)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOGIC CORE -->
+    <script>
+      // --- 1. STATE MANAGEMENT ---
+      const State = {
+        mode: "nebula",
+        sub: "vortex",
+        qty: 44,
+        blend: "hard-light",
+        globalSpeed: 1.0,
+        colors: ["#cccccc", "#888888", "#ffffff", "#eeeeee", "#ffffff"],
+      };
+
+      // DOM Elements cache
+      const dom = {
+        root: document.documentElement,
+        matter: document.getElementById("matter"),
+        svgBlur: document.getElementById("svg-blur"),
+        svgContrast: document.getElementById("svg-contrast"),
+        submodeGrid: document.getElementById("submode-grid"),
+      };
+
+      // --- 2. GENERATOR (The Engine) ---
+      function render() {
+        dom.matter.innerHTML = ""; // Clear stage
+        const palette = ["--c-3", "--c-4", "--c-5"]; // Using highlight colors for particles
+
+        for (let i = 0; i < State.qty; i++) {
+          const el = document.createElement("div");
+          el.classList.add("entity");
+          el.style.mixBlendMode = State.blend;
+
+          // Color cycling
+          const colVar = palette[i % 3];
+
+          // Animation & Appearance logic based on Mode
+          if (State.mode === "nebula") {
+            // Big Gradients
+            el.style.width = "1000px";
+            el.style.height = "1000px";
+            el.style.marginLeft = "-500px";
+            el.style.marginTop = "-500px";
+
+            if (State.sub === "vortex") {
+              el.style.background = `radial-gradient(circle, transparent 30%, var(${colVar}) 50%, transparent 70%)`;
+              el.style.animationName = "vortex-pulse";
+              // Random translation params for Chaos
+              el.style.setProperty("--tx", Math.random() * 200 - 100 + "px");
+              el.style.setProperty("--ty", Math.random() * 200 - 100 + "px");
+            } else if (State.sub === "aurora") {
+              el.style.background = `conic-gradient(from ${
+                Math.random() * 360
+              }deg, transparent, var(${colVar}), transparent)`;
+              el.style.animationName = "rotate-center";
+            } else if (State.sub === "tidal") {
+              el.style.background = `linear-gradient(${
+                Math.random() * 360
+              }deg, transparent, var(${colVar}), transparent)`;
+              el.style.animationName = "tidal-sweep";
+            }
+
+            // Duration base
+            const dur = 5 + Math.random() * 10;
+            el.style.animationDuration = dur / State.globalSpeed + "s";
+
+            // Alternating direction
+            if (i % 2 === 0) el.style.animationDirection = "alternate";
+          } else if (State.mode === "orbs") {
+            // Smaller Blobs
+            const sz = 200 + Math.random() * 300;
+            el.style.width = sz + "px";
+            el.style.height = sz + "px";
+            el.style.marginLeft = -(sz / 2) + "px";
+            el.style.marginTop = -(sz / 2) + "px";
+            el.style.background = `var(${colVar})`;
+            el.style.borderRadius = "50%";
+
+            el.style.animationName = "vortex-pulse";
+            el.style.setProperty("--tx", Math.random() * 300 - 150 + "px");
+            el.style.setProperty("--ty", Math.random() * 300 - 150 + "px");
+
+            el.style.animationDuration =
+              (8 + Math.random() * 8) / State.globalSpeed + "s";
+          } else if (State.mode === "dots") {
+            // Tiny Sparks
+            const sz = 10 + Math.random() * 40;
+            el.style.width = sz + "px";
+            el.style.height = sz + "px";
+            el.style.background = `var(${colVar})`;
+            el.style.marginLeft = -(sz / 2) + "px";
+            el.style.marginTop = -(sz / 2) + "px";
+
+            el.style.animationName = "vortex-pulse";
+            el.style.setProperty("--tx", Math.random() * 400 - 200 + "px");
+            el.style.setProperty("--ty", Math.random() * 400 - 200 + "px");
+
+            el.style.animationDuration =
+              (2 + Math.random() * 4) / State.globalSpeed + "s";
+          }
+
+          // Random Delay start to prevent synced pulsing
+          el.style.animationDelay = Math.random() * -20 + "s";
+
+          dom.matter.appendChild(el);
+        }
+      }
+
+      // --- 3. PARAMETER UPDATERS ---
+
+      // A. Mode Switching
+      function selectMode(m) {
+        State.mode = m;
+        // UI Update
+        document
+          .querySelectorAll("#btn-mode-nebula, #btn-mode-orbs, #btn-mode-dots")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("btn-mode-" + m).classList.add("active");
+
+        // Submode Visibility
+        dom.submodeGrid.style.display = m === "nebula" ? "grid" : "none";
+        render();
+      }
+
+      function selectSub(s) {
+        State.sub = s;
+        document
+          .querySelectorAll("#submode-grid .btn")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("btn-sub-" + s).classList.add("active");
+        render();
+      }
+
+      // B. Re-generation Triggers (Quantities, Blend Modes)
+      function updateGen(key, val) {
+        if (key === "qty") {
+          State.qty = parseInt(val);
+          document.getElementById("val-qty").innerText = val;
+        }
+        if (key === "blend") {
+          State.blend = val;
+        } // Dropdown handle
+        render();
+      }
+
+      // C. CSS Variable Updaters (Live)
+      function updateCss(varName, val) {
+        dom.root.style.setProperty(varName, val);
+
+        // Dumb Label Updater (Iterate common patterns)
+        const map = {
+          "--source-scale": "val-scale",
+          "--source-chaos": "val-chaos",
+          "--breath-speed": "val-br-rate",
+          "--breath-depth": "val-br-dep",
+          "--breath-scale": "val-br-scl",
+          "--star-size": "val-size",
+          "--noise-opacity": "val-noise",
+          "--shine-opacity": "val-shine",
+          "--vignette-str": "val-vig",
+          "--vapor-opacity": "val-vop",
+          "--vapor-size": "val-vsz",
+        };
+        if (map[varName]) {
+          document.getElementById(map[varName]).innerText = val;
+        }
+      }
+
+      // D. SVG Filters
+      function updateSvg(type, val) {
+        if (type === "blur") {
+          dom.svgBlur.setAttribute("stdDeviation", val);
+          document.getElementById("val-visc").innerText = val;
+        }
+        if (type === "contrast") {
+          dom.svgContrast.setAttribute(
+            "values",
+            `1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 ${val} -9`
+          );
+          document.getElementById("val-cont").innerText = val;
+        }
+      }
+
+      // E. Global Speed Hack (Iterating DOM)
+      function updateGlobalSpeed(val) {
+        State.globalSpeed = parseFloat(val);
+        document.getElementById("val-speed").innerText = val + "x";
+        render(); // Simplest way to re-calc animation durations
+      }
+
+      // F. Colors
+      function setColor(idx, hex) {
+        dom.root.style.setProperty(`--c-${idx}`, hex);
+        // Also update input if triggered programmatically
+        document.getElementById("cp-" + idx).value = hex;
+      }
+
+      function setPalette(key) {
+        const pals = {
+          white: ["#cccccc", "#888888", "#ffffff", "#eeeeee", "#ffffff"],
+          cyber: ["#0f0524", "#2a0a55", "#d90368", "#00ccff", "#8a2be2"],
+          fire: ["#1a0500", "#2d0f04", "#ffaa00", "#ff3c00", "#ff8800"],
+        };
+        const p = pals[key];
+        if (p) {
+          p.forEach((hex, i) => setColor(i + 1, hex));
+        }
+      }
+
+      // --- INIT ---
+      // Render initial state
+      render();
+    </script>
+  </body>
+</html>

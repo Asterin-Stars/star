@@ -1,0 +1,212 @@
+[
+  {
+    "id": "wands_ace",
+    "key": "WANDS_ACE",
+    "nombre": "As de Bastos",
+    "contenido": {
+      "arquetipo": "La Ignición Primordial. El Big Bang. La primera línea de código de un proyecto unicornio. Energía pura sin vectorizar.",
+      "sombra": "Burnout instantáneo. La idea brillante que nunca se ejecuta (Vaporware). Impulsividad destructiva.",
+      "misticismo": "Yod. La chispa divina en Kether. El Fuego Secreto de los alquimistas.",
+      "arte": "Action Painting (Pollock). El gesto violento de la creación.",
+      "ciencia": "Combustión Espontánea. Energía de Activación Química.",
+      "computacion": "Hello World. `git init`. El momento de encender el servidor.",
+      "social": "El fundador visionario. La pasión inicial de una revolución.",
+      "cotidiano": "Un momento de La Ignición Primordial en tu día."
+    }
+  },
+  {
+    "id": "wands_02",
+    "key": "WANDS_02",
+    "nombre": "Dos de Bastos",
+    "contenido": {
+      "arquetipo": "El Dominio y la Planificación Global. El arquitecto mirando el plano. La visión de escalabilidad.",
+      "sombra": "Miedo al éxito. Parálisis por análisis en la fase de diseño. Insatisfacción crónica.",
+      "misticismo": "Chokmah en Atziluth. La Sabiduría del Fuego. El Mago se polariza.",
+      "arte": "El mapamundi. Arte conceptual que proyecta imperios.",
+      "ciencia": "Cartografía. Teodesía. La medición del mundo.",
+      "computacion": "Network Topology Design. Planificar la infraestructura cloud global.",
+      "social": "Imperialismo positivo. El deseo de viajar y conquistar mercados.",
+      "cotidiano": "Un momento de El Dominio y la Planificación Global en tu día."
+    }
+  },
+  {
+    "id": "wands_03",
+    "key": "WANDS_03",
+    "nombre": "Tres de Bastos",
+    "contenido": {
+      "arquetipo": "La Expansión y el Primer Retorno. El barco zarpa y se espera el cargamento. Product Market Fit validado.",
+      "sombra": "Impaciencia. Expectativas irreales sobre el ROI. Arrogancia prematura.",
+      "misticismo": "Binah en Atziluth. La forma del fuego se establece.",
+      "arte": "Horizontes abiertos. Romanticismo del viajero.",
+      "ciencia": "Comercio internacional y logística. Vectores de propagación.",
+      "computacion": "Data Latency. El ping de retorno. Scaled Agile.",
+      "social": "Colaboración estratégica. Joint Ventures. El equipo crece.",
+      "cotidiano": "Un momento de La Expansión y el Primer Retorno en tu día."
+    }
+  },
+  {
+    "id": "wands_04",
+    "key": "WANDS_04",
+    "nombre": "Cuatro de Bastos",
+    "contenido": {
+      "arquetipo": "La Celebración y el Hito (Milestone). La fiesta de lanzamiento (Launch Party). Estabilidad temporal.",
+      "sombra": "Complacencia. Creer que la meta volante es la meta final. Hedonismo vacío.",
+      "misticismo": "Chesed en Atziluth. La Misericordia del Fuego. El Templo construido.",
+      "arte": "Danza, festivales, simetría arquitectónica (Jardines).",
+      "ciencia": "Estabilidad termodinámica. Estructuras cristalinas.",
+      "computacion": "Successful Deploy. Version 1.0 Stable Release. Uptime 99.9%.",
+      "social": "La boda, el festival, la comunidad celebrando el éxito.",
+      "cotidiano": "Un momento de La Celebración y el Hito (Milestone) en tu día."
+    }
+  },
+  {
+    "id": "wands_05",
+    "key": "WANDS_05",
+    "nombre": "Cinco de Bastos",
+    "contenido": {
+      "arquetipo": "La Competencia y el Brainstorming Caótico. La lucha por el dominio. Hackathon.",
+      "sombra": "Conflicto de egos. Lucha inútil que gasta recursos. Ruido en la señal.",
+      "misticismo": "Geburah en Atziluth. La Severidad del Fuego. La guerra necesaria.",
+      "arte": "Disonancia. Arte marcial. Batallas heroicas.",
+      "ciencia": "Selección Natural. Competencia intraespecífica.",
+      "computacion": "Race Conditions. DDoS attack. A/B Testing agresivo.",
+      "social": "Debates políticos. Deportes competitivos. Rivalidad de mercado.",
+      "cotidiano": "Un momento de La Competencia y el Brainstorming Caótico en tu día."
+    }
+  },
+  {
+    "id": "wands_06",
+    "key": "WANDS_06",
+    "nombre": "Seis de Bastos",
+    "contenido": {
+      "arquetipo": "La Victoria Pública y el Reconocimiento. El desfile triunfal. Viralidad exitosa.",
+      "sombra": "Soberbia. Dependencia de la validación externa (Likes). El impostor.",
+      "misticismo": "Tiphareth en Atziluth. La Belleza del Fuego. El Rey Solar coronado.",
+      "arte": "Estatuas ecuestres. Laureles. Fotografía de prensa.",
+      "ciencia": "El pico de la ola. Resonancia armónica.",
+      "computacion": "Trending Topic. High Traffic success. Premio de la industria.",
+      "social": "El líder carismático aclamado. El influencer en su prime.",
+      "cotidiano": "Un momento de La Victoria Pública y el Reconocimiento en tu día."
+    }
+  },
+  {
+    "id": "wands_07",
+    "key": "WANDS_07",
+    "nombre": "Siete de Bastos",
+    "contenido": {
+      "arquetipo": "La Defensa de la Posición. El Rey de la Colina. Defender el market share contra los clones.",
+      "sombra": "Paranoia. Agotamiento por estar siempre en guardia. Aislamiento.",
+      "misticismo": "Netzach en Atziluth. La Victoria del Fuego es resistencia.",
+      "arte": "Heroísmo solitario. El último hombre en pie.",
+      "ciencia": "Sistema inmunológico activo. Resistencia al estrés.",
+      "computacion": "Firewall under attack. Cybersecurity defense. Patching vulnerabilities.",
+      "social": "Mantener los principios frente a la crítica. Valor personal.",
+      "cotidiano": "Un momento de La Defensa de la Posición en tu día."
+    }
+  },
+  {
+    "id": "wands_08",
+    "key": "WANDS_08",
+    "nombre": "Ocho de Bastos",
+    "contenido": {
+      "arquetipo": "La Velocidad Pura y la Comunicación Instantánea. Flechas de amor o datos. Fast Track.",
+      "sombra": "Precipitación. Errores por falta de revisión. Noticias falsas viajando rápido.",
+      "misticismo": "Hod en Atziluth. La Gloria del Fuego es movimiento.",
+      "arte": "Futurismo. Líneas de velocidad. Rayos.",
+      "ciencia": "Velocidad de la luz. Transmisión neuronal.",
+      "computacion": "Fiber Optic. 5G. Real-time streaming. High Frequency Trading.",
+      "social": "El mensaje de texto urgente. El flechazo amoroso. Noticias virales.",
+      "cotidiano": "Un momento de La Velocidad Pura y la Comunicación Instantánea en tu día."
+    }
+  },
+  {
+    "id": "wands_09",
+    "key": "WANDS_09",
+    "nombre": "Nueve de Bastos",
+    "contenido": {
+      "arquetipo": "La Resiliencia y la Última Defensa. El guardia herido pero no vencido. Persistencia.",
+      "sombra": "Tozudez. No saber cuándo retirarse. Desgaste crónico.",
+      "misticismo": "Yesod en Atziluth. El Fundamento del Fuego es la fuerza vital.",
+      "arte": "El veterano. Cicatrices de guerra. Estoicismo.",
+      "ciencia": "Reserva de energía. Adrenalina final.",
+      "computacion": "Backup system. Failover. Modo de recuperación.",
+      "social": "Defender lo que es tuyo. La prueba final antes del descanso.",
+      "cotidiano": "Un momento de La Resiliencia y la Última Defensa en tu día."
+    }
+  },
+  {
+    "id": "wands_10",
+    "key": "WANDS_10",
+    "nombre": "Diez de Bastos",
+    "contenido": {
+      "arquetipo": "La Carga y la Responsabilidad Excesiva. El éxito que aplasta. Escalar demasiado rápido.",
+      "sombra": "Colapso. Delegar mal. Ser esclavo de tu propia creación.",
+      "misticismo": "Malkuth en Atziluth. El Reino del Fuego pesa.",
+      "arte": "Atlas cargando el mundo. El esfuerzo físico extremo.",
+      "ciencia": "Fatiga de materiales. Gravedad excesiva.",
+      "computacion": "Tech Debt (Deuda Técnica) acumulada. Servidor sobrecargado.",
+      "social": "Workaholism. El precio del poder. Estrés ejecutivo.",
+      "cotidiano": "Un momento de La Carga y la Responsabilidad Excesiva en tu día."
+    }
+  },
+  {
+    "id": "wands_page",
+    "key": "WANDS_PAGE",
+    "nombre": "Sota de Bastos",
+    "contenido": {
+      "arquetipo": "El Explorador y el Mensajero. El Becario entusiasta. Nuevas noticias.",
+      "sombra": "Inmadurez. Falta de foco. El eterno estudiante que no ejecuta.",
+      "misticismo": "Tierra del Fuego. La semilla de la voluntad.",
+      "arte": "El mensajero. El heraldo. Curiosidad infantil.",
+      "ciencia": "Investigación preliminar. Hipótesis.",
+      "computacion": "Beta Tester. Early Adopter. El script kiddie curioso.",
+      "social": "Noticias emocionantes. Un amigo leal y aventurero.",
+      "cotidiano": "Un momento de El Explorador y el Mensajero en tu día."
+    }
+  },
+  {
+    "id": "wands_knight",
+    "key": "WANDS_KNIGHT",
+    "nombre": "Caballo de Bastos",
+    "contenido": {
+      "arquetipo": "El Guerrero y el Activista. El emprendedor agresivo. Pasión en movimiento.",
+      "sombra": "Violencia. Impulsividad ciega. Iniciar mucho y acabar poco.",
+      "misticismo": "Aire del Fuego. El viento aviva la llama.",
+      "arte": "El caballero andante. La carga de caballería.",
+      "ciencia": "Reacción en cadena. Propulsión.",
+      "computacion": "Sprint. Hackathon winner. Rapid Prototyping.",
+      "social": "El revolucionario. El viajero impulsivo. El amante ardiente.",
+      "cotidiano": "Un momento de El Guerrero y el Activista en tu día."
+    }
+  },
+  {
+    "id": "wands_queen",
+    "key": "WANDS_QUEEN",
+    "nombre": "Reina de Bastos",
+    "contenido": {
+      "arquetipo": "La Carisma y la Confianza. La líder magnética. Bruja del Fuego.",
+      "sombra": "Drama Queen. Manipulación emocional. Celos.",
+      "misticismo": "Agua del Fuego. El vapor que mueve la máquina.",
+      "arte": "La diva. La actriz. El girasol.",
+      "ciencia": "Radiación térmica. El calor que nutre.",
+      "computacion": "Community Manager. UX Designer con empatía. Brand Ambassador.",
+      "social": "La anfitriona perfecta. Popularidad natural. Independencia.",
+      "cotidiano": "Un momento de La Carisma y la Confianza en tu día."
+    }
+  },
+  {
+    "id": "wands_king",
+    "key": "WANDS_KING",
+    "nombre": "Rey de Bastos",
+    "contenido": {
+      "arquetipo": "El Visionario y el Director. Steve Jobs. Voluntad ejecutiva.",
+      "sombra": "Dictador. Intolerancia a la debilidad. Egocentrismo.",
+      "misticismo": "Fuego del Fuego. La llama pura controlada.",
+      "arte": "El trono de salamandras. Poder desnudo.",
+      "ciencia": "Fusión nuclear controlada. Ingeniería.",
+      "computacion": "CTO / CEO. Arquitecto de Sistemas. Visionary Leader.",
+      "social": "Liderazgo inspirador. El padre estricto pero justo.",
+      "cotidiano": "Un momento de El Visionario y el Director en tu día."
+    }
+  }
+]

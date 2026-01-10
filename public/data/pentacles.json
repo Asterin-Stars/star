@@ -1,0 +1,212 @@
+[
+  {
+    "id": "pentacles_ace",
+    "key": "PENTACLES_ACE",
+    "nombre": "As de Oros",
+    "contenido": {
+      "arquetipo": "La Semilla de Oro. El Recurso Infinito. La oportunidad tangible.",
+      "sombra": "Avaricia material. Derroche. Perder la oportunidad.",
+      "misticismo": "Heh final en Kether (Tierra). La raíz de la Materia.",
+      "arte": "El jardín divino. La moneda mágica.",
+      "ciencia": "El átomo. El bosón de Higgs. Capital semilla.",
+      "computacion": "Genesis Block. Initial Coin Offering (ICO). Hardware nuevo.",
+      "social": "Oferta de trabajo. Regalo valioso. Inversión inicial.",
+      "cotidiano": "Un momento de La Semilla de Oro en tu día."
+    }
+  },
+  {
+    "id": "pentacles_02",
+    "key": "PENTACLES_02",
+    "nombre": "Dos de Oros",
+    "contenido": {
+      "arquetipo": "El Malabarista y el Flujo de Caja. Adaptabilidad infinita. Gestión dinámica.",
+      "sombra": "Desequilibrio financiero. Vivir al día. Estrés multitarea.",
+      "misticismo": "Chokmah en Assiah. La Sabiduría de la Tierra es cambio.",
+      "arte": "El infinito (Lemniscata). Barcos en el mar.",
+      "ciencia": "Dinámica de fluidos. Economía circular.",
+      "computacion": "Load Balancing. Async/Await handling. Cashflow management.",
+      "social": "Hacer malabarismos con responsabilidades. Flexibilidad.",
+      "cotidiano": "Un momento de El Malabarista y el Flujo de Caja en tu día."
+    }
+  },
+  {
+    "id": "pentacles_03",
+    "key": "PENTACLES_03",
+    "nombre": "Tres de Oros",
+    "contenido": {
+      "arquetipo": "La Maestría y el Trabajo en Equipo. El artesano competente. Construcción sólida.",
+      "sombra": "Perfeccionismo paralizante. Trabajo mediocre. Falta de reconocimiento.",
+      "misticismo": "Binah en Assiah. El Entendimiento de la Tierra es estructura.",
+      "arte": "La catedral. Los tres maestros. El plano.",
+      "ciencia": "Ingeniería civil. Arquitectura colaborativa.",
+      "computacion": "Open Source Contribution. Code Review. Teamwork.",
+      "social": "Colaboración profesional. Reconocimiento de habilidades. Gremio.",
+      "cotidiano": "Un momento de La Maestría y el Trabajo en Equipo en tu día."
+    }
+  },
+  {
+    "id": "pentacles_04",
+    "key": "PENTACLES_04",
+    "nombre": "Cuatro de Oros",
+    "contenido": {
+      "arquetipo": "La Avaricia y la Seguridad. El Conservador. 'Lo mío es mío'.",
+      "sombra": "Estreñimiento emocional y financiero. Miedo a perder. Bloqueo.",
+      "misticismo": "Chesed en Assiah. La Misericordia de la Tierra condensa.",
+      "arte": "El avaro. La caja fuerte. La fortaleza.",
+      "ciencia": "Conservación de la energía. Inercia.",
+      "computacion": "Vendor Lock-in. Proprietary Software. Firewall excesivo.",
+      "social": "Ahorro extremo. Cierre emocional. Seguridad ante todo.",
+      "cotidiano": "Un momento de La Avaricia y la Seguridad en tu día."
+    }
+  },
+  {
+    "id": "pentacles_05",
+    "key": "PENTACLES_05",
+    "nombre": "Cinco de Oros",
+    "contenido": {
+      "arquetipo": "La Pobreza y la Exclusión. El invierno del alma. Necesidad física.",
+      "sombra": "Victimismo. No pedir ayuda. Pobreza espiritual.",
+      "misticismo": "Geburah en Assiah. La Severidad de la Tierra es carencia.",
+      "arte": "Nieve y vitral iluminado. Mendigos.",
+      "ciencia": "Escasez de recursos. Hipotermia.",
+      "computacion": "Out of Memory. Server Crash. Insufficient Funds.",
+      "social": "Desempleo. Enfermedad. Sentirse fuera del sistema.",
+      "cotidiano": "Un momento de La Pobreza y la Exclusión en tu día."
+    }
+  },
+  {
+    "id": "pentacles_06",
+    "key": "PENTACLES_06",
+    "nombre": "Seis de Oros",
+    "contenido": {
+      "arquetipo": "La Generosidad y la Caridad. El equilibrio del dar y recibir. Filantropía.",
+      "sombra": "Dependencia. Dar para controlar. Superioridad moral.",
+      "misticismo": "Tiphareth en Assiah. La Belleza de la Tierra es compartir.",
+      "arte": "La balanza. El mercader bondadoso.",
+      "ciencia": "Redistribución de recursos. Simetría.",
+      "computacion": "Airdrop. Open Source funding. Grant.",
+      "social": "Ayuda económica. Mentoría. Mecenazgo.",
+      "cotidiano": "Un momento de La Generosidad y la Caridad en tu día."
+    }
+  },
+  {
+    "id": "pentacles_07",
+    "key": "PENTACLES_07",
+    "nombre": "Siete de Oros",
+    "contenido": {
+      "arquetipo": "La Paciencia y la Evaluación. Esperar la cosecha. Inversión a largo plazo.",
+      "sombra": "Frustración por lentitud. Duda sobre el ROI. Abandonar antes de tiempo.",
+      "misticismo": "Netzach en Assiah. La Victoria de la Tierra es el tiempo.",
+      "arte": "El agricultor descansando. Cultivos verdes.",
+      "ciencia": "Botánica. Crecimiento exponencial lento.",
+      "computacion": "Long-term holding (HODL). Training AI model. Rendering.",
+      "social": "Pausa reflexiva. Planificación de retiro. Esperar resultados.",
+      "cotidiano": "Un momento de La Paciencia y la Evaluación en tu día."
+    }
+  },
+  {
+    "id": "pentacles_08",
+    "key": "PENTACLES_08",
+    "nombre": "Ocho de Oros",
+    "contenido": {
+      "arquetipo": "La Prudencia y el Detalle. El aprendiz diligente. Focus total.",
+      "sombra": "Obsesión por el detalle. Workaholic sin visión. Falta de ambición.",
+      "misticismo": "Hod en Assiah. La Gloria de la Tierra es el detalle.",
+      "arte": "El taller. El cincel. Repetición.",
+      "ciencia": "Nanotecnología. Artesanía de precisión.",
+      "computacion": "Refactoring code. Pixel pushing. Deep Work.",
+      "social": "Estudio intenso. Desarrollo de habilidades. Trabajo hormiga.",
+      "cotidiano": "Un momento de La Prudencia y el Detalle en tu día."
+    }
+  },
+  {
+    "id": "pentacles_09",
+    "key": "PENTACLES_09",
+    "nombre": "Nueve de Oros",
+    "contenido": {
+      "arquetipo": "La Autosuficiencia y el Lujo. El jardín privado. Disfrutar del éxito solo.",
+      "sombra": "Aislamiento dorado. Materialismo superficial. Jaula de oro.",
+      "misticismo": "Yesod en Assiah. El Fundamento de la Tierra es la riqueza.",
+      "arte": "La dama y el halcón. Viñedos. Ropas ricas.",
+      "ciencia": "Ecología controlada. Genética de élite.",
+      "computacion": "Exit exitoso. Passive Income. Solo Founder success.",
+      "social": "Independencia financiera. Soltería empoderada. Refinamiento.",
+      "cotidiano": "Un momento de La Autosuficiencia y el Lujo en tu día."
+    }
+  },
+  {
+    "id": "pentacles_10",
+    "key": "PENTACLES_10",
+    "nombre": "Diez de Oros",
+    "contenido": {
+      "arquetipo": "La Riqueza Generacional y el Legado. El castillo familiar. Estabilidad eterna.",
+      "sombra": "Tradicionalismo asfixiante. Disputas de herencia. Carga familiar.",
+      "misticismo": "Malkuth en Assiah. El Reino de la Tierra completo.",
+      "arte": "El arco de piedra. Tres generaciones. Perros.",
+      "ciencia": "Genética de poblaciones. Patrimonio.",
+      "computacion": "Legacy System (Stable). Enterprise Infrastructure. Wealth Protocol.",
+      "social": "Herencia. Empresa familiar. Seguridad a largo plazo.",
+      "cotidiano": "Un momento de La Riqueza Generacional y el Legado en tu día."
+    }
+  },
+  {
+    "id": "pentacles_page",
+    "key": "PENTACLES_PAGE",
+    "nombre": "Sota de Oros",
+    "contenido": {
+      "arquetipo": "El Estudiante Práctico y la Oferta. Beca o oportunidad.",
+      "sombra": "Falta de realismo. Pereza. Soñar sin hacer.",
+      "misticismo": "Tierra de la Tierra. La semilla.",
+      "arte": "Sostener el pentáculo con asombro.",
+      "ciencia": "Ciencia aplicada joven. Becario.",
+      "computacion": "Junior Dev. Learning Crypto. New Project.",
+      "social": "Nueva oferta de trabajo. Inicio de estudios. Curiosidad material.",
+      "cotidiano": "Un momento de El Estudiante Práctico y la Oferta en tu día."
+    }
+  },
+  {
+    "id": "pentacles_knight",
+    "key": "PENTACLES_KNIGHT",
+    "nombre": "Caballo de Oros",
+    "contenido": {
+      "arquetipo": "El Trabajador Incansable y el Conservador. Lento pero seguro.",
+      "sombra": "Estancamiento. Aburrimiento. Terquedad.",
+      "misticismo": "Aire de la Tierra. El arado.",
+      "arte": "Caballo de tiro. Campo arado.",
+      "ciencia": "Ingeniería agrícola. Inercia.",
+      "computacion": "Reliability Engineer. Grinding. Slow & Steady.",
+      "social": "Rutina productiva. Lealtad. Responsabilidad.",
+      "cotidiano": "Un momento de El Trabajador Incansable y el Conservador en tu día."
+    }
+  },
+  {
+    "id": "pentacles_queen",
+    "key": "PENTACLES_QUEEN",
+    "nombre": "Reina de Oros",
+    "contenido": {
+      "arquetipo": "La Madre Nutricia y la Pragmática. Gestión de recursos perfecta.",
+      "sombra": "Materialismo asfixiante. Sobreprotección. Miedo a la pobreza.",
+      "misticismo": "Agua de la Tierra. El oasis.",
+      "arte": "Trono de naturaleza. Conejo.",
+      "ciencia": "Ecología. Economía doméstica.",
+      "computacion": "CFO. Resource Manager. Sustainability.",
+      "social": "Cuidadora. Filántropa práctica. Seguridad maternal.",
+      "cotidiano": "Un momento de La Madre Nutricia y la Pragmática en tu día."
+    }
+  },
+  {
+    "id": "pentacles_king",
+    "key": "PENTACLES_KING",
+    "nombre": "Rey de Oros",
+    "contenido": {
+      "arquetipo": "El Magnate y el Rey Midas. Éxito material consolidado.",
+      "sombra": "Corrupción. Avaricia ciega. Valorar solo lo que cuesta dinero.",
+      "misticismo": "Fuego de la Tierra. El volcán de oro.",
+      "arte": "Trono de toros. Castillo.",
+      "ciencia": "Geología. Finanzas macro.",
+      "computacion": "Venture Capitalist. Bitcoin Whale. Industry Titan.",
+      "social": "Poder económico. Patrón. Estabilidad inamovible.",
+      "cotidiano": "Un momento de El Magnate y el Rey Midas en tu día."
+    }
+  }
+]

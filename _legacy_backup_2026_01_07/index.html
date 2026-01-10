@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Star ✦ Tarot Skeleton</title>
+    <link rel="stylesheet" href="public/css/main.css" />
+  </head>
+  <body>
+    <!-- PRELOADER -->
+    <div id="preloader">
+      <div class="loader-logo">STAR ✦</div>
+    </div>
+
+    <!-- APP CONTAINER -->
+    <div class="app-container">
+      <!-- CARD STAGE -->
+      <div class="card-stage" id="cardStage">
+        <div class="card-inner" id="cardInner">
+          <div class="card-face front">
+            <span>✦</span>
+          </div>
+          <div class="card-face back" id="cardBack">
+            <!-- Image set via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- INSIGHT PANEL -->
+      <div class="insight-panel" id="insightPanel">
+        <h2 class="card-title" id="cardTitle"></h2>
+
+        <div class="reading-section">
+          <h3>Arquetipo</h3>
+          <p id="textArquetipo"></p>
+        </div>
+
+        <div class="reading-section">
+          <h3>Sombra</h3>
+          <p id="textSombra"></p>
+        </div>
+
+        <div class="reading-section">
+          <h3>Misticismo</h3>
+          <p id="textMisticismo"></p>
+        </div>
+
+        <div class="reading-section">
+          <h3>Cotidiano</h3>
+          <p id="textCotidiano"></p>
+        </div>
+
+        <button class="btn-reset" id="btnReset">Nueva Lectura</button>
+      </div>
+    </div>
+
+    <!-- LOGIC SCRIPT -->
+    <script>
+      // --- CONSTANTS ---
+      const DATA_FILES = ["0-5.json", "6-10.json", "11-15.json", "16-21.json"];
+      const DATA_PATH = "./public/data/";
+      const CARD_IMG_PATH = "./public/cards/";
+
+      // --- STATE ---
+      let allCards = [];
+      let currentCard = null;
+      let isFlipped = false;
+      let isLoaded = false;
+
+      // --- DOM REFS ---
+      const preloader = document.getElementById("preloader");
+      const cardStage = document.getElementById("cardStage");
+      const cardInner = document.getElementById("cardInner");
+      const cardBack = document.getElementById("cardBack");
+      const insightPanel = document.getElementById("insightPanel");
+      const cardTitle = document.getElementById("cardTitle");
+      const btnReset = document.getElementById("btnReset");
+
+      // Reading Text Refs
+      const textArquetipo = document.getElementById("textArquetipo");
+      const textSombra = document.getElementById("textSombra");
+      const textMisticismo = document.getElementById("textMisticismo");
+      const textCotidiano = document.getElementById("textCotidiano");
+
+      // --- INIT ---
+      async function init() {
+        try {
+          // 1. Fetch Data
+          await loadAllCards();
+
+          // 2. Prepare First Card
+          pickRandomCard();
+
+          // 3. Hide Preloader
+          setTimeout(() => {
+            preloader.style.opacity = "0";
+            setTimeout(() => {
+              preloader.style.display = "none";
+              isLoaded = true;
+            }, 500);
+          }, 1000);
+        } catch (err) {
+          console.error("Initialization failed:", err);
+          preloader.innerHTML =
+            '<div style="color:red">Error de carga. Recarga la página.</div>';
+        }
+      }
+
+      async function loadAllCards() {
+        for (const file of DATA_FILES) {
+          const response = await fetch(DATA_PATH + file);
+          if (!response.ok) throw new Error(`Failed to load ${file}`);
+          const data = await response.json();
+          allCards = [...allCards, ...data];
+        }
+        console.log(`Loaded ${allCards.length} cards.`);
+      }
+
+      function pickRandomCard() {
+        if (allCards.length === 0) return;
+        const idx = Math.floor(Math.random() * allCards.length);
+        currentCard = allCards[idx];
+
+        // Set Image
+        // ID formatted to 'arXX.jpg'
+        const idStr = String(currentCard.id).padStart(2, "0");
+        const imgUrl = `${CARD_IMG_PATH}ar${idStr}.jpg`;
+
+        // Preload Image
+        const img = new Image();
+        img.onload = () => {
+          cardBack.style.backgroundImage = `url('${imgUrl}')`;
+        };
+        img.src = imgUrl;
+
+        // Prepare Text
+        // We set the text now but the panel is hidden
+        cardTitle.textContent = currentCard.nombre;
+        textArquetipo.textContent = currentCard.contenido.arquetipo;
+        textSombra.textContent = currentCard.contenido.sombra;
+        textMisticismo.textContent = currentCard.contenido.misticismo;
+        textCotidiano.textContent = currentCard.contenido.cotidiano;
+      }
+
+      function revealCard() {
+        if (isFlipped || !isLoaded) return;
+        isFlipped = true;
+
+        // 1. Flip Animation
+        cardStage.classList.add("flipped");
+
+        // 2. Show Text (delayed)
+        setTimeout(() => {
+          insightPanel.classList.add("visible");
+          btnReset.classList.add("visible");
+        }, 600);
+      }
+
+      function resetReading() {
+        // 1. Hide Text
+        insightPanel.classList.remove("visible");
+        btnReset.classList.remove("visible");
+
+        // 2. Flip Back
+        setTimeout(() => {
+          cardStage.classList.remove("flipped");
+          isFlipped = false;
+
+          // 3. Pick New Card (delayed to hide switch)
+          setTimeout(() => {
+            pickRandomCard();
+          }, 400); // changes while back is visible
+        }, 300);
+      }
+
+      // --- EVENTS ---
+      cardStage.addEventListener("click", revealCard);
+      btnReset.addEventListener("click", (e) => {
+        e.stopPropagation(); // Prevent card click
+        resetReading();
+      });
+
+      // Start
+      window.addEventListener("load", init);
+    </script>
+  </body>
+</html>

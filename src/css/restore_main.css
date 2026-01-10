@@ -1,0 +1,2290 @@
+/* =====================================================
+           PRELOADER - SIMPLIFIED FOR PERFORMANCE
+        ===================================================== */
+#starPreloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: var(--theme-bg-primary); /* Solid background instead of blur */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  overflow: hidden;
+  transition: opacity 0.5s ease;
+}
+
+#starPreloader.loaded {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ... (removed expensive ramification animations) ... */
+
+/* Central seed/nucleus */
+.tree-seed {
+  width: 20px;
+  height: 20px;
+  background: var(--color1);
+  border-radius: 50%;
+  animation: pulseSeed 2s ease-in-out infinite;
+}
+
+@keyframes pulseSeed {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+/* ... (removed humidity layer) ... */
+
+/* Logo overlay */
+.preloader-logo {
+  font-size: 3rem;
+  font-weight: 300;
+  color: var(--theme-text-primary);
+  letter-spacing: 0.25em;
+  margin-top: 20px;
+}
+
+
+/* Hide main content until loaded */
+body.loading > *:not(#starPreloader) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* =====================================================
+           ORÁCULO WHITESUR - PROYECTO 7.41
+           Fusión: Glassmorphism Apple Music Style + Misticismo
+        ===================================================== */
+
+:root {
+  /* ==================== THEME SYSTEM ==================== */
+  /* Default: Light Mode */
+
+  /* Backgrounds */
+  --theme-bg-primary: #ffffff;
+  --theme-bg-secondary: rgba(255, 255, 255, 0.95);
+  --theme-bg-interface: rgba(255, 255, 255, 0.3);
+
+  /* Glass Effects */
+  --theme-glass-bg: rgba(255, 255, 255, 0.5);
+  --theme-glass-border: rgba(255, 255, 255, 0.6);
+  --theme-glass-tint: rgba(255, 255, 255, 0.15);
+  --theme-modal-bg: rgba(255, 255, 255, 0.85);
+
+  /* Text Colors */
+  --theme-text-primary: #1d1d1f;
+  --theme-text-secondary: #424245;
+  --theme-text-tertiary: rgba(0, 0, 0, 0.5);
+  --theme-text-inverted: #ffffff;
+
+  /* Wallpaper & Blobs */
+  --theme-wallpaper-opacity: 1;
+  --theme-blob-opacity: 0.6;
+  --theme-wallpaper-blend: normal;
+
+  /* Borders & Shadows */
+  --theme-border-color: rgba(255, 255, 255, 0.6);
+  --theme-shadow-soft: 0 12px 42px rgba(0, 0, 0, 0.1);
+  --theme-shadow-card: 0 8px 32px rgba(0, 0, 0, 0.15);
+
+  /* Preloader */
+  --theme-preloader-bg: radial-gradient(
+    circle at center,
+    rgba(250, 250, 255, 0.98) 0%,
+    rgba(245, 245, 250, 0.95) 50%,
+    rgba(240, 240, 248, 0.92) 100%
+  );
+  --theme-vein-color: rgba(147, 51, 234, 0.25);
+
+  /* ==================== LEGACY VARIABLES (preserved for compatibility) ==================== */
+  /* GLASSMORPHISM - Ajustado para fondos dinámicos claros */
+  --glass-surface: var(--theme-glass-bg);
+  --glass-border: var(--theme-glass-border);
+  --glass-blur: 35px;
+  --shadow-soft: var(--theme-shadow-soft);
+  --shadow-card: var(--theme-shadow-card);
+
+  /* TIPOGRAFÍA - Ajustada a oscuro para legibilidad sobre cristal claro */
+  --text-primary: var(--theme-text-primary);
+  --text-secondary: var(--theme-text-secondary);
+  --text-tertiary: var(--theme-text-tertiary);
+
+  /* ANIMACIONES - Basadas en principios de Apple HIG */
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Ease out suave */
+  --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* Rebote sutil */
+  --ease-natural: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Material Design */
+
+  /* Variables para colores dinámicos del fondo */
+  --color1: #ffffff;
+  --color2: #ffffff;
+  --color3: #ffffff;
+  --color4: #ffffff;
+
+  /* Color de keyword - basado en la paleta de la carta */
+  --keyword-color: #ffeb3b;
+
+  /* GYROSCOPE - Variables actualizadas dinámicamente por JavaScript */
+  --gyro-x: 0;
+  --gyro-y: 0;
+  --gyro-z: 0;
+  --gyro-hue: 0deg;
+
+  /* Smooth transitions for theme changes */
+  --theme-transition: 0.3s ease;
+}
+
+/* ==================== DARK MODE THEME ==================== */
+[data-theme="dark"] {
+  /* Backgrounds */
+  --theme-bg-primary: #000000;
+  --theme-bg-secondary: rgba(0, 0, 0, 0.95);
+  --theme-bg-interface: rgba(0, 0, 0, 0.4);
+
+  /* Glass Effects - Darker tints */
+  --theme-glass-bg: rgba(0, 0, 0, 0.4);
+  --theme-glass-border: rgba(255, 255, 255, 0.15);
+  --theme-glass-tint: rgba(0, 0, 0, 0.3);
+  --theme-modal-bg: rgba(0, 0, 0, 0.75);
+
+  /* Text Colors - Inverted */
+  --theme-text-primary: #f5f5f7;
+  --theme-text-secondary: #d1d1d6;
+  --theme-text-tertiary: rgba(255, 255, 255, 0.5);
+  --theme-text-inverted: #000000;
+
+  /* Wallpaper & Blobs - Dimmed */
+  --theme-wallpaper-opacity: 0.4;
+  --theme-blob-opacity: 0.3;
+  --theme-wallpaper-blend: multiply;
+
+  /* Borders & Shadows - Lighter for visibility */
+  --theme-border-color: rgba(255, 255, 255, 0.2);
+  --theme-shadow-soft: 0 12px 42px rgba(0, 0, 0, 0.6);
+  --theme-shadow-card: 0 8px 32px rgba(0, 0, 0, 0.8);
+
+  /* Preloader - Dark variant */
+  --theme-preloader-bg: radial-gradient(
+    circle at center,
+    rgba(10, 10, 15, 0.98) 0%,
+    rgba(5, 5, 10, 0.95) 50%,
+    rgba(0, 0, 5, 0.92) 100%
+  );
+  --theme-vein-color: rgba(147, 51, 234, 0.4);
+
+  /* Legacy compatibility updates */
+  --glass-surface: var(--theme-glass-bg);
+  --glass-border: var(--theme-glass-border);
+  --text-primary: var(--theme-text-primary);
+  --text-secondary: var(--theme-text-secondary);
+  --text-tertiary: var(--theme-text-tertiary);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Eliminar outline azul de selección (Requerimiento del usuario) */
+*,
+*:focus,
+*:active,
+button:focus,
+button:active,
+a:focus,
+a:active,
+div:focus,
+div:active,
+[tabindex]:focus,
+[tabindex]:active,
+*:focus-visible,
+.card-stage,
+.card-stage:focus,
+.card-stage:active,
+.card-inner,
+.card-inner:focus,
+.card-inner:active {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* BLOQUEO DE SCROLL HASTA QUE LA CARTA SE REVELE */
+body.no-scroll {
+  overflow: hidden;
+  /* Evita el scroll en el body */
+  position: fixed;
+  /* Previene que se mueva el contenido en iOS */
+  width: 100%;
+  /* Mantiene el ancho */
+}
+
+/* ==================== WALLPAPER DINÁMICO ESTILO APPLE MUSIC LÍQUIDO ==================== */
+.wallpaper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--theme-bg-primary);
+  /* Theme-aware background */
+  z-index: -2;
+  overflow: hidden;
+  /* Contiene las manchas de color */
+  transition: background-color 0.8s var(--ease-smooth);
+}
+
+.wallpaper.active {
+  /* Theme-aware tint when active */
+  background: var(--theme-bg-secondary);
+}
+
+/* Manchas de color (Blobs) */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  /* El blur intenso crea el efecto líquido/borroso. Ajustado para ser muy fluido. */
+  filter: blur(135px);
+  opacity: 0;
+  /* Transición suave al aparecer */
+  transition: opacity 1.5s ease-in-out;
+  width: 65vmax;
+  height: 65vmax;
+  /* Theme-aware blend mode */
+  mix-blend-mode: var(--theme-wallpaper-blend);
+}
+
+.wallpaper.active .blob {
+  /* Theme-aware opacity */
+  opacity: var(--theme-blob-opacity);
+}
+
+/* Asignación de colores dinámicos y animaciones únicas */
+.blob1 {
+  background: var(--color1);
+  animation: move1 28s ease-in-out infinite alternate;
+}
+
+.blob2 {
+  background: var(--color2);
+  animation: move2 32s ease-in-out infinite alternate;
+}
+
+.blob3 {
+  background: var(--color3);
+  animation: move3 38s ease-in-out infinite alternate;
+}
+
+.blob4 {
+  background: var(--color4);
+  animation: move4 42s ease-in-out infinite alternate;
+}
+
+/* Keyframes para movimiento lento y orgánico */
+@keyframes move1 {
+  from {
+    transform: translate(-20%, -20%) scale(1) rotate(0deg);
+  }
+
+  to {
+    transform: translate(30%, 40%) scale(1.4) rotate(360deg);
+  }
+}
+
+@keyframes move2 {
+  from {
+    transform: translate(50%, -30%) scale(1.2) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-20%, 60%) scale(0.9) rotate(-360deg);
+  }
+}
+
+@keyframes move3 {
+  from {
+    transform: translate(70%, 70%) scale(0.9) rotate(0deg);
+  }
+
+  to {
+    transform: translate(10%, -10%) scale(1.5) rotate(360deg);
+  }
+}
+
+@keyframes move4 {
+  from {
+    transform: translate(-10%, 80%) scale(1.1) rotate(0deg);
+  }
+
+  to {
+    transform: translate(60%, -20%) scale(1) rotate(-360deg);
+  }
+}
+
+/* ==================== IRIDESCENT BORDER EFFECTS (iOS 26 Style) ==================== */
+
+/* Rainbow gradient animation for borders */
+/* Chromatic aberration doesn't need animated gradients */
+
+/* Base iridescent border effect - CHROMATIC ABERRATION STYLE */
+.iridescent-border {
+  position: relative;
+  isolation: isolate;
+}
+
+/* RED/MAGENTA CHANNEL - offset right/up slightly - iOS26 INTENSE */
+.iridescent-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  filter: hue-rotate(0deg) blur(0.6px) brightness(1.8);
+  mix-blend-mode: screen;
+  opacity: 0.95;
+  transform: translate(
+    calc(3px + var(--gyro-x) * 0.05px),
+    calc(2px + var(--gyro-y) * 0.05px)
+  );
+  /* Radial mask: relaxed for more visibility */
+  -webkit-mask: radial-gradient(circle at center, transparent 70%, black 100%);
+  mask: radial-gradient(circle at center, transparent 70%, black 100%);
+  pointer-events: none;
+  z-index: -1;
+
+  /* GPU acceleration */
+  will-change: transform, filter;
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* GREEN/BLUE CHANNEL - offset left/down slightly - iOS26 INTENSE */
+.iridescent-border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  filter: hue-rotate(180deg) blur(0.6px) brightness(1.8);
+  mix-blend-mode: screen;
+  opacity: 0.9;
+  transform: translate(
+    calc(-3px - var(--gyro-x) * 0.05px),
+    calc(-2px - var(--gyro-y) * 0.05px)
+  );
+  /* Radial mask: relaxed for more visibility */
+  -webkit-mask: radial-gradient(circle at center, transparent 60%, black 100%);
+  mask: radial-gradient(circle at center, transparent 60%, black 100%);
+  pointer-events: none;
+  z-index: -1;
+
+  /* GPU acceleration */
+  will-change: transform, filter;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Hover: increase brightness and intensity even more */
+.iridescent-border:hover::before {
+  opacity: 0.9;
+  filter: hue-rotate(0deg) blur(0.3px) brightness(1.8);
+}
+
+.iridescent-border:hover::after {
+  opacity: 0.8;
+  filter: hue-rotate(180deg) blur(0.3px) brightness(1.8);
+}
+
+/* Subtle variant for small elements (buttons) */
+.iridescent-border-subtle::before {
+  /* Smaller offset for subtle effect */
+  transform: translate(
+    calc(0.5px + var(--gyro-x) * 0.01px),
+    calc(0.25px + var(--gyro-y) * 0.01px)
+  );
+  opacity: 0.2;
+  filter: hue-rotate(0deg) blur(0.3px);
+  /* Tighter mask for smaller elements */
+  -webkit-mask: radial-gradient(circle at center, transparent 85%, black 100%);
+  mask: radial-gradient(circle at center, transparent 85%, black 100%);
+}
+
+.iridescent-border-subtle::after {
+  /* Opposite offset */
+  transform: translate(
+    calc(-0.5px - var(--gyro-x) * 0.01px),
+    calc(-0.25px - var(--gyro-y) * 0.01px)
+  );
+  opacity: 0.15;
+  filter: hue-rotate(180deg) blur(0.3px);
+  /* Tighter mask for smaller elements */
+  -webkit-mask: radial-gradient(circle at center, transparent 85%, black 100%);
+  mask: radial-gradient(circle at center, transparent 85%, black 100%);
+}
+
+.iridescent-border-subtle:hover::before {
+  opacity: 0.35;
+}
+
+.iridescent-border-subtle:hover::after {
+  opacity: 0.25;
+}
+
+/* CAPA DE TEXTURA - Efecto "papel antiguo" muy sutil */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="300" height="300" filter="url(%23n)" opacity="0.05"/></svg>');
+  opacity: 0.08;
+  z-index: -1;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* ==================== INTERFACE PRINCIPAL ==================== */
+.interface {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* SAFE CENTERING: flex-start + auto margin prevents cutoff on small screens */
+  justify-content: flex-start; 
+  min-height: 100vh;
+  gap: 30px;
+  width: 100%;
+  max-width: 800px; /* Reduced max-width for better reading flow */
+  padding: 60px 20px 100px 20px; /* Extra bottom padding for readability */
+  margin: 0 auto;
+}
+
+/* Force insight panel visibility when active */
+#insightPanel.active {
+  display: block !important;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==================== CARTA - ZONA INTERACTIVA ==================== */
+.card-stage {
+  perspective: 1800px;
+  width: 282px;
+  /* Adjusted for 9:16 Aspect Ratio (approx) */
+  height: 500px;
+  cursor: pointer;
+  z-index: 10;
+  margin-top: 20px;
+  flex-shrink: 0;
+  transform-style: preserve-3d;
+  animation: breathe 4s ease-in-out infinite;
+
+  /* PREVENIR SCROLL AL INTERACTUAR CON LA CARTA */
+  touch-action: none;
+  /* Previene el comportamiento de scroll predeterminado en touch devices */
+  overscroll-behavior: contain;
+  /* Evita que el scroll se propague al contenedor padre */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Breathing stops on hover to not interfere with tilt */
+.card-stage:hover {
+  animation-play-state: paused;
+}
+
+.card-stage.flipped {
+  /* Flip state handled via variables */
+  --flip-angle: 180deg;
+}
+
+/* CONTENEDOR INTERNO 3D - Maneja inclinación y volteo */
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+
+  /* Default: Fast transition for tilt responsiveness */
+  transition: transform 0.1s ease-out;
+
+  /* Combine Tilt (rx, ry) and Flip (flip-angle 0 or 180) */
+  transform: rotateX(var(--rotate-x, 0deg))
+    rotateY(calc(var(--rotate-y, 0deg) + var(--flip-angle, 0deg)));
+}
+
+/* Slow transition only when flipping */
+.card-inner.is-flipping {
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 26px;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  /* Fix for Safari handling of overflow with 3D */
+  transform: translateZ(0);
+}
+
+/* RAINBOW PRISM GLARE (iOS26 Signature Effect) */
+.card-face::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at var(--glare-x, 50%) var(--glare-y, 50%),
+    rgba(255, 0, 255, 0.4) 0%,
+    rgba(0, 255, 255, 0.3) 20%,
+    rgba(255, 255, 0, 0.2) 40%,
+    transparent 70%
+  );
+  opacity: var(--glare-opacity, 0);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 10;
+  filter: blur(30px);
+  animation: rainbowPrism 3s ease-in-out infinite;
+  transition: opacity 0.3s ease;
+}
+
+/* Enhanced glare when card is flipped */
+.card-stage.flipped .card-face::after {
+  --glare-opacity: 0.6;
+}
+
+@keyframes rainbowPrism {
+  0%,
+  100% {
+    filter: blur(30px) hue-rotate(0deg);
+  }
+
+  33% {
+    filter: blur(35px) hue-rotate(120deg);
+  }
+
+  66% {
+    filter: blur(30px) hue-rotate(240deg);
+  }
+}
+
+/* DORSO - Gradiente Púrpura/Índigo solicitado */
+.front {
+  /* Implementación de: bg-gradient-to-br from-purple-900/20 to-indigo-900/20 */
+  /* Y radial-gradient(circle at 30% 30%, rgba(147, 51, 234, 0.1) 0%, transparent 50%) */
+
+  background-image: radial-gradient(
+      circle at 30% 30%,
+      rgba(147, 51, 234, 0.15) 0%,
+      transparent 50%
+    ),
+    linear-gradient(
+      to bottom right,
+      rgba(147, 51, 234, 0.25),
+      rgba(79, 70, 229, 0.25)
+    );
+
+  /* iOS26 WET GLASS DEPTH */
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  backdrop-filter: blur(25px) saturate(180%);
+
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow-card), inset 0 2px 4px rgba(255, 255, 255, 0.6),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2), 0 0 40px rgba(147, 51, 234, 0.3);
+
+  /* CENTERING FIX: Ensure full image visibility */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.keyword-highlight {
+  position: relative;
+  display: inline-block;
+  padding: 2px 1px;
+  font-weight: 800;
+
+  /* TRANSPARENT TEXT - wallpaper colors show through */
+  color: transparent;
+  background: inherit;
+  /* Inherit wallpaper background */
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  /* Subtle outline to define letter edges */
+  /* Subtle outline to define letter edges */
+  -webkit-text-stroke: 0.3px rgba(255, 255, 255, 0.3);
+
+  /* Allow blend with wallpaper */
+  mix-blend-mode: normal;
+
+  transition: all 0.3s ease;
+}
+
+/* Hover: Slightly stronger outline */
+.keyword-highlight:hover {
+  -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.5);
+  transform: scale(1.03);
+}
+
+/* NO pseudo-elementos (sin esferas ni brillos extras) */
+.keyword-highlight::before,
+.keyword-highlight::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Símbolo lunar central - Ajustado para el nuevo fondo */
+.symbol {
+  width: 70px;
+  height: 70px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+/* ANVERSO - La revelación - iOS26 WET GLASS */
+.back {
+  /* Fondo tipo cristal claro para la carta revelada */
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  backdrop-filter: blur(25px) saturate(180%);
+  transform: rotateY(180deg);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  overflow: hidden;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.8),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.15);
+  position: relative;
+  isolation: isolate;
+}
+
+/* ==================== PREMIUM HOLOGRAPHIC EFFECTS ==================== */
+/* INTENSOS Y VISIBLES - Optimizados para fondo claro */
+
+/* LAYER 1: Rainbow Foil Intensity - ARCOÍRIS MUY VISIBLE */
+.back::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 0, 255, 0.9) 0%,
+    rgba(0, 200, 255, 0.9) 15%,
+    rgba(255, 200, 0, 0.9) 30%,
+    rgba(255, 50, 150, 0.9) 45%,
+    rgba(100, 255, 100, 0.9) 60%,
+    rgba(255, 100, 0, 0.9) 75%,
+    rgba(150, 50, 255, 0.9) 90%,
+    rgba(0, 255, 255, 0.9) 100%
+  );
+  background-size: 200% 200%;
+  mix-blend-mode: screen; /* screen es más visible que color-dodge en blancos */
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 3;
+  border-radius: 11px;
+  animation: rainbowSweep 3s linear infinite;
+}
+
+/* LAYER 2: Metall ic Grain VISIBLE - Alto contraste */
+.back::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+      45deg,
+      rgba(255, 215, 0, 0.25) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(255, 215, 0, 0.25) 3px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(192, 192, 192, 0.25) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(192, 192, 192, 0.25) 3px
+    );
+  mix-blend-mode: multiply; /* multiply es más visible que overlay */
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: 11px;
+  animation: grainShift 2s linear infinite;
+}
+
+/* LAYER 3: Radial Shimmer INTENSO */
+.card-stage.flipped .card-face.back {
+  position: relative;
+}
+
+/* Brillo radial que se mueve */
+.card-stage.flipped .card-face.back .tarot-img {
+  position: relative;
+}
+
+.card-stage.flipped .card-face.back .tarot-img::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.6) 10%,
+    rgba(255, 255, 255, 0.3) 30%,
+    transparent 60%
+  );
+  mix-blend-mode: overlay;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 10;
+  animation: shimmerPulse 2.5s ease-in-out infinite;
+}
+
+/* Animaciones */
+@keyframes rainbowSweep {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 200%;
+  }
+}
+
+@keyframes grainShift {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(3px, 3px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes shimmerPulse {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.1);
+  }
+}
+
+.tarot-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  /* ELIMINACIÓN DE FONDO BLANCO (Importante si las imágenes lo tienen) */
+  mix-blend-mode: darken;
+  /* REMOVED filter for crisp card quality */
+  transition: transform 4s var(--ease-smooth);
+}
+
+/* Efecto zoom al revelar */
+.card-stage.flipped .tarot-img {
+  transform: scale(1.02);
+}
+
+/* ==================== VIDEO OVERLAY (LONG-PRESS) ==================== */
+.card-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 26px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.card-video-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.card-video-overlay video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Center alignment prevents uneven cropping */
+  object-position: center center;
+  background: transparent;
+  /* Enhanced visibility and seamless integration */
+  filter: brightness(1.05) contrast(1.03);
+  border-radius: 26px;
+  /* Match parent for perfect edge alignment */
+  /* Prevent lag/jitter */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+@media (max-width: 600px) {
+  .card-collection-notification {
+    width: 95%;
+    padding: 12px 15px;
+  }
+
+  .card-slot {
+    width: 45px;
+    height: 72px;
+  }
+
+  .progress-text {
+    font-size: 12px;
+  }
+}
+
+/* ==================== PANEL DE LECTURA ==================== */
+/* Estilo Apple Music Lyrics */
+.insight-panel {
+  width: 92%;
+  max-width: 720px;
+  background: rgba(245, 245, 245, 0.45);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  border-radius: 22px;
+  padding: 32px 42px 36px;
+  border: 1.5px solid var(--glass-border);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  /* Estado inicial: invisible */
+  opacity: 0;
+  transform: translateY(25px) scale(0.96);
+  transition: all 0.9s var(--ease-smooth);
+  text-align: left;
+  pointer-events: none;
+  z-index: 5;
+  margin-bottom: 60px;
+  flex-shrink: 0;
+}
+
+.insight-panel.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* TÍTULO Y TEXTOS - AJUSTADOS PARA LECTURA SOBRE CRISTAL CLARO */
+
+h2 {
+  margin: 0 0 22px 0;
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--text-primary);
+  /* Efecto de texto "grabado" sutil en lugar de shimmer brillante */
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
+  animation: fadeSlideIn 0.6s var(--ease-smooth) 0.2s both;
+}
+
+/* SECCIONES DE CONTENIDO */
+.section {
+  margin-bottom: 24px;
+  animation: fadeSlideIn 0.7s var(--ease-smooth) both;
+}
+
+.section:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.section:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.section:nth-child(4) {
+  animation-delay: 0.5s;
+}
+
+.section:nth-child(5) {
+  animation-delay: 0.6s;
+}
+
+.section:nth-child(6) {
+  animation-delay: 0.7s;
+}
+
+.section:nth-child(7) {
+  animation-delay: 0.8s;
+}
+
+.section-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 0 0 8px 0;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.section-title:hover {
+  color: var(--accent-primary);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9);
+}
+
+.section-title::after {
+  content: ">";
+  opacity: 0.6;
+  font-weight: 300;
+  font-size: 0.75em;
+  transition: opacity 0.2s ease;
+}
+
+.section-title:hover::after {
+  opacity: 0.9;
+  color: var(--accent-primary);
+}
+
+.intro-section {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 0 0 24px 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  animation: fadeSlideIn 0.6s ease-out;
+}
+
+.intro-text {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin: 0;
+  text-align: justify;
+}
+
+.intro-text em {
+  color: var(--accent-primary);
+  font-weight: 500;
+  font-style: italic;
+}
+
+.section-content {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  font-weight: 400;
+  margin: 0;
+}
+
+.biblical-verse {
+  font-style: italic;
+  border-left: 2px solid rgba(0, 0, 0, 0.2);
+  padding-left: 16px;
+  margin-top: 6px;
+  color: var(--text-secondary);
+}
+
+.verse-reference {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  font-style: normal;
+  text-align: right;
+}
+
+/* ==================== FLOATING STARS (APPLE-STYLE MAGNETIC SCROLL) ==================== */
+.floating-star {
+  position: fixed;
+  width: 3px;
+  /* Smaller dots like Apple */
+  height: 3px;
+  background: rgba(255, 255, 255, 0.9);
+  /* White dots */
+  border-radius: 50%;
+  /* Perfect circles */
+  pointer-events: none;
+  z-index: 1;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.5));
+  /* Subtle white glow */
+  animation: starTwinkle 2s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes starTwinkle {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* ==================== MODAL GLASSMORPHISM BLANCO ==================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  animation: modalFadeIn 0.3s ease-out;
+  padding: 20px;
+  transition: background var(--theme-transition);
+}
+
+.modal-content {
+  background: var(--theme-modal-bg);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid var(--theme-border-color);
+  border-radius: 16px;
+  box-shadow: var(--theme-shadow-soft);
+  max-width: 700px;
+  width: 100%;
+  /* FIX SCROLL: Limitar altura y usar flex column */
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  animation: modalSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background var(--theme-transition),
+    border-color var(--theme-transition);
+}
+
+.modal-header {
+  padding: 24px 28px 20px 28px;
+  border-bottom: 1px solid var(--theme-border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Header no se encoge */
+  flex-shrink: 0;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--theme-text-primary);
+  transition: color var(--theme-transition);
+}
+
+.ai-btn {
+  /* El botón es el MICROCOSMOS: Refleja los colores del MACROCOSMOS (Fondo) */
+  background: linear-gradient(
+    135deg,
+    var(--color1, #ffffff),
+    var(--color2, #e0e0e0)
+  );
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #2c2c2c;
+}
+
+.modal-body {
+  padding: 24px 28px;
+  /* SCROLLABLE */
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.modal-body p {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #333;
+  text-align: justify;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.modal-footer {
+  padding: 16px 28px 28px 28px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  text-align: right;
+}
+
+.modal-footer small {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apple Music-style letter reveal with white fill */
+@keyframes letterReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.9);
+    filter: blur(3px);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* White fill animation */
+@keyframes whiteFill {
+  from {
+    color: rgba(0, 0, 0, 0.3);
+  }
+
+  to {
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6),
+      0 0 12px rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Class for animating letters individually */
+.letter-animate {
+  display: inline-block;
+  opacity: 0;
+  animation: letterReveal 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-play-state: paused;
+}
+
+.letter-animate.reveal {
+  animation-play-state: running;
+}
+
+/* Apply white fill after reveal */
+.letter-animate.reveal.fill {
+  animation: letterReveal 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+    whiteFill 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+}
+
+/* TEXTO DE LECTURA */
+p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  font-weight: 400;
+}
+
+/* BOTÓN DE REINICIO - ELIMINADO (Se eliminan los estilos .card-reset-btn) */
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+  .card-stage {
+    width: 260px;
+    height: 460px;
+  }
+
+  .insight-panel {
+    width: 90%;
+    max-width: 600px;
+  }
+
+  .blob {
+    filter: blur(90px);
+  }
+}
+
+@media (max-width: 768px) {
+  .card-stage {
+    width: 236px;
+    height: 420px;
+  }
+
+  .insight-panel {
+    width: 94%;
+    max-width: 500px;
+    padding: 22px 28px;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  p,
+  .section-content {
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  .blob {
+    filter: blur(70px);
+  }
+}
+
+@media (max-width: 480px) {
+  .card-stage {
+    width: 220px;
+    height: 390px;
+  }
+
+  .insight-panel {
+    width: 96%;
+    padding: 18px 24px;
+    max-width: 400px;
+  }
+
+  h2 {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  p,
+  .section-content {
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .card-stage {
+    width: 180px;
+    height: 320px;
+  }
+
+  .insight-panel {
+    width: 98%;
+    padding: 16px 20px;
+  }
+
+  h2 {
+    font-size: 0.95rem;
+  }
+
+  p,
+  .section-content {
+    font-size: 0.85rem;
+  }
+}
+
+/* ==================== ACCESIBILIDAD ==================== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .blob {
+    animation: none !important;
+  }
+}
+
+/* EXTRACTED STYLES FOR INSIGHT PANEL */
+.insight-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, #fff 0%, var(--color3) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.intro-box {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.intro-text-style {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.95);
+  font-style: italic;
+}
+
+.reading-grid-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.biblical-text-style {
+  font-family: "Times New Roman", serif;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.ai-magic-btn-container {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.ai-result-container-style {
+  display: none;
+  margin-top: 20px;
+}
+
+/* Fix for video playsinline warning */
+video {
+  outline: none;
+}
+
+/* EXTRACTED STYLES FOR SETTINGS & COMPOSITE */
+.settings-panel-container {
+  width: 100%;
+  height: 100%;
+  padding: 25px;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  color: white;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.settings-title {
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+.setting-label {
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+.settings-footer {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0.7rem;
+  opacity: 0.5;
+}
+
+.composite-flex-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.reading-unit {
+  opacity: 0.35;
+  filter: blur(1.5px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: inline-block;
+  /* Or block depending on flow */
+}
+
+.reading-unit.active {
+  opacity: 1;
+  filter: blur(0);
+}
+
+/* ==================== KEYWORD HIGHLIGHTING - FIXED TRANSPARENCY ==================== */
+
+/* Keywords: "Crystal" effect allowing background blobs to show through */
+.keyword-highlight {
+  /* TRANSPARENT TEXT - wallpaper shows through */
+  color: transparent;
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+
+  /* Subtle outline */
+  -webkit-text-stroke: 0.3px rgba(255, 255, 255, 0.3);
+
+  mix-blend-mode: normal;
+  transition: all 0.5s ease;
+}
+
+/* Filled/Active state - same transparent */
+.keyword-highlight.filled {
+  -webkit-text-stroke: 0.4px rgba(255, 255, 255, 0.4);
+}
+
+.keyword-highlight:hover {
+  transform: scale(1.05);
+  -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.5);
+}
+
+/* =====================================================
+           STICKY AD BANNER - Mobile Monetization
+        ===================================================== */
+.sticky-ad-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: rgba(10, 10, 15, 0.85);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid rgba(147, 51, 234, 0.3);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(100%);
+  animation: slideUpAd 1s ease-out 5s forwards;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes slideUpAd {
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Adjust social buttons to not overlap with ad */
+.patreon-btn {
+  bottom: 90px !important;
+}
+
+.instagram-btn {
+  bottom: 160px !important;
+}
+
+@media (max-width: 768px) {
+  .patreon-btn {
+    bottom: 80px !important;
+  }
+
+  .instagram-btn {
+    bottom: 140px !important;
+  }
+}
+
+/* ==================== ESTILOS BOTÓN IA ==================== */
+.ai-synthesis-container {
+  margin-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.ai-btn {
+  /* El botón es el MICROCOSMOS: Refleja los colores del MACROCOSMOS (Fondo) */
+  /* Fondo base translúcido para las mini-blobs */
+  background: rgba(255, 255, 255, 0.3);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+/* Mini-blob 1 - Movimiento lento */
+.ai-btn::before {
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--color1, #ffd1dc);
+  filter: blur(25px);
+  mix-blend-mode: multiply;
+  opacity: 0.6;
+  top: -20px;
+  left: -10px;
+  animation: microMove1 12s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+/* Mini-blob 2 - Movimiento diferente */
+.ai-btn::after {
+  content: "";
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: var(--color2, #b8e0ff);
+  filter: blur(20px);
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+  bottom: -15px;
+  right: -10px;
+  animation: microMove2 14s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+.ai-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.ai-btn:active {
+  transform: scale(0.95);
+}
+
+.ai-btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  filter: grayscale(0.5);
+}
+
+/* Icono dentro del botón (opcional, o solo el color) */
+.ai-btn-icon {
+  position: relative;
+  z-index: 2;
+  font-size: 1.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  transition: transform 0.5s ease;
+}
+
+/* Estado "Pensando" (Microcosmo activo) */
+.ai-btn.thinking {
+  animation: liquidButton 2s ease infinite, pulseMicro 1.5s ease-in-out infinite;
+  cursor: wait;
+}
+
+.ai-btn.thinking .ai-btn-icon {
+  animation: spinStar 2s linear infinite;
+}
+
+@keyframes pulseMicro {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+}
+
+@keyframes spinStar {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animaciones micro para las mini-blobs del botón */
+@keyframes microMove1 {
+  from {
+    transform: translate(-5px, -5px) scale(1);
+  }
+
+  to {
+    transform: translate(10px, 8px) scale(1.2);
+  }
+}
+
+@keyframes microMove2 {
+  from {
+    transform: translate(8px, -6px) scale(0.9);
+  }
+
+  to {
+    transform: translate(-7px, 10px) scale(1.1);
+  }
+}
+
+.ai-result {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  padding: 20px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  animation: fadeSlideIn 0.5s ease-out;
+}
+
+.ai-header {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-primary);
+  /* Negro/Oscuro */
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 8px;
+}
+
+.ai-result p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  font-style: italic;
+}
+
+/* BOTÓN DE IDIOMA (TOP-RIGHT, MINIMALIST) */
+.lang-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  background: transparent;
+  border: none;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.8rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.lang-btn:hover {
+  transform: scale(1.15);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.lang-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+/* TIP DE INTERACCIÓN ELIMINADO */
+
+/* =====================================================
+           HADA (FAIRY) PARTICLE SYSTEM - TECHNO-MAGIC
+        ===================================================== */
+.hada-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 600px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  /* Allow clicking through to card, fairies have pointer-events:auto */
+  z-index: 50;
+  opacity: 0;
+  transition: opacity 0.8s ease-out 0.5s;
+}
+
+.hada-container.active {
+  opacity: 1;
+}
+
+.hada {
+  position: absolute;
+  width: var(--hada-size, 35px);
+  height: var(--hada-size, 35px);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.9) 0%,
+    var(--hada-color, rgba(147, 51, 234, 0.6)) 50%,
+    transparent 100%
+  );
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0 15px var(--hada-color, rgba(147, 51, 234, 0.5)),
+    0 0 30px var(--hada-color, rgba(147, 51, 234, 0.3)),
+    inset 0 0 10px rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  pointer-events: auto;
+  animation: hadaFloat var(--float-duration, 6s) ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--hada-size, 35px) * 0.4);
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.hada:hover {
+  transform: scale(1.3);
+  box-shadow: 0 0 25px var(--hada-color, rgba(147, 51, 234, 0.8)),
+    0 0 50px var(--hada-color, rgba(147, 51, 234, 0.5)),
+    inset 0 0 15px rgba(255, 255, 255, 0.7);
+}
+
+.hada::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: inherit;
+  filter: blur(8px);
+  opacity: 0.5;
+  z-index: -1;
+}
+
+@keyframes hadaFloat {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+
+  25% {
+    transform: translateY(-15px) translateX(8px);
+  }
+
+  50% {
+    transform: translateY(-5px) translateX(-10px);
+  }
+
+  75% {
+    transform: translateY(-20px) translateX(5px);
+  }
+}
+
+/* Hada Tooltip */
+.hada-tooltip {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 320px;
+  padding: 20px 25px;
+  background: rgba(15, 15, 25, 0.95);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.hada-tooltip.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.hada-tooltip-header {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  color: var(--hada-color, rgba(147, 51, 234, 1));
+  opacity: 0.8;
+}
+
+.hada-tooltip-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.hada-tooltip-close:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ==================== HOLO EFFECTS SETTINGS SYSTEM ==================== */
+
+/* Floating Settings Button */
+.holo-settings-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(147, 51, 234, 0.6);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.holo-settings-btn:hover {
+  transform: scale(1.1) rotate(15deg);
+  box-shadow: 0 6px 25px rgba(147, 51, 234, 0.6),
+    inset 0 1px 3px rgba(255, 255, 255, 0.4);
+  background: rgba(147, 51, 234, 0.8);
+}
+
+.holo-settings-btn:active {
+  transform: scale(0.95);
+}
+
+/* Intensity Preset Buttons */
+.intensity-preset-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.intensity-preset-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(147, 51, 234, 0.5);
+  transform: translateY(-2px);
+}
+
+.intensity-preset-btn.active {
+  background: rgba(147, 51, 234, 0.4);
+  border-color: rgba(147, 51, 234, 0.8);
+  color: white;
+  font-weight: 600;
+}
+
+/* ==================== ADVANCED HOLO EFFECTS ==================== */
+
+/* EFFECT: Horizontal Bars (Yu-Gi-Oh Secret Rare Style) */
+.holo-bars {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    rgba(255, 255, 255, 0.15) 1px,
+    transparent 2px,
+    transparent 8px
+  );
+  background-size: 100% 20px;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 4;
+  border-radius: 11px;
+  animation: barsMove 2s linear infinite;
+}
+
+@keyframes barsMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 20px;
+  }
+}
+
+/* EFFECT: Sparkle Particles (Pokémon Rainbow Style) */
+.sparkle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+  animation: sparkleFade 2s ease-in-out infinite;
+}
+
+@keyframes sparkleFade {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Sparkle positioning with stagger */
+.sparkle:nth-child(1) {
+  top: 15%;
+  left: 20%;
+  animation-delay: 0s;
+}
+.sparkle:nth-child(2) {
+  top: 35%;
+  left: 70%;
+  animation-delay: 0.3s;
+}
+.sparkle:nth-child(3) {
+  top: 60%;
+  left: 30%;
+  animation-delay: 0.6s;
+}
+.sparkle:nth-child(4) {
+  top: 80%;
+  left: 65%;
+  animation-delay: 0.9s;
+}
+.sparkle:nth-child(5) {
+  top: 25%;
+  left: 85%;
+  animation-delay: 1.2s;
+}
+.sparkle:nth-child(6) {
+  top: 50%;
+  left: 15%;
+  animation-delay: 1.5s;
+}
+.sparkle:nth-child(7) {
+  top: 70%;
+  left: 50%;
+  animation-delay: 1.8s;
+}
+.sparkle:nth-child(8) {
+  top: 40%;
+  left: 40%;
+  animation-delay: 0.4s;
+}
+.sparkle:nth-child(9) {
+  top: 10%;
+  left: 55%;
+  animation-delay: 0.7s;
+}
+.sparkle:nth-child(10) {
+  top: 90%;
+  left: 25%;
+  animation-delay: 1s;
+}
+
+/* Intensity Variations */
+.card-face.back[data-intensity="low"] .holo-bars {
+  opacity: 0.3;
+  animation-duration: 3s;
+}
+
+.card-face.back[data-intensity="medium"] .holo-bars {
+  opacity: 0.6;
+  animation-duration: 2s;
+}
+
+.card-face.back[data-intensity="high"] .holo-bars {
+  opacity: 0.9;
+  animation-duration: 1.5s;
+}
+
+/* Rainbow intensity variations */
+.card-face.back[data-intensity="low"] .back::before {
+  opacity: 0.4;
+  animation-duration: 4s;
+}
+
+.card-face.back[data-intensity="medium"] .back::before {
+  opacity: 0.7;
+  animation-duration: 3s;
+}
+
+.card-face.back[data-intensity="high"] .back::before {
+  opacity: 0.95;
+  animation-duration: 2s;
+}
+
+/* Hide effects when toggled off */
+.card-face.back[data-rainbow="false"] .back::before {
+  display: none;
+}
+
+.card-face.back[data-bars="false"] .holo-bars {
+  display: none;
+}
+
+.card-face.back[data-sparkles="false"] .sparkle {
+  display: none;
+}
+
+/* ==================== THEME TOGGLE BUTTON ==================== */
+.theme-toggle-btn {
+  position: fixed;
+  bottom: 110px; /* Above holo settings button */
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--theme-glass-bg);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid var(--theme-border-color);
+  color: var(--theme-text-primary);
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--theme-shadow-soft);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1) rotate(15deg);
+  box-shadow: var(--theme-shadow-card);
+  background: var(--theme-modal-bg);
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+/* Icon container for smooth rotation */
+.theme-icon {
+  transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  display: inline-block;
+}
+
+.theme-toggle-btn:hover .theme-icon {
+  transform: rotate(180deg);
+}
+
+/* ==================== TOP BAR (New Structure) ==================== */
+.top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  z-index: 100;
+}
+
+.top-btn {
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px; /* Pill shape for text, circle for icon */
+  height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--theme-text-primary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  padding: 0 15px; /* Pill padding */
+}
+
+.top-btn.icon-only {
+  padding: 0;
+  width: 44px;
+  border-radius: 50%;
+}
+
+.top-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-color: var(--theme-text-primary);
+}
+
+.top-btn span {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+/* Centrar imagen de carta */
+.card-face.front {
+  padding: 10px; /* Marco blanco */
+}
+
+.tarot-img {
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}

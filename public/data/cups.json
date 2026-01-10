@@ -1,0 +1,212 @@
+[
+  {
+    "id": "cups_ace",
+    "key": "CUPS_ACE",
+    "nombre": "As de Copas",
+    "contenido": {
+      "arquetipo": "El Santo Grial. El desbordamiento emocional. Amor puro incondicional.",
+      "sombra": "Sensiblería irracional. Inundación emocional. Falta de límites.",
+      "misticismo": "Heh final en Kether. La raíz del Agua.",
+      "arte": "La fuente. El bautismo. El corazón sagrado.",
+      "ciencia": "El agua como solvente universal. Origen de la vida.",
+      "computacion": "Data Lake. El usuario ideal. Flow state.",
+      "social": "Nuevo amor. Concepción. Inspiración espiritual profunda.",
+      "cotidiano": "Un momento de El Santo Grial en tu día."
+    }
+  },
+  {
+    "id": "cups_02",
+    "key": "CUPS_02",
+    "nombre": "Dos de Copas",
+    "contenido": {
+      "arquetipo": "La Conexión y el Alma Gemela. El pacto sagrado. Intercambio de fluidos/datos.",
+      "sombra": "Codependencia. Perderse en el otro. Idealización ciega.",
+      "misticismo": "Chokmah en Briah. La Sabiduría del Amor.",
+      "arte": "El brindis. Los amantes. El caduceo.",
+      "ciencia": "Enlace químico. Simbiosis. Resonancia.",
+      "computacion": "P2P Connection. Handshake protocol. Data Sync.",
+      "social": "Romance. Amistad profunda. Contrato basado en confianza.",
+      "cotidiano": "Un momento de La Conexión y el Alma Gemela en tu día."
+    }
+  },
+  {
+    "id": "cups_03",
+    "key": "CUPS_03",
+    "nombre": "Tres de Copas",
+    "contenido": {
+      "arquetipo": "La Comunidad y la Celebración Compartida. La tribu se reúne. Alegría colectiva.",
+      "sombra": "Exceso, resaca, chisme. El grupo excluyente (clique).",
+      "misticismo": "Binah en Briah. El Entendimiento del Amor es compartir.",
+      "arte": "Las Tres Gracias. Danza circular. Cosecha.",
+      "ciencia": "Feromonas. Comportamiento de enjambre positivo.",
+      "computacion": "Social Network. Community Forum. Multiplayer Coop.",
+      "social": "Salida con amigos. Boda. Equipo de trabajo feliz.",
+      "cotidiano": "Un momento de La Comunidad y la Celebración Compartida en tu día."
+    }
+  },
+  {
+    "id": "cups_04",
+    "key": "CUPS_04",
+    "nombre": "Cuatro de Copas",
+    "contenido": {
+      "arquetipo": "La Apatía y la Contemplación. El lujo de aburrirse. Rechazo de la oferta.",
+      "sombra": "Depresión leve. Ceguera a las oportunidades. Estancamiento emocional.",
+      "misticismo": "Chesed en Briah. La Misericordia del Agua puede estancarse.",
+      "arte": "El pensador bajo el árbol. Melancolía.",
+      "ciencia": "Saturación. Estasis de fluidos.",
+      "computacion": "User Churn. Banner blindness. Fatiga de notificaciones.",
+      "social": "Necesidad de introspección. No ver lo que tienes delante.",
+      "cotidiano": "Un momento de La Apatía y la Contemplación en tu día."
+    }
+  },
+  {
+    "id": "cups_05",
+    "key": "CUPS_05",
+    "nombre": "Cinco de Copas",
+    "contenido": {
+      "arquetipo": "El Duelo y la Pérdida Parcial. Llorar sobre la leche derramada.",
+      "sombra": "Victimismo crónico. No ver las copas que quedan en pie.",
+      "misticismo": "Geburah en Briah. La Severidad del Agua es la pérdida.",
+      "arte": "El luto. Figura encapuchada. Río del olvido.",
+      "ciencia": "Entropía emocional. Pérdida de datos.",
+      "computacion": "Data Loss. Corrupted File. 404 Not Found (emocional).",
+      "social": "Ruptura. Decepción. Arrepentimiento.",
+      "cotidiano": "Un momento de El Duelo y la Pérdida Parcial en tu día."
+    }
+  },
+  {
+    "id": "cups_06",
+    "key": "CUPS_06",
+    "nombre": "Seis de Copas",
+    "contenido": {
+      "arquetipo": "La Nostalgia y la Inocencia. Recuerdos de la infancia. El pasado idealizado.",
+      "sombra": "Vivir en el pasado. Infantilismo. Negación del presente.",
+      "misticismo": "Tiphareth en Briah. La Belleza del Agua es la memoria.",
+      "arte": "Jardín de infancia. Flores antiguas. Cuentos de hadas.",
+      "ciencia": "Memoria a largo plazo. Genética ancestral.",
+      "computacion": "Backup restore. Legacy system appreciation. Retro gaming.",
+      "social": "Reencuentro. Regalo del pasado. Pureza de intención.",
+      "cotidiano": "Un momento de La Nostalgia y la Inocencia en tu día."
+    }
+  },
+  {
+    "id": "cups_07",
+    "key": "CUPS_07",
+    "nombre": "Siete de Copas",
+    "contenido": {
+      "arquetipo": "La Ilusión y las Opciones Múltiples. El menú de deseos. Fantasía VR.",
+      "sombra": "Confusión. Parálisis por elección. Escapismo drogadicto.",
+      "misticismo": "Netzach en Briah. La Victoria del Agua es la imaginación.",
+      "arte": "Visiones alucinatorias. Nubes. Sueños.",
+      "ciencia": "Multiverso. Superposición cuántica de estados.",
+      "computacion": "Virtual Reality (VR). Feature creepy. Vaporware promises.",
+      "social": "Soñar despierto. Indecisión. Deseos inalcanzables.",
+      "cotidiano": "Un momento de La Ilusión y las Opciones Múltiples en tu día."
+    }
+  },
+  {
+    "id": "cups_08",
+    "key": "CUPS_08",
+    "nombre": "Ocho de Copas",
+    "contenido": {
+      "arquetipo": "El Abandono y la Búsqueda Superior. Dejar lo que funciona por lo que llena.",
+      "sombra": "Huir de los problemas. Miedo al compromiso. Caminar sin rumbo.",
+      "misticismo": "Hod en Briah. La Gloria del Agua es fluir hacia el mar.",
+      "arte": "El peregrino nocturno. Eclipse lunar.",
+      "ciencia": "Migración. Evolución divergente.",
+      "computacion": "Refactoring. Abandonware. Pivoting a startup.",
+      "social": "Dejar un trabajo seguro. Viaje espiritual. Ruptura necesaria.",
+      "cotidiano": "Un momento de El Abandono y la Búsqueda Superior en tu día."
+    }
+  },
+  {
+    "id": "cups_09",
+    "key": "CUPS_09",
+    "nombre": "Nueve de Copas",
+    "contenido": {
+      "arquetipo": "El Deseo Cumplido y la Satisfacción. El gato que se comió al canario.",
+      "sombra": "Glotonería. Materialismo emocional. Soberbia solitaria.",
+      "misticismo": "Yesod en Briah. El Fundamento del Agua es la felicidad.",
+      "arte": "El comerciante feliz. Banquete solitario.",
+      "ciencia": "Dopamina y Serotonina. Homeostasis perfecta.",
+      "computacion": "Success rate 100%. Achievements unlocked. Estabilidad total.",
+      "social": "Autoestima alta. Placer sensual. Éxito personal.",
+      "cotidiano": "Un momento de El Deseo Cumplido y la Satisfacción en tu día."
+    }
+  },
+  {
+    "id": "cups_10",
+    "key": "CUPS_10",
+    "nombre": "Diez de Copas",
+    "contenido": {
+      "arquetipo": "La Familia Feliz y la Armonía Total. El arcoíris permanente. Utopía.",
+      "sombra": "Irrealidad. 'Felicidad de Instagram'. Negación de conflictos subyacentes.",
+      "misticismo": "Malkuth en Briah. El Reino del Agua perfeccionado.",
+      "arte": "El hogar ideal. Arcoíris. Danza familiar.",
+      "ciencia": "Ecosistema equilibrado. Simbiosis perfecta.",
+      "computacion": "Fully Integrated System. Smart Home Harmony. Seamless UX.",
+      "social": "Matrimonio feliz. Paz doméstica. Legado emocional.",
+      "cotidiano": "Un momento de La Familia Feliz y la Armonía Total en tu día."
+    }
+  },
+  {
+    "id": "cups_page",
+    "key": "CUPS_PAGE",
+    "nombre": "Sota de Copas",
+    "contenido": {
+      "arquetipo": "El Soñador y el Poeta. Mensaje de amor o intuición.",
+      "sombra": "Ingenuidad excesiva. Hipersensibilidad. El 'Crybaby'.",
+      "misticismo": "Tierra del Agua. El loto en el barro.",
+      "arte": "El pez en la copa. El joven artista.",
+      "ciencia": "Psicología infantil. Empatía espejo.",
+      "computacion": "Junior Designer. Creative Intern. Intuitive AI.",
+      "social": "Invitación social. Nueva emoción. Un admirador.",
+      "cotidiano": "Un momento de El Soñador y el Poeta en tu día."
+    }
+  },
+  {
+    "id": "cups_knight",
+    "key": "CUPS_KNIGHT",
+    "nombre": "Caballo de Copas",
+    "contenido": {
+      "arquetipo": "El Romántico y el Idealista. El caballero del Grial.",
+      "sombra": "Melodrama. Promesas vacías. Don Juan.",
+      "misticismo": "Aire del Agua. La lluvia que nutre o ahoga.",
+      "arte": "El caballero blanco. Alas en los talones.",
+      "ciencia": "Hidrodinámica. Corrientes marinas.",
+      "computacion": "Evangelist. Brand Storyteller. Viral emotion.",
+      "social": "Proposición romántica. Invitación a viaje. Seducción.",
+      "cotidiano": "Un momento de El Romántico y el Idealista en tu día."
+    }
+  },
+  {
+    "id": "cups_queen",
+    "key": "CUPS_QUEEN",
+    "nombre": "Reina de Copas",
+    "contenido": {
+      "arquetipo": "La Empática y la Psíquica. La madre del mundo emocional.",
+      "sombra": "Vampirismo emocional. Depresión. Confusión de límites.",
+      "misticismo": "Agua del Agua. El océano profundo.",
+      "arte": "La sirena. El cáliz cerrado. Visión interior.",
+      "ciencia": "La Luna y las mareas. Inteligencia emocional.",
+      "computacion": "Deep Learning. Sentiment Analysis. UX Researcher.",
+      "social": "La consejera. La mejor amiga. Intuición infalible.",
+      "cotidiano": "Un momento de La Empática y la Psíquica en tu día."
+    }
+  },
+  {
+    "id": "cups_king",
+    "key": "CUPS_KING",
+    "nombre": "Rey de Copas",
+    "contenido": {
+      "arquetipo": "El Diplomático y el Terapeuta. Control emocional maduro.",
+      "sombra": "Manipulación fría. Represión. Alcoholismo.",
+      "misticismo": "Fuego del Agua. El vapor controlado.",
+      "arte": "Trono flotante. El rey pescador.",
+      "ciencia": "Psiquiatría. Gestión de crisis.",
+      "computacion": "Product Owner. Community Leader. Crisis Management.",
+      "social": "Consejo sabio. Padre comprensivo. Mediador.",
+      "cotidiano": "Un momento de El Diplomático y el Terapeuta en tu día."
+    }
+  }
+]

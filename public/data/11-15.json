@@ -14,7 +14,11 @@
         "cita": "Con la vara que midiereis, seréis medidos",
         "referencia": "Mateo 7:2",
         "conexion": "El pasaje bíblico paradigmático es el Juicio de Salomón (1 Reyes 3:16-28).  Ante dos mujeres que reclaman el mismo hijo, Salomón ordena cortar al niño en dos con una espada.  Esta aparente crueldad (severidad) es una estratagema para revelar el verdadero amor (la madre verdadera renuncia a su derecho para salvar al hijo). La Justicia verdadera utiliza la espada para discernir la verdad del corazón."
-      }
+      },
+      "arte": "Clasicismo Heroico. Hércules Farnese. La belleza de la potencia muscular y el control.",
+      "ciencia": "Energía Potencial y Cinética. Resistencia de Materiales. La fuerza nuclear fuerte.",
+      "computacion": "Brute Force vs. Algoritmos Eficientes. Ciberseguridad ofensiva (Red Teaming).",
+      "social": "Resiliencia psicológica. El control de los instintos (Civilización vs. Barbarie). Poder blando (Soft Power)."
     }
   },
   {
@@ -32,7 +36,11 @@
         "cita": "Padre, en tus manos encomiendo mi espíritu",
         "referencia": "Lucas 23:46",
         "conexion": "Aunque resuena con la Pasión de Cristo (el sacrificio redentor), la iconografía es idéntica a la Crucifixión de San Pedro.  Según la tradición, Pedro pidió ser crucificado cabeza abajo por no considerarse digno de morir igual que su Maestro.  Esto añade una capa de humildad radical.  También conecta con Jonás en el vientre de la ballena: tres días de oscuridad y suspensión en el abismo acuático antes de la resurrección a su verdadera misión profética."
-      }
+      },
+      "arte": "Perspectiva Inversa. Arte medieval o moderno que rompe la visión euclidiana. Dalí.",
+      "ciencia": "Relatividad Especial. La dilatación del tiempo. Suspensión criogénica.",
+      "computacion": "System Hang / Deadlock. Procesos en espera (Await/Async). El 'Spinning Wheel' de carga.",
+      "social": "Sacrificio por un bien mayor. El mártir político. La 'cultura de la cancelación' vista desde la víctima."
     }
   },
   {
@@ -50,7 +58,11 @@
         "cita": "¿Dónde está, oh muerte, tu aguijón?  ¿Dónde, oh sepulcro, tu victoria?",
         "referencia": "1 Corintios 15:55",
         "conexion": "Este desafío retórico de San Pablo, que cita a Oseas 13:14, recontextualiza la muerte no como un final absoluto, sino como un umbral vencido. La teología paulina utiliza la metáfora agrícola: 'Lo que tú siembras no se vivifica, si no muere antes' (1 Corintios 15:36).  Aquí, la muerte es el mecanismo indispensable para la fructificación.  La letra hebrea Nun (semilla/pez) resuena con esta imagen: el cuerpo físico es la cáscara de la semilla que debe romperse y descomponerse en la tierra oscura para que el 'cuerpo espiritual' pueda germinar. La muerte pierde su 'aguijón' (el veneno del miedo y el pecado) cuando se comprende como un proceso de siembra para una cosecha superior."
-      }
+      },
+      "arte": "Vanitas y Memento Mori. Calaveras, flores marchitas. Damien Hirst (tiburón en formol).",
+      "ciencia": "Entropía y Apoptosis (muerte celular programada para el bien del organismo). Reciclaje de materia.",
+      "computacion": "Garbage Collection. Eliminar procesos zombies. Deprecación de software (End of Life).",
+      "social": "Revoluciones violentas. Luto colectivo. El fin de una era histórica (caída de imperios)."
     }
   },
   {
@@ -68,7 +80,11 @@
         "cita": "Este principio de señales hizo Jesús en Caná de Galilea, y manifestó su gloria",
         "referencia": "Juan 2:11",
         "conexion": "El correlato bíblico más profundo es el primer milagro de Jesús en las Bodas de Caná (Juan 2:1-11).  La transformación del agua en vino es un acto supremo de alquimia y templanza divina. El agua (la ley antigua, la purificación externa, el inconsciente) es elevada a una nueva octava vibratoria, convirtiéndose en vino (el espíritu, la sangre de la nueva alianza, el éxtasis). El hecho de que el milagro ocurra en 'tinajas de piedra' destinadas a la purificación ritual subraya la idea de utilizar las estructuras existentes (el cuerpo, la tradición) para contener una nueva sustancia espiritual. Jesús actúa aquí como el Ángel de la Templanza, mezclando los elementos para revelar su 'gloria'."
-      }
+      },
+      "arte": "Impresionismo. La mezcla óptica de colores. La alquimia de la luz. Turner.",
+      "ciencia": "Química de Soluciones. Aleaciones. Termodinámica del equilibrio.",
+      "computacion": "Middleware. Integración de sistemas (API Glue). Interpolación de datos.",
+      "social": "Diplomacia. El 'Fino Arte del Compromiso'. Multiculturalismo e integración."
     }
   },
   {
@@ -86,7 +102,11 @@
         "cita": "Porque lo que hago, no lo entiendo; pues no hago lo que quiero, sino lo que aborrezco, eso hago",
         "referencia": "Romanos 7:15",
         "conexion": "La descripción fenomenológica más precisa del estado del Diablo se encuentra en Romanos 7:15-23. San Pablo describe la división interna (esquizofrenia espiritual) causada por el Arcano XV: la voluntad consciente es impotente frente a la programación biológica y psíquica (la 'ley de los miembros'). También resuena con las Tentaciones en el Desierto (Mateo 4), donde el Diablo ofrece poder sobre los reinos materiales (Capricornio) a cambio de adoración, simbolizando la trampa final del poder temporal."
-      }
+      },
+      "arte": "Goya (Pinturas Negras). El Bosco. La estética de lo grotesco y lo prohibido.",
+      "ciencia": "Adicciones (Dopamina). Virus y hackeo biológico. Gravedad ineludible (Agujeros Negros).",
+      "computacion": "Malware / Ransomware. Dark Patterns en UX. Vendor Lock-in (estar atrapado en un ecosistema).",
+      "social": "Consumismo desenfrenado. Deuda tóxica. Manipulación mediática y Fake News."
     }
   }
 ]

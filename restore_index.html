@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es" id="htmlRoot">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Star ✦</title>
+    <meta
+      name="description"
+      content="Oráculo de Tarot y Numerología del presente."
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* =====================================================
+           CORE VARIABLES & PRELOADER (From Clean Core v8)
+        ===================================================== */
+      :root {
+        /* --- PRELOADER GEOMETRY --- */
+        --star-size: 171px;
+        --star-rotation: 0deg;
+        --global-speed: 1;
+        --source-scale: 1.7;
+        --source-chaos: 0.5;
+        --bg-speed: 19s;
+        --bg-direction: 45deg;
+
+        /* --- PRELOADER PALETTE (White/Silver) --- */
+        --c-1: #cccccc;
+        --c-2: #888888;
+        --c-3: #ffffff;
+        --c-4: #eeeeee;
+        --c-5: #ffffff;
+
+        /* --- PRELOADER ATMOSPHERE --- */
+        --vapor-size: 199%;
+        --vapor-opacity: 0.2;
+        --vapor-blur: 73px;
+        --noise-opacity: 0.19;
+        --shine-opacity: 1;
+        --vignette-str: 0;
+
+        /* --- PRELOADER LIFE (Breathing) --- */
+        --breath-speed: 6s;
+        --breath-depth: 0.2;
+        --breath-scale: 0.04;
+
+        /* --- APP UI (Glassmorphism & Colors) --- */
+        --glass-surface: rgba(255, 255, 255, 0.5);
+        --glass-border: rgba(255, 255, 255, 0.6);
+        --glass-blur: 35px;
+        --shadow-soft: 0 12px 42px rgba(0, 0, 0, 0.1);
+        --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.15);
+        --text-primary: #1d1d1f;
+        --text-secondary: #424245;
+        --text-tertiary: rgba(0, 0, 0, 0.5);
+        --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
+        /* --- DYNAMIC WALLPAPER COLORS --- */
+        --color1: #ffffff;
+        --color2: #ffffff;
+        --color3: #ffffff;
+        --color4: #ffffff;
+
+        /* --- GYRO EFFECT --- */
+        --gyro-x: 0;
+        --gyro-y: 0;
+      }
+
+      /* --- GLOBAL RESET --- */
+      * {
+        box-sizing: border-box;
+        outline: none !important;
+        -webkit-tap-highlight-color: transparent;
+      }
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        font-family: "Poppins", sans-serif;
+        overflow: hidden; /* Managed by app state */
+        background: #050505; /* Load dark initially */
+      }
+
+      /* =====================================================
+           1. CLEAN CORE PRELOADER STYLES
+        ===================================================== */
+      #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: radial-gradient(circle at center, #111 0%, #000 70%);
+        transition: opacity 1s ease-out, visibility 1s;
+      }
+      #preloader.fade-out {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      /* VAPOR LAYER */
+      .vapor-layer {
+        position: absolute;
+        width: var(--vapor-size);
+        height: var(--vapor-size);
+        background: radial-gradient(circle, var(--c-3) 0%, transparent 60%);
+        filter: blur(var(--vapor-blur));
+        opacity: var(--vapor-opacity);
+        mix-blend-mode: screen;
+        pointer-events: none;
+        animation: vapor-pulse 8s infinite ease-in-out;
+      }
+      @keyframes vapor-pulse {
+        0%,
+        100% {
+          transform: scale(0.95);
+          opacity: calc(var(--vapor-opacity) * 0.8);
+        }
+        50% {
+          transform: scale(1.05);
+          opacity: var(--vapor-opacity);
+        }
+      }
+
+      /* LIVING WRAPPER */
+      .living-wrapper {
+        position: relative;
+        width: var(--star-size);
+        height: var(--star-size);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: breath-anim var(--breath-speed) ease-in-out infinite;
+      }
+      @keyframes breath-anim {
+        0%,
+        100% {
+          transform: scale(1);
+          filter: brightness(1);
+        }
+        50% {
+          transform: scale(calc(1 - var(--breath-scale)));
+          filter: brightness(calc(1 - var(--breath-depth)));
+        }
+      }
+
+      /* STAR PORTAL (Mask) */
+      .star-portal {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 C50 35 65 50 100 50 C65 50 50 65 50 100 C50 65 35 50 0 50 C35 50 50 35 50 0 Z' fill='black'/%3E%3C/svg%3E");
+        mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 C50 35 65 50 100 50 C65 50 50 65 50 100 C50 65 35 50 0 50 C35 50 50 35 50 0 Z' fill='black'/%3E%3C/svg%3E");
+        -webkit-mask-size: contain;
+        mask-size: contain;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+      }
+
+      /* INTERNAL LAYERS */
+      .portal-inner {
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .portal-bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          var(--bg-direction),
+          var(--c-1),
+          var(--c-2),
+          var(--c-1)
+        );
+        background-size: 200% 200%;
+        animation: bg-pan var(--bg-speed) ease infinite;
+      }
+      @keyframes bg-pan {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      .depth-noise {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 15;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+        mix-blend-mode: overlay;
+        opacity: var(--noise-opacity);
+      }
+
+      /* =====================================================
+           2. MAIN APP STYLES (Purple Moon + Wallpapers)
+        ===================================================== */
+      #app-container {
+        opacity: 0;
+        transition: opacity 1.5s ease;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      #app-container.visible {
+        opacity: 1;
+      }
+
+      /* WALLPAPER BLOB ENGINE */
+      .wallpaper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+        z-index: -2;
+        overflow: hidden;
+        transition: background-color 0.8s var(--ease-smooth);
+      }
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(135px);
+        opacity: 0.7;
+        width: 65vmax;
+        height: 65vmax;
+        mix-blend-mode: multiply;
+        animation: blob-float 30s infinite alternate ease-in-out;
+      }
+      @keyframes blob-float {
+        from {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        to {
+          transform: translate(20%, 20%) rotate(20deg);
+        }
+      }
+
+      .blob1 {
+        background: var(--color1);
+        top: -20%;
+        left: -20%;
+        animation-duration: 25s;
+      }
+      .blob2 {
+        background: var(--color2);
+        top: -20%;
+        right: -20%;
+        animation-duration: 28s;
+      }
+      .blob3 {
+        background: var(--color3);
+        bottom: -20%;
+        left: -20%;
+        animation-duration: 32s;
+      }
+      .blob4 {
+        background: var(--color4);
+        bottom: -20%;
+        right: -20%;
+        animation-duration: 35s;
+      }
+
+      /* INTERFACE */
+      .interface {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 40px 20px;
+        box-sizing: border-box;
+        transition: justify-content 0.5s;
+      }
+      .interface.revealed {
+        justify-content: flex-start;
+      }
+
+      /* CARD STAGE (3D) */
+      .card-stage {
+        perspective: 1800px;
+        width: 282px;
+        height: 500px;
+        cursor: pointer;
+        z-index: 10;
+        margin-top: 20px;
+        transform-style: preserve-3d;
+        animation: breathe-card 4s ease-in-out infinite;
+      }
+      @keyframes breathe-card {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.02);
+        }
+      }
+
+      .card-stage:hover {
+        animation-play-state: paused;
+      }
+      .card-stage.flipped {
+        --flip-angle: 180deg;
+      }
+
+      .card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform: rotateY(var(--flip-angle, 0deg));
+      }
+
+      .card-face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        border-radius: 26px;
+        box-shadow: var(--shadow-card);
+        overflow: hidden;
+      }
+
+      /* CARD BACK (Purple Moon) */
+      .front {
+        background-image: radial-gradient(
+            circle at 30% 30%,
+            rgba(147, 51, 234, 0.15) 0%,
+            transparent 50%
+          ),
+          linear-gradient(
+            to bottom right,
+            rgba(147, 51, 234, 0.25),
+            rgba(79, 70, 229, 0.25)
+          );
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1.5px solid rgba(255, 255, 255, 0.3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .symbol {
+        width: 70px;
+        height: 70px;
+        border: 1.5px solid rgba(255, 255, 255, 0.4);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        animation: moon-pulse 3s ease-in-out infinite;
+      }
+      @keyframes moon-pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.8;
+        }
+        50% {
+          transform: scale(1.05);
+          opacity: 1;
+        }
+      }
+
+      /* CARD FRONT (Image) */
+      .back {
+        background: #fff;
+        transform: rotateY(180deg);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+      }
+      .tarot-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 16px;
+      }
+
+      /* INSIGHT PANEL */
+      .insight-panel {
+        width: 92%;
+        max-width: 720px;
+        background: rgba(245, 245, 245, 0.45);
+        backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+        -webkit-backdrop-filter: blur(var(--glass-blur));
+        border-radius: 22px;
+        padding: 32px;
+        margin-top: 40px;
+        margin-bottom: 60px;
+        border: 1.5px solid var(--glass-border);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.8s ease;
+        display: none; /* Hidden by default */
+      }
+      .insight-panel.active {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      h2.card-title {
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--text-primary);
+        margin-bottom: 30px;
+      }
+      .reading-section {
+        margin-bottom: 25px;
+      }
+      .reading-section h3 {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+      }
+      .reading-section p {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+        margin: 0;
+      }
+
+      /* UTILS */
+      .btn-reset {
+        background: rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 12px 24px;
+        border-radius: 50px;
+        cursor: pointer;
+        margin-top: 20px;
+        width: 100%;
+        font-weight: 600;
+        color: var(--text-primary);
+        transition: background 0.2s;
+      }
+      .btn-reset:hover {
+        background: rgba(255, 255, 255, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 1. PRELOADER (Clean Core v8) -->
+    <div id="preloader">
+      <div class="vapor-layer"></div>
+      <div class="living-wrapper">
+        <div class="star-portal">
+          <div class="portal-inner">
+            <div class="portal-bg"></div>
+            <!-- Depth Stack -->
+            <div class="depth-noise"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. MAIN APP -->
+    <div id="app-container">
+      <!-- WALLPAPER BACKGROUND -->
+      <div class="wallpaper">
+        <div class="blob blob1"></div>
+        <div class="blob blob2"></div>
+        <div class="blob blob3"></div>
+        <div class="blob blob4"></div>
+      </div>
+
+      <div class="interface" id="interface">
+        <!-- CARD AREA -->
+        <div class="card-stage" id="cardStage">
+          <div class="card-inner" id="cardInner">
+            <!-- BACK (Initial View - Purple Moon) -->
+            <div class="card-face front">
+              <div class="symbol">☾</div>
+            </div>
+            <!-- FRONT (Revealed Image) -->
+            <div class="card-face back">
+              <img src="" alt="Tarot Card" class="tarot-img" id="cardImage" />
+            </div>
+          </div>
+        </div>
+
+        <!-- READING PANEL -->
+        <div class="insight-panel" id="insightPanel">
+          <h2 class="card-title" id="cardTitle"></h2>
+
+          <div class="reading-section">
+            <h3>Arquetipo</h3>
+            <p id="textArquetipo"></p>
+          </div>
+          <div class="reading-section">
+            <h3>Sombra</h3>
+            <p id="textSombra"></p>
+          </div>
+          <div class="reading-section">
+            <h3>Misticismo</h3>
+            <p id="textMisticismo"></p>
+          </div>
+          <div class="reading-section">
+            <h3>Cotidiano</h3>
+            <p id="textCotidiano"></p>
+          </div>
+          <div class="reading-section">
+            <h3>Resonancia Bíblica</h3>
+            <p id="textBiblico"></p>
+            <small
+              id="textRef"
+              style="
+                display: block;
+                margin-top: 5px;
+                opacity: 0.6;
+                text-align: right;
+              "
+            ></small>
+          </div>
+
+          <div
+            class="reading-section"
+            id="universalSection"
+            style="
+              display: none;
+              margin-top: 20px;
+              border-top: 1px solid rgba(0, 0, 0, 0.1);
+              padding-top: 20px;
+            "
+          >
+            <!-- Universal Content will be injected here if available -->
+            <div id="universalContent"></div>
+          </div>
+
+          <button class="btn-reset" id="btnReset">Nueva Lectura</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULES -->
+    <script type="module">
+      import { initCore } from "./src/js/core.js";
+
+      // Start App
+      window.addEventListener("load", () => {
+        console.log("✦ Star Oracle Initializing...");
+        initCore();
+      });
+    </script>
+  </body>
+</html>

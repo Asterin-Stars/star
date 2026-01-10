@@ -1,0 +1,212 @@
+[
+  {
+    "id": "swords_ace",
+    "key": "SWORDS_ACE",
+    "nombre": "As de Espadas",
+    "contenido": {
+      "arquetipo": "La Verdad Absoluta y la Idea Cortante. El triunfo de la razón. Claridad.",
+      "sombra": "Crueldad ideológica. Verdad sin empatía. Violencia verbal.",
+      "misticismo": "Vav en Kether. La raíz del Aire.",
+      "arte": "La espada en la piedra. La corona y el laurel.",
+      "ciencia": "Bisturí. Láser. Lógica proposicional.",
+      "computacion": "Root Access. Algorithm logic. The Code itself.",
+      "social": "Una gran idea. Una decisión irrevocable. Justicia.",
+      "cotidiano": "Un momento de La Verdad Absoluta y la Idea Cortante en tu día."
+    }
+  },
+  {
+    "id": "swords_02",
+    "key": "SWORDS_02",
+    "nombre": "Dos de Espadas",
+    "contenido": {
+      "arquetipo": "El Bloqueo y la Tregua. Ojos vendados por elección. Negación.",
+      "sombra": "Indecisión lisiante. Falsedad. Paz armada.",
+      "misticismo": "Chokmah en Yetzirah. La Sabiduría del Aire se detiene.",
+      "arte": "Equilibrio precario. La luna creciente. Vendas.",
+      "ciencia": "Estática. Fuerzas opuestas iguales.",
+      "computacion": "Deadlock. Pending Request. Awaiting Input.",
+      "social": "Evitar un conflicto necesario. Silencio diplomático.",
+      "cotidiano": "Un momento de El Bloqueo y la Tregua en tu día."
+    }
+  },
+  {
+    "id": "swords_03",
+    "key": "SWORDS_03",
+    "nombre": "Tres de Espadas",
+    "contenido": {
+      "arquetipo": "El Dolor y la Traición. Corazón atravesado. La verdad duele.",
+      "sombra": "Autocompasión. Regodearse en el dolor. Drama.",
+      "misticismo": "Binah en Yetzirah. El Entendimiento del Aire es separación.",
+      "arte": "Corazón sangrante. Lluvia y tormenta.",
+      "ciencia": "Cirugía. Disección.",
+      "computacion": "Fatal Error. Breakpoint. Malware infection.",
+      "social": "Divorcio. Despido. Mala noticia impactante.",
+      "cotidiano": "Un momento de El Dolor y la Traición en tu día."
+    }
+  },
+  {
+    "id": "swords_04",
+    "key": "SWORDS_04",
+    "nombre": "Cuatro de Espadas",
+    "contenido": {
+      "arquetipo": "El Descanso y la Recuperación. Meditación forzada. El guerrero duerme.",
+      "sombra": "Retirada cobarde. Enfermedad psicosomática. Estancamiento.",
+      "misticismo": "Chesed en Yetzirah. La Misericordia del Aire es el sueño.",
+      "arte": "El sarcófago. La vidriera. Silencio de catedral.",
+      "ciencia": "Hibernación. Modo reposo.",
+      "computacion": "Sleep Mode. System Maintenance. Downtime.",
+      "social": "Vacaciones curativas. retiro. Convalecencia.",
+      "cotidiano": "Un momento de El Descanso y la Recuperación en tu día."
+    }
+  },
+  {
+    "id": "swords_05",
+    "key": "SWORDS_05",
+    "nombre": "Cinco de Espadas",
+    "contenido": {
+      "arquetipo": "La Victoria Pírrica y el Deshonor. Ganar perdiendo todo. Egoísmo.",
+      "sombra": "Humillación. Bullying. Robar el crédito.",
+      "misticismo": "Geburah en Yetzirah. La Severidad del Aire es crueldad.",
+      "arte": "La sonrisa burlona. El campo de batalla vacío.",
+      "ciencia": "Parasitismo. Juego de suma cero.",
+      "computacion": "Hostile Takeover. Hacking nefasto. Troll.",
+      "social": "Discusión sucia. Traición. Vergüenza.",
+      "cotidiano": "Un momento de La Victoria Pírrica y el Deshonor en tu día."
+    }
+  },
+  {
+    "id": "swords_06",
+    "key": "SWORDS_06",
+    "nombre": "Seis de Espadas",
+    "contenido": {
+      "arquetipo": "La Transición y el Viaje Mental. Dejar atrás el dolor. Moverse hacia la calma.",
+      "sombra": "Huida. Llevar el equipaje emocional contigo. Resistencia al cambio.",
+      "misticismo": "Tiphareth en Yetzirah. La Belleza del Aire es la claridad mental.",
+      "arte": "La barca en el río. El silencio del viaje.",
+      "ciencia": "Aerodinámica. Flujo laminar.",
+      "computacion": "Migration to Cloud. System Upgrade. Moving Data.",
+      "social": "Mudanza. Viaje necesario. Recuperación lenta.",
+      "cotidiano": "Un momento de La Transición y el Viaje Mental en tu día."
+    }
+  },
+  {
+    "id": "swords_07",
+    "key": "SWORDS_07",
+    "nombre": "Siete de Espadas",
+    "contenido": {
+      "arquetipo": "La Estrategia y el Sigilo. El ladrón o el espía. Astucia sobre fuerza.",
+      "sombra": "Engaño. Autoengaño. El síndrome del impostor.",
+      "misticismo": "Netzach en Yetzirah. La Victoria del Aire es inteligencia.",
+      "arte": "El campamento enemigo. Pasos silenciosos.",
+      "ciencia": "Camuflaje. Tácticas de guerrilla.",
+      "computacion": "Backdoor. VPN. Incognito Mode. Stealth.",
+      "social": "Diplomacia secreta. Evitar confrontación directa. Truco.",
+      "cotidiano": "Un momento de La Estrategia y el Sigilo en tu día."
+    }
+  },
+  {
+    "id": "swords_08",
+    "key": "SWORDS_08",
+    "nombre": "Ocho de Espadas",
+    "contenido": {
+      "arquetipo": "La Prisión Mental y la Restricción. Creer que no hay salida. Víctima.",
+      "sombra": "Parálisis por miedo. Culpabilizar a otros. Ceguera selectiva.",
+      "misticismo": "Hod en Yetzirah. La Gloria del Aire se congela.",
+      "arte": "Atada y vendada. Espadas como barrotes.",
+      "ciencia": "Paradoja lógica. Bucle infinito.",
+      "computacion": "Infinite Loop. Sandbox restricted. Firewall block.",
+      "social": "Censura. Autocensura. Sentirse atrapado en una situación.",
+      "cotidiano": "Un momento de La Prisión Mental y la Restricción en tu día."
+    }
+  },
+  {
+    "id": "swords_09",
+    "key": "SWORDS_09",
+    "nombre": "Nueve de Espadas",
+    "contenido": {
+      "arquetipo": "La Pesadilla y la Ansiedad. El insomnio. La mente ataca al cuerpo.",
+      "sombra": "Paranoia. Culpa excesiva. Trauma no procesado.",
+      "misticismo": "Yesod en Yetzirah. El Fundamento del Aire es el sueño lúcido.",
+      "arte": "Despertar nocturno. Manos en la cara. Oscuridad.",
+      "ciencia": "Estrés cortisol. Trastorno del sueño.",
+      "computacion": "System Alert at 3AM. Critical Bug anxiety. Panic.",
+      "social": "Preocupación extrema. Vergüenza pública. Miedo al futuro.",
+      "cotidiano": "Un momento de La Pesadilla y la Ansiedad en tu día."
+    }
+  },
+  {
+    "id": "swords_10",
+    "key": "SWORDS_10",
+    "nombre": "Diez de Espadas",
+    "contenido": {
+      "arquetipo": "La Ruina y el Final Absoluto. Tocar fondo. No puede ir a peor.",
+      "sombra": "Victimismo melodramático. Mártir. Dolor exagerado.",
+      "misticismo": "Malkuth en Yetzirah. El Reino del Aire cae.",
+      "arte": "Espadas en la espalda. Cielo negro. El fin.",
+      "ciencia": "Fallo sistémico total. Acupuntura extrema.",
+      "computacion": "Blue Screen of Death (BSOD). Fatal Exception. Format C:.",
+      "social": "Traición final. Bancarrota. Colapso del ego.",
+      "cotidiano": "Un momento de La Ruina y el Final Absoluto en tu día."
+    }
+  },
+  {
+    "id": "swords_page",
+    "key": "SWORDS_PAGE",
+    "nombre": "Sota de Espadas",
+    "contenido": {
+      "arquetipo": "El Espía y el Estudiante Agudo. Mente curiosa y vigilante.",
+      "sombra": "Chismoso. Troll de internet. Paranoico.",
+      "misticismo": "Tierra del Aire. La nube baja.",
+      "arte": "Vigilancia. El viento en el pelo.",
+      "ciencia": "Observación empírica. Periodismo.",
+      "computacion": "Data Analyst. Code Reviewer. Debugger.",
+      "social": "Vigilar redes sociales. Un mensaje encriptado. Curiosidad.",
+      "cotidiano": "Un momento de El Espía y el Estudiante Agudo en tu día."
+    }
+  },
+  {
+    "id": "swords_knight",
+    "key": "SWORDS_KNIGHT",
+    "nombre": "Caballo de Espadas",
+    "contenido": {
+      "arquetipo": "El Cruzado y el Fanático. Lógica agresiva. Ataque directo.",
+      "sombra": "Mente cerrada. Agresividad verbal. Hater.",
+      "misticismo": "Aire del Aire. El huracán.",
+      "arte": "Carga a caballo. Viento furioso.",
+      "ciencia": "Velocidad supersónica. Debate lógico.",
+      "computacion": "Brute Force Attack. Senior Dev arrogante. Disruption.",
+      "social": "Debate acalorado. Defensa de ideas. Impulsividad intelectual.",
+      "cotidiano": "Un momento de El Cruzado y el Fanático en tu día."
+    }
+  },
+  {
+    "id": "swords_queen",
+    "key": "SWORDS_QUEEN",
+    "nombre": "Reina de Espadas",
+    "contenido": {
+      "arquetipo": "La Viuda y la Jueza. Claridad dolorosa. Independencia mental.",
+      "sombra": "Amargura. Frialdad excesiva. Crítica destructiva.",
+      "misticismo": "Agua del Aire. La nube de lluvia que limpia.",
+      "arte": "Trono de piedra. Espada recta. Mirada severa.",
+      "ciencia": "Lógica formal. Análisis objetivo.",
+      "computacion": "System Administrator. Security Audit. La que dice 'No'.",
+      "social": "Mujer independiente. Divorciada. Intelectual solitaria.",
+      "cotidiano": "Un momento de La Viuda y la Jueza en tu día."
+    }
+  },
+  {
+    "id": "swords_king",
+    "key": "SWORDS_KING",
+    "nombre": "Rey de Espadas",
+    "contenido": {
+      "arquetipo": "El Juez y el Estratega. Autoridad intelectual. La ley.",
+      "sombra": "Tiranía intelectual. Falta de empatía. Crueldad legal.",
+      "misticismo": "Fuego del Aire. El rayo.",
+      "arte": "Mirada frontal. Corona de mariposas (psique). Justicia.",
+      "ciencia": "Neurocirugía. Leyes físicas.",
+      "computacion": "Chief Information Officer (CIO). Arquitecto de Software. Juez.",
+      "social": "Abogado. Juez. Experto. Decisión racional final.",
+      "cotidiano": "Un momento de El Juez y el Estratega en tu día."
+    }
+  }
+]

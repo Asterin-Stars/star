@@ -1,0 +1,159 @@
+Updated image: /home/star/star/public/cards/ar00.jpg
+Updated image: /home/star/star/public/cards/ar01.jpg
+Updated image: /home/star/star/public/cards/ar02.jpg
+Updated image: /home/star/star/public/cards/ar03.jpg
+Updated image: /home/star/star/public/cards/ar04.jpg
+Updated image: /home/star/star/public/cards/ar05.jpg
+Updated image: /home/star/star/public/cards/ar06.jpg
+Updated image: /home/star/star/public/cards/ar07.jpg
+Updated image: /home/star/star/public/cards/ar08.jpg
+Updated image: /home/star/star/public/cards/ar09.jpg
+Updated image: /home/star/star/public/cards/ar10.jpg
+Updated image: /home/star/star/public/cards/ar11.jpg
+Updated image: /home/star/star/public/cards/ar12.jpg
+Updated image: /home/star/star/public/cards/ar13.jpg
+Updated image: /home/star/star/public/cards/ar14.jpg
+Updated image: /home/star/star/public/cards/ar15.jpg
+Updated image: /home/star/star/public/cards/ar16.jpg
+Updated image: /home/star/star/public/cards/ar17.jpg
+Updated image: /home/star/star/public/cards/ar18.jpg
+Updated image: /home/star/star/public/cards/ar19.jpg
+Updated image: /home/star/star/public/cards/ar20.jpg
+Updated image: /home/star/star/public/cards/ar21.jpg
+
+JSON_START
+{
+    "ar00": [
+        "#000000",
+        "#ffffff",
+        "#e37329",
+        "#49a3b9"
+    ],
+    "ar01": [
+        "#ffffff",
+        "#000000",
+        "#cfb70b",
+        "#5392bb"
+    ],
+    "ar02": [
+        "#ffffff",
+        "#000000",
+        "#e37c22",
+        "#4c9eb7"
+    ],
+    "ar03": [
+        "#ffffff",
+        "#000000",
+        "#e47724",
+        "#49a8ae"
+    ],
+    "ar04": [
+        "#ffffff",
+        "#000000",
+        "#e3801d",
+        "#48a8b1"
+    ],
+    "ar05": [
+        "#ffffff",
+        "#000000",
+        "#e17729",
+        "#46a6bd"
+    ],
+    "ar06": [
+        "#ffffff",
+        "#000000",
+        "#e37823",
+        "#47aaad"
+    ],
+    "ar07": [
+        "#ffffff",
+        "#000000",
+        "#e17529",
+        "#4a9abb"
+    ],
+    "ar08": [
+        "#000000",
+        "#ffffff",
+        "#df851b",
+        "#529cb9"
+    ],
+    "ar09": [
+        "#ffffff",
+        "#000000",
+        "#e07328",
+        "#55abb9"
+    ],
+    "ar10": [
+        "#000000",
+        "#ffffff",
+        "#e37b20",
+        "#4a9fb4"
+    ],
+    "ar11": [
+        "#ffffff",
+        "#000000",
+        "#e07629",
+        "#5da1af"
+    ],
+    "ar12": [
+        "#000000",
+        "#ffffff",
+        "#e0732c",
+        "#49a8be"
+    ],
+    "ar13": [
+        "#ffffff",
+        "#000000",
+        "#e17524",
+        "#509cb8"
+    ],
+    "ar14": [
+        "#ffffff",
+        "#000000",
+        "#e17c21",
+        "#48aab0"
+    ],
+    "ar15": [
+        "#ffffff",
+        "#000000",
+        "#e17a22",
+        "#608ea9"
+    ],
+    "ar16": [
+        "#ffffff",
+        "#000000",
+        "#d3a50e",
+        "#4b9fba"
+    ],
+    "ar17": [
+        "#000000",
+        "#ffffff",
+        "#e27325",
+        "#4b95ba"
+    ],
+    "ar18": [
+        "#000000",
+        "#ffffff",
+        "#df762a",
+        "#3cb2bb"
+    ],
+    "ar19": [
+        "#ffffff",
+        "#000000",
+        "#e27d1e",
+        "#49a4b4"
+    ],
+    "ar20": [
+        "#ffffff",
+        "#000000",
+        "#e27721",
+        "#4b9cb8"
+    ],
+    "ar21": [
+        "#000000",
+        "#ffffff",
+        "#e37721",
+        "#46adae"
+    ]
+}
+JSON_END

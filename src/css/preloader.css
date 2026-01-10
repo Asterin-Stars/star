@@ -1,0 +1,155 @@
+:root {
+  /* Star Effect Variables */
+  --star-size: 8rem;
+  --star-blur-depth: 23px;
+  --vapor-blur: 25px;
+  --vapor-size: 360px;
+  --vapor-opacity: 0.75;
+  --gradient-speed: 8s;
+  --vapor-speed: 10s;
+  --breathe-scale-min: 0.95;
+  --breathe-scale-max: 1.05;
+  
+  /* Color Bulbs */
+  --color-1: #ff006e;
+  --color-2: #2a0c55;
+  --color-3: #3a86ff;
+  --color-4: #06ffa5;
+  --color-5: #ffbe0b;
+  
+  /* Bulb Properties */
+  --bulb-blur: 40px;
+  --bulb-size: 120px;
+  --bulb-opacity: 0.6;
+}
+
+/* Preloader Container */
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-void);
+  background-image: radial-gradient(circle at 50% 50%, #1a0b2e 0%, #000000 70%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-preloader);
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Breathing Star */
+/* Breathing Star */
+.loader-star {
+  position: relative;
+  font-size: var(--star-size);
+  color: #ffffff;
+  text-shadow: 
+    0 0 20px rgba(255, 255, 255, 0.8),
+    0 0 40px rgba(125, 95, 255, 0.6);
+  animation: breathe var(--gradient-speed) ease-in-out infinite;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 
+   Glow Container - The source of the ambient light.
+   It is centered and acts as a 0x0 anchor for the huge radial gradients.
+*/
+.loader-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  z-index: 1; /* Behind the star */
+}
+
+/* Color Bulbs Layer 1 */
+.loader-glow::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* Massive size to cover screen without clipping */
+  width: 150vmax; 
+  height: 150vmax;
+  transform: translate(-50%, -50%);
+  background: 
+    radial-gradient(circle at 30% 40%, var(--color-1), transparent 40%),
+    radial-gradient(circle at 70% 60%, var(--color-3), transparent 40%),
+    radial-gradient(circle at 50% 20%, var(--color-5), transparent 40%);
+  filter: blur(80px); /* Increased blur */
+  opacity: 0.5; /* Slightly reduced opacity for ambient feel */
+  animation: bulbs-flow-1 var(--gradient-speed) ease-in-out infinite;
+}
+
+/* Color Bulbs Layer 2 */
+.loader-glow::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150vmax;
+  height: 150vmax;
+  transform: translate(-50%, -50%);
+  background: 
+    radial-gradient(circle at 60% 30%, var(--color-2), transparent 45%),
+    radial-gradient(circle at 40% 70%, var(--color-4), transparent 45%);
+  filter: blur(100px);
+  opacity: 0.4;
+  animation: bulbs-flow-2 var(--vapor-speed) ease-in-out infinite reverse;
+}
+
+
+
+/* Animations */
+@keyframes breathe {
+  0%, 100% { 
+    transform: scale(var(--breathe-scale-min)); 
+    opacity: 0.8; 
+  }
+  50% { 
+    transform: scale(var(--breathe-scale-max)); 
+    opacity: 1; 
+  }
+}
+
+@keyframes bulbs-flow-1 {
+  0%, 100% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translate(-55%, -45%) rotate(90deg) scale(1.1);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(180deg) scale(0.9);
+  }
+  75% {
+    transform: translate(-45%, -55%) rotate(270deg) scale(1.05);
+  }
+}
+
+@keyframes bulbs-flow-2 {
+  0%, 100% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+  33% {
+    transform: translate(-48%, -52%) rotate(120deg) scale(1.08);
+  }
+  66% {
+    transform: translate(-52%, -48%) rotate(240deg) scale(0.92);
+  }
+}
+
+

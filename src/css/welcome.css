@@ -1,0 +1,112 @@
+/* Welcome View Styles */
+
+.view {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.view.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Glass Card */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border: 1px solid var(--glass-border);
+  padding: 3rem 2rem;
+  border-radius: 24px;
+  text-align: center;
+  max-width: 90%;
+  width: 400px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+/* Typography */
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(125, 95, 255, 0.3);
+}
+
+.hero-subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+  line-height: 1.5;
+  font-weight: 300;
+}
+
+/* Animations */
+.view.active .fade-in-up {
+  animation: fadeInUp 1s ease forwards 0.3s; /* Delay to start after view fades in */
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Buttons */
+.btn-holo {
+  background: rgba(125, 95, 255, 0.1);
+  border: 1px solid rgba(125, 95, 255, 0.3);
+  color: #fff;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+}
+
+.btn-holo::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.btn-holo:hover {
+  background: rgba(125, 95, 255, 0.25);
+  border-color: rgba(125, 95, 255, 0.8);
+  box-shadow: 0 0 20px rgba(125, 95, 255, 0.4);
+  transform: scale(1.05);
+}
+
+.btn-holo:hover::before {
+  left: 100%;
+}
