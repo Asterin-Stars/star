@@ -564,25 +564,26 @@
         /* ... (color vars existentes se asumen arriba) ... */
 
         /* [CONTROL DE CARTA] Ajusta aquí el marco y bordes */
-        --card-frame-padding: 16px; /* Grosor del marco blanco (p.ej. 12px a 20px) */
-        --card-frame-color: #fdfbf7; /* Color del marco (papel crema) */
-        --card-frame-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05); /* Sombra interna sutil */
-        --card-img-radius: 2px; /* Redondeo de la ilustración interna */
+        --card-frame-padding: 8px; /* Solicitado: 8px */
+        --card-frame-color: #fdfbf7;
+        --card-frame-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05);
+        --card-img-radius: 4px; /* Solicitado: Suavizado */
 
         /* [EFECTOS DE CAPAS] Ajusta la intensidad de cada capa */
-        --layer-base-contrast: 1.05; /* Nitidez de la imagen base */
+        --layer-base-contrast: 1.05;
 
-        --layer-gold-opacity: 0.85; /* Intensidad del dorado */
-        --layer-gold-blend: color-dodge; /* Modo de fusión (color-dodge, overlay, screen) */
-        --layer-gold-brightness: 1.2; /* Brillo extra del oro */
+        /* BRIGHT GOLD - Configuración Solicitada */
+        --layer-gold-opacity: 0.1;
+        --layer-gold-blend: screen;
+        --layer-gold-brightness: 2.8;
 
-        --layer-ink-opacity: 0.9; /* Fuerza de las líneas negras */
+        --layer-ink-opacity: 0.9;
         --layer-ink-blend: multiply;
 
-        --layer-passion-opacity: 0.6; /* Intensidad de colores cálidos */
+        --layer-passion-opacity: 0.6;
         --layer-passion-blend: soft-light;
 
-        --layer-spirit-opacity: 0.4; /* Intensidad del brillo etéreo */
+        --layer-spirit-opacity: 0.4;
         --layer-spirit-blend: screen;
       }
 

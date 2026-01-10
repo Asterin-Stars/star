@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Holo-Lab 2.0: Editor Avanzado</title>
+    <style>
+      :root {
+        --bg-color: #0f172a;
+        --panel-bg: rgba(30, 41, 59, 0.95);
+        --text-color: #e2e8f0;
+
+        /* Valores por defecto (se sobreescriben) */
+        --card-frame-padding: 8px;
+        --card-img-radius: 4px;
+        --layer-zoom: 1.1;
+
+        --layer-gold-opacity: 0.1;
+        --layer-gold-blend: screen;
+        --layer-gold-brightness: 2.8;
+
+        /* Esta variable define la MÁSCARA del patrón para que solo brille donde hay oro */
+        --gold-mask-url: url("./public/cards_layered/ar13/gold.png");
+        --layer-gold-pattern: none;
+
+        --layer-ink-opacity: 0.9;
+        --layer-passion-opacity: 0.6;
+        --layer-spirit-opacity: 0.4;
+
+        --tilt-x: 0deg;
+        --tilt-y: 0deg;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg-color);
+        color: var(--text-color);
+        font-family: system-ui, sans-serif;
+        overflow: hidden;
+        display: flex;
+        height: 100vh;
+      }
+
+      .preview-area {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        perspective: 1200px;
+        background: radial-gradient(circle at center, #334155 0%, #0f172a 100%);
+      }
+
+      .card-container {
+        width: 320px;
+        height: 560px;
+        position: relative;
+        transform-style: preserve-3d;
+        transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+        transition: transform 0.1s;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+      }
+
+      .card-face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: #fdfbf7;
+        padding: var(--card-frame-padding);
+        box-sizing: border-box;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .card-layers {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        /* radius para el contenido */
+        border-radius: var(--card-img-radius);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        background: #fff;
+      }
+
+      /* WRAPPER PARA CAPAS (Clave para pseudo-elementos) */
+      .layer-wrapper {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        transform: translate(-50%, -50%) scale(var(--layer-zoom));
+        pointer-events: none;
+      }
+
+      .layer-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* ESTILOS DE CAPAS */
+      .layer-base {
+        z-index: 1;
+      }
+      .layer-nature {
+        z-index: 2;
+        mix-blend-mode: normal;
+      }
+      .layer-passion {
+        z-index: 3;
+        mix-blend-mode: soft-light;
+        opacity: var(--layer-passion-opacity);
+      }
+      .layer-ink {
+        z-index: 4;
+        mix-blend-mode: multiply;
+        opacity: var(--layer-ink-opacity);
+      }
+
+      /* GIGANTE UPDATE: Capa Gold con Wrapper y Máscara */
+      .wrapper-gold {
+        z-index: 5;
+        mix-blend-mode: var(
+          --layer-gold-blend
+        ); /* screen/colordodge se aplica al wrapper */
+        opacity: var(--layer-gold-opacity);
+        filter: brightness(var(--layer-gold-brightness));
+      }
+
+      /* El patrón (brillo/textura) se dibuja ENCIMA de la imagen gold */
+      .wrapper-gold::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--layer-gold-pattern);
+        /* Truco maestro: Usar la propia imagen como máscara para que el patrón solo se vea en el oro */
+        -webkit-mask-image: var(--gold-mask-url);
+        mask-image: var(--gold-mask-url);
+        -webkit-mask-size: cover;
+        mask-size: cover;
+        mix-blend-mode: overlay; /* El patrón se mezcla con el color del oro */
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      .layer-spirit {
+        z-index: 6;
+        mix-blend-mode: screen;
+        opacity: var(--layer-spirit-opacity);
+      }
+
+      /* CONTROLES */
+      .controls {
+        width: 340px;
+        background: var(--panel-bg);
+        padding: 20px;
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        overflow-y: auto;
+      }
+      .control-group {
+        margin-bottom: 15px;
+      }
+      label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+        color: #94a3b8;
+      }
+      input[type="range"] {
+        width: 100%;
+      }
+
+      .value-display {
+        color: #60a5fa;
+        font-family: monospace;
+      }
+      .css-output {
+        width: 100%;
+        height: 120px;
+        background: #000;
+        color: #0f0;
+        border: none;
+        padding: 10px;
+        font-size: 0.75rem;
+        margin-top: 20px;
+      }
+
+      h2 {
+        color: #fff;
+        border-bottom: 1px solid #475569;
+        padding-bottom: 10px;
+      }
+      h3 {
+        color: #60a5fa;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="preview-area" id="previewArea">
+      <div class="card-container">
+        <div class="card-face">
+          <div class="card-layers">
+            <!-- Estructura de Wrappers para soportar efectos avanzados -->
+            <div class="layer-wrapper layer-base">
+              <img
+                src="./public/cards_layered/ar13/base.png"
+                class="layer-img"
+              />
+            </div>
+            <div class="layer-wrapper layer-nature">
+              <img
+                src="./public/cards_layered/ar13/nature.png"
+                class="layer-img"
+              />
+            </div>
+            <div class="layer-wrapper layer-passion">
+              <img
+                src="./public/cards_layered/ar13/passion.png"
+                class="layer-img"
+              />
+            </div>
+            <div class="layer-wrapper layer-ink">
+              <img
+                src="./public/cards_layered/ar13/ink.png"
+                class="layer-img"
+              />
+            </div>
+
+            <!-- La Capa de Oro Especial -->
+            <div class="layer-wrapper wrapper-gold">
+              <img
+                src="./public/cards_layered/ar13/gold.png"
+                class="layer-img"
+              />
+            </div>
+
+            <div class="layer-wrapper layer-spirit">
+              <img
+                src="./public/cards_layered/ar13/spirit.png"
+                class="layer-img"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <h2>🎛️ Holo-Lab 2.0</h2>
+
+      <h3>Geometría</h3>
+      <div class="control-group">
+        <label
+          >Padding Marco
+          <span id="v-pad" class="value-display">8px</span></label
+        >
+        <input
+          type="range"
+          min="0"
+          max="30"
+          value="8"
+          oninput="upd('--card-frame-padding', this.value+'px', 'v-pad')"
+        />
+      </div>
+      <div class="control-group">
+        <label
+          >Radio Esquinas
+          <span id="v-rad" class="value-display">4px</span></label
+        >
+        <input
+          type="range"
+          min="0"
+          max="20"
+          value="4"
+          oninput="upd('--card-img-radius', this.value+'px', 'v-rad')"
+        />
+      </div>
+
+      <h3>Capa de Oro (Holo)</h3>
+      <div class="control-group">
+        <label
+          >Opacidad <span id="v-g-op" class="value-display">0.1</span></label
+        >
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.1"
+          oninput="upd('--layer-gold-opacity', this.value, 'v-g-op')"
+        />
+      </div>
+      <div class="control-group">
+        <label
+          >Brillo (Brightness)
+          <span id="v-g-br" class="value-display">2.8</span></label
+        >
+        <input
+          type="range"
+          min="0.5"
+          max="5"
+          step="0.1"
+          value="2.8"
+          oninput="upd('--layer-gold-brightness', this.value, 'v-g-br')"
+        />
+      </div>
+      <div class="control-group">
+        <label>Modo Fusión</label>
+        <select onchange="upd('--layer-gold-blend', this.value)">
+          <option value="screen" selected>Screen (Tu elección)</option>
+          <option value="color-dodge">Color Dodge</option>
+          <option value="overlay">Overlay</option>
+          <option value="normal">Normal</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label>Patrón de Reflejo (¡Ahora funciona!)</label>
+        <select onchange="upd('--layer-gold-pattern', this.value)">
+          <option value="none" selected>Ninguno (Liso)</option>
+          <option
+            value="linear-gradient(135deg, transparent 40%, white 50%, transparent 60%)"
+          >
+            Rayo Diagonal
+          </option>
+          <option
+            value="repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.5) 5px, rgba(255,255,255,0.5) 10px)"
+          >
+            Rayas Holográficas
+          </option>
+          <option
+            value="radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%)"
+          >
+            Destello Central
+          </option>
+          <option
+            value="conic-gradient(white, transparent, white, transparent)"
+          >
+            Prisma Cónico
+          </option>
+        </select>
+      </div>
+
+      <h3>Otras Capas</h3>
+      <div class="control-group">
+        <label
+          >Tinta (Ink) <span id="v-ink" class="value-display">0.9</span></label
+        >
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.05"
+          value="0.9"
+          oninput="upd('--layer-ink-opacity', this.value, 'v-ink')"
+        />
+      </div>
+
+      <h3>Salida CSS</h3>
+      <textarea id="cssOut" class="css-output"></textarea>
+    </div>
+
+    <script>
+      const root = document.documentElement;
+      const preview = document.getElementById("previewArea");
+      const out = document.getElementById("cssOut");
+
+      // Parallax simple
+      preview.addEventListener("mousemove", (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
+        const y = (e.clientY / window.innerHeight - 0.5) * 2;
+        root.style.setProperty("--tilt-y", x * 15 + "deg");
+        root.style.setProperty("--tilt-x", y * -15 + "deg");
+      });
+
+      function upd(name, val, displayId) {
+        root.style.setProperty(name, val);
+        if (displayId) document.getElementById(displayId).textContent = val;
+        genCSS();
+      }
+
+      function genCSS() {
+        const s = getComputedStyle(root);
+        out.value = `
+  --card-frame-padding: ${s.getPropertyValue("--card-frame-padding").trim()};
+  --card-img-radius: ${s.getPropertyValue("--card-img-radius").trim()};
+  
+  --layer-gold-opacity: ${s.getPropertyValue("--layer-gold-opacity").trim()};
+  --layer-gold-blend: ${s.getPropertyValue("--layer-gold-blend").trim()};
+  --layer-gold-brightness: ${s
+    .getPropertyValue("--layer-gold-brightness")
+    .trim()};
+  
+  --layer-ink-opacity: ${s.getPropertyValue("--layer-ink-opacity").trim()};
+      `.trim();
+      }
+      genCSS();
+    </script>
+  </body>
+</html>
