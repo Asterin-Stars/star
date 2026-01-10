@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Holo-Lab 3.0: Debug & Fix</title>
+    <title>Holo-Lab 4.0: All Layers Control</title>
     <style>
       :root {
         --bg-color: #0f172a;
@@ -15,17 +15,27 @@
         --card-img-radius: 4px;
         --layer-zoom: 1.1;
 
+        /* Capas Individuales */
+        --layer-base-contrast: 1;
+
+        --layer-nature-opacity: 1;
+        --layer-nature-blend: normal;
+
+        --layer-passion-opacity: 0.6;
+        --layer-passion-blend: soft-light;
+
+        --layer-ink-opacity: 0.9;
+        --layer-ink-blend: multiply;
+
+        /* Capa Gold */
         --layer-gold-opacity: 0.1;
         --layer-gold-blend: screen;
         --layer-gold-brightness: 2.8;
-
-        /* MÁSCARA del patrón */
-        --gold-mask-url: url("./public/cards_layered/ar13/gold.png");
         --layer-gold-pattern: none;
+        --gold-mask-url: url("./public/cards_layered/ar13/gold.png");
 
-        --layer-ink-opacity: 0.9;
-        --layer-passion-opacity: 0.6;
         --layer-spirit-opacity: 0.4;
+        --layer-spirit-blend: screen;
 
         --tilt-x: 0deg;
         --tilt-y: 0deg;
@@ -68,6 +78,8 @@
         padding: var(--card-frame-padding);
         box-sizing: border-box;
         border-radius: 12px;
+
+        /* Clip path to ensure nothing spills out */
         overflow: hidden;
       }
 
@@ -79,6 +91,9 @@
         border-radius: var(--card-img-radius);
         border: 1px solid rgba(0, 0, 0, 0.1);
         background: #fff;
+
+        /* Force isolation to manage blends */
+        isolation: isolate;
       }
 
       /* WRAPPER PARA CAPAS */
@@ -86,8 +101,11 @@
         position: absolute;
         top: 50%;
         left: 50%;
+
+        /* Importante: Tamaño exacto de la imagen interna para que la máscara coincida */
         width: 100%;
         height: 100%;
+
         transform: translate(-50%, -50%) scale(var(--layer-zoom));
         pointer-events: none;
       }
@@ -102,25 +120,28 @@
       /* ESTILOS DE CAPAS */
       .layer-base {
         z-index: 1;
+        filter: contrast(var(--layer-base-contrast));
       }
+
       .layer-nature {
         z-index: 2;
-        mix-blend-mode: normal;
+        mix-blend-mode: var(--layer-nature-blend);
+        opacity: var(--layer-nature-opacity);
       }
 
       .layer-passion {
         z-index: 3;
-        mix-blend-mode: soft-light;
+        mix-blend-mode: var(--layer-passion-blend);
         opacity: var(--layer-passion-opacity);
       }
 
       .layer-ink {
         z-index: 4;
-        mix-blend-mode: multiply;
+        mix-blend-mode: var(--layer-ink-blend);
         opacity: var(--layer-ink-opacity);
       }
 
-      /* FIX CRÍTICO: Capa Gold con Opacidad Desacoplada */
+      /* FIX MÁSCARA: Wrapper Gold */
       .wrapper-gold {
         z-index: 5;
         mix-blend-mode: var(--layer-gold-blend);
@@ -138,11 +159,23 @@
         left: 0;
         width: 100%;
         height: 100%;
+
         background: var(--layer-gold-pattern);
+
+        /* MÁSCARA AJUSTADA */
         -webkit-mask-image: var(--gold-mask-url);
         mask-image: var(--gold-mask-url);
-        -webkit-mask-size: cover;
-        mask-size: cover;
+
+        /* Asegurar que la máscara cubra exactamente el espacio de la imagen */
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+
+        -webkit-mask-position: center;
+        mask-position: center;
+
         mix-blend-mode: overlay;
         opacity: 0.8;
         pointer-events: none;
@@ -151,50 +184,68 @@
 
       .layer-spirit {
         z-index: 6;
-        mix-blend-mode: screen;
+        mix-blend-mode: var(--layer-spirit-blend);
         opacity: var(--layer-spirit-opacity);
       }
 
       /* CONTROLES */
       .controls {
-        width: 340px;
+        width: 360px;
         background: var(--panel-bg);
         padding: 20px;
         border-left: 1px solid rgba(255, 255, 255, 0.1);
         overflow-y: auto;
       }
       .control-group {
-        margin-bottom: 15px;
+        margin-bottom: 12px;
       }
 
-      /* Labels linked correctly */
       label {
         display: flex;
         justify-content: space-between;
-        font-size: 0.85rem;
-        margin-bottom: 5px;
+        font-size: 0.8rem;
+        margin-bottom: 4px;
         color: #94a3b8;
       }
+      input[type="range"] {
+        height: 4px;
+        border-radius: 2px;
+        -webkit-appearance: none;
+        background: #334155;
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 12px;
+        height: 12px;
+        background: #60a5fa;
+        border-radius: 50%;
+        cursor: pointer;
+      }
 
-      input[type="range"],
       select {
-        width: 100%;
-        box-sizing: border-box;
+        background: #1e293b;
+        color: #e2e8f0;
+        border: 1px solid #475569;
+        padding: 4px;
+        font-size: 0.8rem;
+        border-radius: 4px;
       }
 
       .value-display {
         color: #60a5fa;
         font-family: monospace;
+        font-size: 0.8rem;
       }
       .css-output {
         width: 100%;
-        height: 120px;
+        height: 100px;
         background: #000;
         color: #0f0;
         border: none;
         padding: 10px;
-        font-size: 0.75rem;
+        font-size: 0.7rem;
         margin-top: 20px;
+        font-family: monospace;
       }
       .help-text {
         color: #64748b;
@@ -207,12 +258,34 @@
         color: #fff;
         border-bottom: 1px solid #475569;
         padding-bottom: 10px;
+        font-size: 1.2rem;
       }
       h3 {
         color: #60a5fa;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         text-transform: uppercase;
-        margin-top: 20px;
+        margin-top: 15px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid #334155;
+        padding-bottom: 2px;
+      }
+
+      .layer-section {
+        border-left: 2px solid #334155;
+        padding-left: 10px;
+        margin-bottom: 15px;
+      }
+      .layer-section.gold {
+        border-left-color: #fbbf24;
+      }
+      .layer-section.ink {
+        border-left-color: #1e293b;
+      }
+      .layer-section.passion {
+        border-left-color: #f87171;
+      }
+      .layer-section.spirit {
+        border-left-color: #c084fc;
       }
     </style>
   </head>
@@ -225,28 +298,28 @@
               <img
                 src="./public/cards_layered/ar13/base.png"
                 class="layer-img"
-                alt="Capa Base"
+                alt="Base"
               />
             </div>
             <div class="layer-wrapper layer-nature">
               <img
                 src="./public/cards_layered/ar13/nature.png"
                 class="layer-img"
-                alt="Capa Naturaleza"
+                alt="Nature"
               />
             </div>
             <div class="layer-wrapper layer-passion">
               <img
                 src="./public/cards_layered/ar13/passion.png"
                 class="layer-img"
-                alt="Capa Pasión"
+                alt="Passion"
               />
             </div>
             <div class="layer-wrapper layer-ink">
               <img
                 src="./public/cards_layered/ar13/ink.png"
                 class="layer-img"
-                alt="Capa Tinta"
+                alt="Ink"
               />
             </div>
             <!-- GOLD WRAPPER -->
@@ -254,14 +327,14 @@
               <img
                 src="./public/cards_layered/ar13/gold.png"
                 class="layer-img"
-                alt="Capa Dorada Holo"
+                alt="Gold"
               />
             </div>
             <div class="layer-wrapper layer-spirit">
               <img
                 src="./public/cards_layered/ar13/spirit.png"
                 class="layer-img"
-                alt="Capa Espíritu"
+                alt="Spirit"
               />
             </div>
           </div>
@@ -270,13 +343,12 @@
     </div>
 
     <div class="controls">
-      <h2>🎛️ Holo-Lab 3.0</h2>
+      <h2>🎛️ Holo-Lab 4.0</h2>
 
       <h3>Geometría</h3>
       <div class="control-group">
         <label for="inp-padding"
-          >Padding Marco
-          <span id="v-pad" class="value-display">8px</span></label
+          >Padding <span id="v-pad" class="value-display">8px</span></label
         >
         <input
           id="inp-padding"
@@ -289,8 +361,7 @@
       </div>
       <div class="control-group">
         <label for="inp-radius"
-          >Radio Esquinas
-          <span id="v-rad" class="value-display">4px</span></label
+          >Radio <span id="v-rad" class="value-display">4px</span></label
         >
         <input
           id="inp-radius"
@@ -302,75 +373,174 @@
         />
       </div>
 
-      <h3>Capa de Oro (Holo)</h3>
-      <div class="control-group">
-        <label for="inp-gold-op"
-          >Opacidad Tinta
-          <span id="v-g-op" class="value-display">0.1</span></label
+      <h3>Capas (Layers)</h3>
+
+      <!-- GOLD -->
+      <div class="layer-section gold">
+        <label style="color: #fbbf24; font-weight: bold"
+          >GOLD LAYER (Holo)</label
         >
-        <input
-          id="inp-gold-op"
-          type="range"
-          min="0"
-          max="1"
-          step="0.01"
-          value="0.1"
-          oninput="upd('--layer-gold-opacity', this.value, 'v-g-op')"
-        />
-      </div>
-      <div class="control-group">
-        <label for="inp-gold-br"
-          >Brillo (Brightness)
-          <span id="v-g-br" class="value-display">2.8</span></label
-        >
-        <input
-          id="inp-gold-br"
-          type="range"
-          min="0.5"
-          max="5"
-          step="0.1"
-          value="2.8"
-          oninput="upd('--layer-gold-brightness', this.value, 'v-g-br')"
-        />
-      </div>
-      <div class="control-group">
-        <label for="sel-blend">Modo Fusión</label>
-        <select id="sel-blend" onchange="upd('--layer-gold-blend', this.value)">
-          <option value="screen" selected>Screen (Recomendado)</option>
-          <option value="color-dodge">Color Dodge</option>
-          <option value="overlay">Overlay</option>
-          <option value="normal">Normal</option>
-        </select>
+        <div class="control-group">
+          <label for="inp-gold-op"
+            >Opacidad <span id="v-g-op" class="value-display">0.1</span></label
+          >
+          <input
+            id="inp-gold-op"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="0.1"
+            oninput="upd('--layer-gold-opacity', this.value, 'v-g-op')"
+          />
+        </div>
+        <div class="control-group">
+          <label for="inp-gold-br"
+            >Brillo <span id="v-g-br" class="value-display">2.8</span></label
+          >
+          <input
+            id="inp-gold-br"
+            type="range"
+            min="0.5"
+            max="5"
+            step="0.1"
+            value="2.8"
+            oninput="upd('--layer-gold-brightness', this.value, 'v-g-br')"
+          />
+        </div>
+        <div class="control-group">
+          <label for="sel-blend">Blend</label>
+          <select
+            id="sel-blend"
+            onchange="upd('--layer-gold-blend', this.value)"
+          >
+            <option value="screen" selected>Screen</option>
+            <option value="color-dodge">Color Dodge</option>
+            <option value="overlay">Overlay</option>
+            <option value="normal">Normal</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="sel-pattern">Patrón Holo</label>
+          <select
+            id="sel-pattern"
+            onchange="upd('--layer-gold-pattern', this.value)"
+          >
+            <option value="none" selected>Ninguno</option>
+            <option
+              value="linear-gradient(135deg, transparent 40%, white 50%, transparent 60%)"
+            >
+              Rayo Diagonal
+            </option>
+            <option
+              value="repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.5) 5px, rgba(255,255,255,0.5) 10px)"
+            >
+              Rayas Holográficas
+            </option>
+            <option
+              value="radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%)"
+            >
+              Destello Central
+            </option>
+          </select>
+        </div>
       </div>
 
-      <div class="control-group">
-        <label for="sel-pattern">Patrón de Reflejo</label>
-        <select
-          id="sel-pattern"
-          onchange="upd('--layer-gold-pattern', this.value)"
-        >
-          <option value="none" selected>Ninguno</option>
-          <option
-            value="linear-gradient(135deg, transparent 40%, white 50%, transparent 60%)"
+      <!-- PASSION -->
+      <div class="layer-section passion">
+        <label style="color: #f87171; font-weight: bold">PASSION LAYER</label>
+        <div class="control-group">
+          <label
+            >Opacidad <span id="v-pass" class="value-display">0.6</span></label
           >
-            Rayo Diagonal
-          </option>
-          <option
-            value="repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.5) 5px, rgba(255,255,255,0.5) 10px)"
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.05"
+            value="0.6"
+            oninput="upd('--layer-passion-opacity', this.value, 'v-pass')"
+          />
+        </div>
+        <div class="control-group">
+          <label>Blend</label>
+          <select onchange="upd('--layer-passion-blend', this.value)">
+            <option value="soft-light" selected>Soft Light</option>
+            <option value="multiply">Multiply</option>
+            <option value="overlay">Overlay</option>
+            <option value="normal">Normal</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- INK -->
+      <div class="layer-section ink">
+        <label style="color: #94a3b8; font-weight: bold">INK LAYER</label>
+        <div class="control-group">
+          <label
+            >Opacidad <span id="v-ink" class="value-display">0.9</span></label
           >
-            Rayas Holográficas
-          </option>
-          <option
-            value="radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%)"
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.05"
+            value="0.9"
+            oninput="upd('--layer-ink-opacity', this.value, 'v-ink')"
+          />
+        </div>
+        <div class="control-group">
+          <label>Blend</label>
+          <select onchange="upd('--layer-ink-blend', this.value)">
+            <option value="multiply" selected>Multiply</option>
+            <option value="normal">Normal</option>
+            <option value="darken">Darken</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- SPIRIT -->
+      <div class="layer-section spirit">
+        <label style="color: #c084fc; font-weight: bold">SPIRIT LAYER</label>
+        <div class="control-group">
+          <label
+            >Opacidad <span id="v-spi" class="value-display">0.4</span></label
           >
-            Destello Central
-          </option>
-          <option
-            value="conic-gradient(white, transparent, white, transparent)"
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.05"
+            value="0.4"
+            oninput="upd('--layer-spirit-opacity', this.value, 'v-spi')"
+          />
+        </div>
+        <div class="control-group">
+          <label>Blend</label>
+          <select onchange="upd('--layer-spirit-blend', this.value)">
+            <option value="screen" selected>Screen</option>
+            <option value="lighten">Lighten</option>
+            <option value="normal">Normal</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- NATURE -->
+      <div class="layer-section" style="border-left-color: #4ade80">
+        <label style="color: #4ade80; font-weight: bold">NATURE LAYER</label>
+        <div class="control-group">
+          <label
+            >Opacidad <span id="v-nat" class="value-display">1.0</span></label
           >
-            Prisma Cónico
-          </option>
-        </select>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.05"
+            value="1.0"
+            oninput="upd('--layer-nature-opacity', this.value, 'v-nat')"
+          />
+        </div>
       </div>
 
       <h3>Debug Mode</h3>
@@ -391,12 +561,11 @@
           />
         </div>
         <span class="help-text"
-          >Muestra el patrón sin máscara y fuerza opacidad.</span
+          >Si ves todo rojo y no solo el oro, la máscara falla.</span
         >
       </div>
 
       <h3>Salida CSS</h3>
-      <label for="cssOut" style="display: none">Código CSS generado</label>
       <textarea id="cssOut" class="css-output"></textarea>
     </div>
 
@@ -421,25 +590,26 @@
 
       function toggleDebug(enabled) {
         if (enabled) {
-          // DEBUG: Rojo intenso, sin máscara
+          // DEBUG: Rojo intenso, debe respetar mascara
           root.style.setProperty(
             "--layer-gold-pattern",
             "repeating-linear-gradient(45deg, red, red 10px, yellow 10px, yellow 20px)"
           );
           root.style.setProperty("--layer-gold-blend", "normal");
+          root.style.setProperty("--layer-gold-opacity", "1");
 
-          // Forzar opacidad visual en imagen para ver geometria
+          // Forzar opacidad visual en imagen
           const style = document.createElement("style");
           style.id = "debug-css";
           style.textContent = `
                     .wrapper-gold::after {
-                        -webkit-mask-image: none !important;
-                        mask-image: none !important;
-                        mix-blend-mode: normal !important;
-                        opacity: 1 !important;
+                       opacity: 1 !important;
+                       mix-blend-mode: normal !important;
+                       /* Importante: NO quitamos mask-image aqui para probar si funciona */
                     }
                     .wrapper-gold .layer-img {
-                        opacity: 0.5 !important;
+                        opacity: 0.2 !important; 
+                        filter: grayscale(1);
                     }
                 `;
           document.head.appendChild(style);
@@ -453,16 +623,36 @@
             "--layer-gold-pattern",
             document.getElementById("sel-pattern").value
           );
+          upd(
+            "--layer-gold-opacity",
+            document.getElementById("inp-gold-op").value
+          );
         }
       }
 
       function genCSS() {
         const s = getComputedStyle(root);
         out.value = `
-/* Configuración Holo-Lab 3.0 */
+/* Configuración Holo-Lab 4.0 */
 :root {
   --card-frame-padding: ${s.getPropertyValue("--card-frame-padding").trim()};
   --card-img-radius: ${s.getPropertyValue("--card-img-radius").trim()};
+
+  /* Capas */
+  --layer-base-contrast: ${s.getPropertyValue("--layer-base-contrast").trim()};
+  
+  --layer-nature-opacity: ${s
+    .getPropertyValue("--layer-nature-opacity")
+    .trim()};
+  --layer-nature-blend: ${s.getPropertyValue("--layer-nature-blend").trim()};
+
+  --layer-passion-opacity: ${s
+    .getPropertyValue("--layer-passion-opacity")
+    .trim()};
+  --layer-passion-blend: ${s.getPropertyValue("--layer-passion-blend").trim()};
+
+  --layer-ink-opacity: ${s.getPropertyValue("--layer-ink-opacity").trim()};
+  --layer-ink-blend: ${s.getPropertyValue("--layer-ink-blend").trim()};
 
   --layer-gold-opacity: ${s.getPropertyValue("--layer-gold-opacity").trim()};
   --layer-gold-blend: ${s.getPropertyValue("--layer-gold-blend").trim()};
@@ -470,7 +660,10 @@
     .getPropertyValue("--layer-gold-brightness")
     .trim()};
 
-  --layer-ink-opacity: ${s.getPropertyValue("--layer-ink-opacity").trim()};
+  --layer-spirit-opacity: ${s
+    .getPropertyValue("--layer-spirit-opacity")
+    .trim()};
+  --layer-spirit-blend: ${s.getPropertyValue("--layer-spirit-blend").trim()};
 }`.trim();
       }
       genCSS();
