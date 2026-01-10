@@ -398,6 +398,7 @@
         /* Evita que el scroll se propague al contenedor padre */
         white-space: nowrap;
         -webkit-user-select: none;
+        -webkit-user-select: none;
         user-select: none;
       }
 
@@ -827,6 +828,7 @@
         margin: 0 0 8px 0;
         text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
         cursor: pointer;
+        -webkit-user-select: none;
         user-select: none;
         display: flex;
         align-items: center;
@@ -1592,28 +1594,26 @@
     </button>
     <style>
       .collection-btn {
-          position: fixed;
-          top: 20px;
-          left: 20px;
-          z-index: 100;
-          background: transparent;
-          border: none;
-          width: 44px;
-          height: 44px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          font-size: 2rem;
-          filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 100;
+        background: transparent;
+        border: none;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 2rem;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
       }
 
       .collection-btn:hover {
-          transform: scale(1.15);
-          filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-      }
-
+        transform: scale(1.15);
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
       }
     </style>
 
@@ -1845,6 +1845,7 @@
           width: 100%;
           padding: 14px 20px;
           background: rgba(255, 255, 255, 0.2);
+          -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
           border: 1px solid rgba(255, 255, 255, 0.3);
           border-radius: 10px;
