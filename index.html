@@ -1939,6 +1939,7 @@
           name: cardData.name,
           timestamp: new Date().toISOString(),
           order: collectedCards.length + 1,
+          fullData: cardData, // Complete data for restoration
         });
 
         // Save to session
