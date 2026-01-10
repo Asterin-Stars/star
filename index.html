@@ -2766,6 +2766,29 @@
         }, 650);
       }
 
+      /* ==================== OCULTAR CARTA ==================== */
+      function hideDestiny() {
+        if (!currentCardData) return;
+
+        isRevealed = false;
+
+        // 1. Voltear carta de regreso
+        cardStage.classList.remove("flipped");
+
+        // 2. Ocultar panel de contenido
+        insightPanel.classList.remove("active");
+
+        // 3. Deshabilitar scroll
+        document.body.classList.add("no-scroll");
+        document.querySelector(".interface").classList.remove("revealed");
+
+        // 4. Ocultar sección intro
+        const introSection = document.getElementById("introSection");
+        if (introSection) introSection.style.display = "none";
+
+        console.log("🌙 Carta ocultada");
+      }
+
       /* ==================== MODAL DE EJEMPLOS ==================== */
       function openModal(category) {
         let concepts, title, conceptNumber;
@@ -3440,11 +3463,15 @@
         // STATE 1: First click (wait for more clicks or timeout)
         if (clickCount === 1) {
           clickTimer = setTimeout(() => {
-            console.log("✅ Single click confirmed - revealing card");
-            // Single click confirmed: REVEAL CARD
+            console.log("✅ Single click confirmed - toggling card");
+            // Single click confirmed: TOGGLE CARD (reveal or hide)
             requestAnimationFrame(() => {
-              if (!isRevealed && currentCardData) {
-                revealDestiny();
+              if (currentCardData) {
+                if (isRevealed) {
+                  hideDestiny();
+                } else {
+                  revealDestiny();
+                }
               }
             });
             clickCount = 0;
@@ -4146,14 +4173,27 @@
                   const cardIndex = parseInt(item.dataset.index);
                   const savedCard = collectedCards[cardIndex];
 
-                  // Restore the card data
+                  console.log("📂 Restoring saved reading:", savedCard.name);
+
+                  // Set the saved data as current
                   currentCardData = savedCard.fullData;
+
+                  // Update card image
+                  const cardImg = document.getElementById("cardImg");
+                  if (cardImg) {
+                    cardImg.src = savedCard.image;
+                  }
 
                   // Close modal
                   collectionModal.style.display = "none";
 
-                  // Reveal the card again with saved data
-                  revealDestiny();
+                  // If already revealed, hide first then reveal with new data
+                  if (isRevealed) {
+                    hideDestiny();
+                    setTimeout(() => revealDestiny(), 300);
+                  } else {
+                    revealDestiny();
+                  }
                 });
 
                 // Hover effect
