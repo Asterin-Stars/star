@@ -2767,7 +2767,7 @@
       }
 
       /* ==================== OCULTAR CARTA ==================== */
-      function hideDestiny() {
+      function hideDestiny(isRestoring = false) {
         if (!currentCardData) return;
 
         isRevealed = false;
@@ -2795,12 +2795,17 @@
         const introSection = document.getElementById("introSection");
         if (introSection) introSection.style.display = "none";
 
-        // 6. Preparar nueva carta para próxima revelación
-        setTimeout(() => {
-          prepareOracle(); // Assuming prepareOracle is the function to prepare a new card
-        }, 300);
-
-        console.log("🌙 Carta ocultada - preparando nueva carta");
+        // 6. Preparar nueva carta SOLO si no estamos restaurando
+        if (!isRestoring) {
+          setTimeout(() => {
+            prepareOracle();
+          }, 300);
+          console.log("🌙 Carta ocultada - preparando nueva carta");
+        } else {
+          console.log(
+            "📂 Carta ocultada para restauración (sin preparar nueva)"
+          );
+        }
       }
 
       /* ==================== MODAL DE EJEMPLOS ==================== */
