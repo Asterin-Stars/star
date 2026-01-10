@@ -4203,7 +4203,7 @@
 
                   // If already revealed, hide first then reveal with new data
                   if (isRevealed) {
-                    hideDestiny();
+                    hideDestiny(true); // Pass true to prevent loading random card
                     setTimeout(() => revealDestiny(), 300);
                   } else {
                     revealDestiny();
