@@ -567,7 +567,7 @@
         transform: rotateY(180deg);
         border: 1px solid rgba(255, 255, 255, 0.5);
         overflow: hidden;
-        padding: 15px;
+        padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -581,6 +581,34 @@
         filter: contrast(1.1) saturate(1.1) brightness(1.05);
         transition: transform 4s var(--ease-smooth);
       }
+
+      .card-layers {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .layer-img {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        object-fit: cover;
+        transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        will-change: transform;
+      }
+
+      /* Efectos específicos por capa */
+      .layer-base { z-index: 1; }
+      .layer-nature { z-index: 2; mix-blend-mode: normal; } /* Elementos físicos */
+      .layer-passion { z-index: 3; mix-blend-mode: overlay; opacity: 0.8; } /* Color/Fuego */
+      .layer-ink { z-index: 4; mix-blend-mode: multiply; opacity: 0.9; } /* Líneas */
+      .layer-gold {
+        z-index: 5;
+        mix-blend-mode: color-dodge;
+        filter: brightness(1.3) contrast(1.2);
+        opacity: 0.9;
+      }
+      .layer-spirit { z-index: 6; mix-blend-mode: screen; opacity: 0.6; pointer-events: none; }
 
       /* Efecto zoom al revelar */
       .card-stage.flipped .tarot-img {
@@ -1490,6 +1518,7 @@
             <div class="symbol">☾</div>
           </div>
           <div class="card-face back iridescent-border">
+            <div id="cardLayers" class="card-layers"></div>
             <img id="cardImg" src="" alt="Arcano del Tarot" class="tarot-img" />
           </div>
 
@@ -2585,21 +2614,60 @@
           };
 
           // Configurar imagen local (./public/cards/arXX.jpg)
+          // Configurar imagen local o capas
           const cardSlug = currentCardData.name_short;
-          const imageUrl = `./public/cards/${cardSlug}.jpg`;
+          const layersContainer = document.getElementById("cardLayers");
+          const cardImg = document.getElementById("cardImg");
 
-          // Precarga de imagen
-          const img = new Image();
-          img.onload = () => {
-            cardImg.src = imageUrl;
-          };
-          img.onerror = () => {
-            // Fallback: usar imagen del Loco si falla la carga
-            cardImg.src = "./public/cards/ar00.jpg";
-          };
-          img.src = imageUrl;
+          // Intentar cargar capas primero
+          const baseLayerUrl = `./public/cards_layered/${cardSlug}/base.png`;
+          const layerImg = new Image();
 
-          console.log("✨ Carta preparada:", currentCardData.name);
+          layerImg.onload = () => {
+            // Capas disponibles: usar sistema de capas
+            cardImg.style.display = "none";
+            layersContainer.innerHTML = "";
+            layersContainer.style.display = "block";
+
+            const layers = [
+              { name: "base", file: "base.png", class: "layer-base" },
+              { name: "nature", file: "nature.png", class: "layer-nature" },
+              { name: "passion", file: "passion.png", class: "layer-passion" },
+              { name: "ink", file: "ink.png", class: "layer-ink" },
+              { name: "gold", file: "gold.png", class: "layer-gold" },
+              { name: "spirit", file: "spirit.png", class: "layer-spirit" },
+            ];
+
+            layers.forEach((layer) => {
+              const img = document.createElement("img");
+              img.src = `./public/cards_layered/${cardSlug}/${layer.file}`;
+              img.className = `layer-img ${layer.class}`;
+              // Manejo de error silencioso para capas opcionales
+              img.onerror = () => {
+                img.style.display = "none";
+              };
+              layersContainer.appendChild(img);
+            });
+
+            console.log("✨ Capas cargadas para:", currentCardData.name);
+          };
+
+          layerImg.onerror = () => {
+            // Fallback a imagen plana jpg
+            layersContainer.style.display = "none";
+            cardImg.style.display = "block";
+            cardImg.src = `./public/cards/${cardSlug}.jpg`;
+
+            // Fallback del fallback
+            cardImg.onerror = () => {
+              cardImg.src = "./public/cards/ar00.jpg";
+            };
+            console.log("📂 Usando imagen plana para:", currentCardData.name);
+          };
+
+          layerImg.src = baseLayerUrl;
+
+          // console.log("✨ Carta preparada:", currentCardData.name); (Movido arriba)
           isProcessing = false;
 
           // Si la carta ya estaba revelada (cambio de idioma en caliente), actualizar textos
