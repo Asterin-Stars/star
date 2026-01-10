@@ -559,66 +559,130 @@
         }
       }
 
+      /* ==================== CONFIGURACIÓN VISUAL (PERILLAS) ==================== */
+      :root {
+        /* ... (color vars existentes se asumen arriba) ... */
+
+        /* [CONTROL DE CARTA] Ajusta aquí el marco y bordes */
+        --card-frame-padding: 16px; /* Grosor del marco blanco (p.ej. 12px a 20px) */
+        --card-frame-color: #fdfbf7; /* Color del marco (papel crema) */
+        --card-frame-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05); /* Sombra interna sutil */
+        --card-img-radius: 2px; /* Redondeo de la ilustración interna */
+
+        /* [EFECTOS DE CAPAS] Ajusta la intensidad de cada capa */
+        --layer-base-contrast: 1.05; /* Nitidez de la imagen base */
+
+        --layer-gold-opacity: 0.85; /* Intensidad del dorado */
+        --layer-gold-blend: color-dodge; /* Modo de fusión (color-dodge, overlay, screen) */
+        --layer-gold-brightness: 1.2; /* Brillo extra del oro */
+
+        --layer-ink-opacity: 0.9; /* Fuerza de las líneas negras */
+        --layer-ink-blend: multiply;
+
+        --layer-passion-opacity: 0.6; /* Intensidad de colores cálidos */
+        --layer-passion-blend: soft-light;
+
+        --layer-spirit-opacity: 0.4; /* Intensidad del brillo etéreo */
+        --layer-spirit-blend: screen;
+      }
+
+      /* ... existing CSS ... */
+
       /* ANVERSO - La revelación */
       .back {
-        /* Fondo tipo cristal claro para la carta revelada */
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
+        /* Usamos las variables definidas arriba */
+        background-color: var(--card-frame-color);
+        padding: var(--card-frame-padding);
+
+        /* Fixes de Safari y Mobile */
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
         transform: rotateY(180deg);
-        border: 1px solid rgba(255, 255, 255, 0.5);
+
+        border: 1px solid rgba(255, 255, 255, 0.4);
         overflow: hidden;
-        padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: var(--card-frame-shadow);
+      }
+
+      /* Contenedor de capas (La ilustración en sí) */
+      .card-layers,
+      .tarot-img {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: var(--card-img-radius);
+        overflow: hidden;
+        /* Borde fino para delimitar la tinta del marco */
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+
+        /* Fixes de renderizado */
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
       }
 
       .tarot-img {
-        width: 100%;
-        height: 100%;
         object-fit: cover;
-        object-position: center center;
-        filter: contrast(1.1) saturate(1.1) brightness(1.05);
-        transition: transform 4s var(--ease-smooth);
-      }
-
-      .card-layers {
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        pointer-events: none;
-        overflow: hidden;
+        display: block;
+        filter: contrast(var(--layer-base-contrast));
       }
 
       .layer-img {
         position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
+        /* Un poco más grande para el parallax */
+        top: -5%;
+        left: -5%;
+        width: 110%;
+        height: 110%;
         object-fit: cover;
-        transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        transition: transform 0.1s cubic-bezier(0.1, 0.5, 0.1, 1);
         will-change: transform;
       }
 
-      /* Efectos específicos por capa */
-      .layer-base { z-index: 1; }
-      .layer-nature { z-index: 2; mix-blend-mode: normal; } /* Elementos físicos */
-      .layer-passion { z-index: 3; mix-blend-mode: overlay; opacity: 0.8; } /* Color/Fuego */
-      .layer-ink { z-index: 4; mix-blend-mode: multiply; opacity: 0.9; } /* Líneas */
+      /* APLICACIÓN DE EFECTOS (Conectado a las perillas) */
+      .layer-base {
+        z-index: 1;
+        filter: contrast(var(--layer-base-contrast));
+      }
+
+      .layer-nature {
+        z-index: 2;
+        mix-blend-mode: normal;
+      }
+
+      .layer-passion {
+        z-index: 3;
+        mix-blend-mode: var(--layer-passion-blend);
+        opacity: var(--layer-passion-opacity);
+      }
+
+      .layer-ink {
+        z-index: 4;
+        mix-blend-mode: var(--layer-ink-blend);
+        opacity: var(--layer-ink-opacity);
+        filter: contrast(1.1);
+      }
+
       .layer-gold {
         z-index: 5;
-        mix-blend-mode: color-dodge;
-        filter: brightness(1.3) contrast(1.2);
-        opacity: 0.9;
+        mix-blend-mode: var(--layer-gold-blend);
+        opacity: var(--layer-gold-opacity);
+        filter: brightness(var(--layer-gold-brightness));
+        transition: opacity 0.2s, transform 0.1s;
       }
-      .layer-spirit { z-index: 6; mix-blend-mode: screen; opacity: 0.6; pointer-events: none; }
+
+      .layer-spirit {
+        z-index: 6;
+        mix-blend-mode: var(--layer-spirit-blend);
+        opacity: var(--layer-spirit-opacity);
+        pointer-events: none;
+      }
 
       /* Efecto zoom al revelar */
       .card-stage.flipped .tarot-img {
         transform: scale(1.02);
-      }
-
-        /* Match parent for perfect edge alignment */
-        /* Prevent lag/jitter */
-        transform: translate3d(0, 0, 0);
-        backface-visibility: hidden;
       }
 
       @media (max-width: 600px) {
