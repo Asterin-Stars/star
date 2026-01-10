@@ -752,19 +752,8 @@
       }
 
       @media (max-width: 600px) {
-        .card-collection-notification {
-          width: 95%;
-          padding: 12px 15px;
-        }
 
-        .card-slot {
-          width: 45px;
-          height: 72px;
-        }
 
-        .progress-text {
-          font-size: 12px;
-        }
       }
 
       /* ==================== PANEL DE LECTURA ==================== */
@@ -1539,43 +1528,6 @@
   </head>
 
   <body>
-    <!-- 3-Card Collection Notification -->
-    <div class="card-collection-notification" id="cardCollectionNotif">
-      <div class="collection-content">
-        <div class="collection-header">
-          <div class="progress-dots">
-            <div class="dot" id="dot1"></div>
-            <div class="progress-line" id="line1"></div>
-            <div class="dot" id="dot2"></div>
-            <div class="progress-line" id="line2"></div>
-            <div class="dot" id="dot3"></div>
-          </div>
-          <!-- Progress counter removed per user request -->
-        </div>
-
-        <div class="card-slots">
-          <div class="card-slot empty" id="slot1">
-            <span class="slot-placeholder"></span>
-          </div>
-          <div class="card-slot empty" id="slot2">
-            <span class="slot-placeholder"></span>
-          </div>
-          <div class="card-slot empty" id="slot3">
-            <span class="slot-placeholder"></span>
-          </div>
-        </div>
-
-        <div class="composite-message u-hidden" id="compositeMessage">
-          <div class="u-flex-center-gap">
-            <span class="composite-icon">✨</span>
-            <span class="composite-text">Lectura Compuesta Completa</span>
-          </div>
-          <button class="composite-email-btn" id="compositeEmailBtn">
-            📧 Solicitar Lectura Profunda
-          </button>
-        </div>
-      </div>
-    </div>
 
     <div class="wallpaper" id="wallpaper">
       <div class="blob blob1"></div>
@@ -1689,25 +1641,6 @@
           </div>
         </div>
 
-        <!-- Botón de Síntesis IA -->
-        <div class="ai-synthesis-container">
-          <button
-            class="ai-btn iridescent-border-subtle"
-            id="aiBtn"
-            aria-label="Sintetizar Numerología"
-          >
-            <span class="ai-btn-icon">✦</span>
-          </button>
-          <div class="ai-result u-hidden" id="aiResult">
-            <div class="ai-header">
-              <span class="ai-icon-small">✦</span> Numerología
-            </div>
-            <p id="aiText"></p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal para ejemplos de los 22 conceptos -->
       <div class="modal-overlay u-hidden" id="modalOverlay">
         <div class="modal-content iridescent-border" id="modalContent">
           <div class="modal-header">
@@ -2039,7 +1972,7 @@
         // Add card with timestamp
         collectedCards.push({
           name_short: cardData.name_short,
-          image: `./public/cards_layered/${cardData.name_short}/base.webp`,
+          image: `./public/cards/${cardData.name_short}.jpg`,
           name: cardData.name,
           timestamp: new Date().toISOString(),
           order: collectedCards.length + 1,
@@ -2734,7 +2667,7 @@
           const cardImg = document.getElementById("cardImg");
 
           // Intentar cargar capas primero
-          const baseLayerUrl = `./public/cards_layered/${cardSlug}/base.webp`;
+          const baseLayerUrl = `./public/cards_layered/${cardSlug}/base.png`;
           const layerImg = new Image();
 
           layerImg.onload = () => {
@@ -2744,17 +2677,17 @@
             layersContainer.style.display = "block";
 
             const layers = [
-              { name: "base", file: "base.webp", class: "layer-base" },
-              { name: "nature", file: "nature.webp", class: "layer-nature" },
-              { name: "passion", file: "passion.webp", class: "layer-passion" },
-              { name: "ink", file: "ink.webp", class: "layer-ink" },
+              { name: "base", file: "base.png", class: "layer-base" },
+              { name: "nature", file: "nature.png", class: "layer-nature" },
+              { name: "passion", file: "passion.png", class: "layer-passion" },
+              { name: "ink", file: "ink.png", class: "layer-ink" },
               {
                 name: "gold",
-                file: "gold.webp",
+                file: "gold.png",
                 class: "layer-gold",
                 isHolo: true,
               }, // Marcamos Gold como Holo
-              { name: "spirit", file: "spirit.webp", class: "layer-spirit" },
+              { name: "spirit", file: "spirit.png", class: "layer-spirit" },
             ];
 
             layers.forEach((layer) => {
@@ -2794,11 +2727,11 @@
             // Fallback a imagen plana jpg
             layersContainer.style.display = "none";
             cardImg.style.display = "block";
-            cardImg.src = `./public/cards_layered/${cardSlug}/base.webp`;
+            cardImg.src = `./public/cards/${cardSlug}.jpg`;
 
             // Fallback del fallback
             cardImg.onerror = () => {
-              cardImg.src = "./public/cards_layered/ar00/base.webp";
+              cardImg.src = "./public/cards/ar00.jpg";
             };
             console.log("📂 Usando imagen plana para:", currentCardData.name);
           };
@@ -2841,7 +2774,7 @@
               },
             },
           };
-          cardImg.src = "./public/cards_layered/ar00/base.webp";
+          cardImg.src = "./public/cards/ar00.jpg";
         }
       }
 
