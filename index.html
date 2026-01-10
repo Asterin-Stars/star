@@ -5082,63 +5082,6 @@
       }
     </style>
 
-    <!-- Google Maps API with Places Library -->
-    <script>
-      // Google Maps initialization (called by API callback)
-      let map, marker, autocomplete;
-
-      function initGoogleMaps() {
-        const mapElement = document.getElementById("googleMap");
-        if (!mapElement) return;
-
-        // Dark mode map styles
-        const darkStyles = [
-          { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
-          { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
-          {
-            featureType: "water",
-            elementType: "geometry",
-            stylers: [{ color: "#17263c" }],
-          },
-        ];
-
-        map = new google.maps.Map(mapElement, {
-          center: { lat: -34.6037, lng: -58.3816 },
-          zoom: 12,
-          styles: darkStyles,
-        });
-
-        const searchInput = document.getElementById("locationSearch");
-        if (searchInput) {
-          autocomplete = new google.maps.places.Autocomplete(searchInput);
-          autocomplete.bindTo("bounds", map);
-
-          autocomplete.addListener("place_changed", () => {
-            const place = autocomplete.getPlace();
-            if (place.geometry) {
-              map.setCenter(place.geometry.location);
-              map.setZoom(15);
-              placeMarker(place.geometry.location);
-              updateCoords(
-                place.geometry.location.lat(),
-                place.geometry.location.lng()
-              );
-            }
-          });
-        }
-
-        map.addListener("click", (e) => {
-          placeMarker(e.latLng);
-          updateCoords(e.latLng.lat(), e.latLng.lng());
-        });
-      }
-
-      function placeMarker(loc) {
-        if (marker) marker.setMap(null);
-        marker = new google.maps.Marker({ position: loc, map: map });
-      }
-
-      function updateCoords(lat, lng) {
         document.getElementById("selectedLat").textContent = lat.toFixed(6);
         document.getElementById("selectedLng").textContent = lng.toFixed(6);
       }
