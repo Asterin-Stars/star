@@ -364,6 +364,18 @@
         />
       </div>
 
+      <h3>Debug Mode</h3>
+      <div class="control-group">
+        <label>
+          Mostrar Máscara Roja
+          <input type="checkbox" onchange="toggleDebug(this.checked)" />
+        </label>
+        <small style="color: #64748b; font-size: 0.7rem">
+          Pone el patrón en rojo sólido y quita la máscara para verificar
+          geometría.
+        </small>
+      </div>
+
       <h3>Salida CSS</h3>
       <textarea id="cssOut" class="css-output"></textarea>
     </div>
@@ -385,6 +397,60 @@
         root.style.setProperty(name, val);
         if (displayId) document.getElementById(displayId).textContent = val;
         genCSS();
+      }
+
+      function toggleDebug(enabled) {
+        if (enabled) {
+          // DEBUG: Rojo intenso, sin máscara, opacidad total
+          root.style.setProperty(
+            "--layer-gold-pattern",
+            "repeating-linear-gradient(45deg, red, red 10px, yellow 10px, yellow 20px)"
+          );
+          root.style.setProperty("--layer-gold-blend", "normal");
+          root.style.setProperty("--layer-gold-opacity", "1");
+
+          // Inyectar CSS temporal para anular máscara
+          const style = document.createElement("style");
+          style.id = "debug-css";
+          style.textContent = `
+            .wrapper-gold::after {
+              -webkit-mask-image: none !important;
+              mask-image: none !important;
+              mix-blend-mode: normal !important;
+              opacity: 1 !important;
+            }
+          `;
+          document.head.appendChild(style);
+        } else {
+          // Restaurar valores visuales
+          const style = document.getElementById("debug-css");
+          if (style) style.remove();
+
+          // Leer valores de los inputs para restaurar variables
+          document
+            .querySelector('select[onchange*="layer-gold-pattern"]')
+            .onchange({
+              target: {
+                value: document.querySelector(
+                  'select[onchange*="layer-gold-pattern"]'
+                ).value,
+              },
+            });
+          // Simple trigger de update para restaurar estado
+          upd(
+            "--layer-gold-blend",
+            document.querySelector('select[onchange*="layer-gold-blend"]').value
+          );
+          upd(
+            "--layer-gold-opacity",
+            document.querySelector('input[oninput*="layer-gold-opacity"]').value
+          );
+          upd(
+            "--layer-gold-pattern",
+            document.querySelector('select[onchange*="layer-gold-pattern"]')
+              .value
+          );
+        }
       }
 
       function genCSS() {
