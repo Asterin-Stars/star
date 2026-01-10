@@ -2689,7 +2689,7 @@
           const layerImg = new Image();
 
           layerImg.onload = () => {
-            // Capas disponibles: usar sistema de capas
+            // Capas disponibles: usar estructura de Wrappers
             cardImg.style.display = "none";
             layersContainer.innerHTML = "";
             layersContainer.style.display = "block";
@@ -2699,22 +2699,46 @@
               { name: "nature", file: "nature.png", class: "layer-nature" },
               { name: "passion", file: "passion.png", class: "layer-passion" },
               { name: "ink", file: "ink.png", class: "layer-ink" },
-              { name: "gold", file: "gold.png", class: "layer-gold" },
+              {
+                name: "gold",
+                file: "gold.png",
+                class: "layer-gold",
+                isHolo: true,
+              }, // Marcamos Gold como Holo
               { name: "spirit", file: "spirit.png", class: "layer-spirit" },
             ];
 
             layers.forEach((layer) => {
+              // CREAMOS UN WRAPPER (Cápsula)
+              const wrapper = document.createElement("div");
+              wrapper.className = `layer-wrapper ${layer.class}`;
+
               const img = document.createElement("img");
               img.src = `./public/cards_layered/${cardSlug}/${layer.file}`;
-              img.className = `layer-img ${layer.class}`;
-              // Manejo de error silencioso para capas opcionales
+              img.className = "layer-content"; // Clase interna genérica
+
+              // Si es Holo, inyectamos la máscara para el brillo
+              if (layer.isHolo) {
+                // Seteamos la variable CSS localmente para que ::after la pueda leer
+                wrapper.style.setProperty(
+                  "--mask-url",
+                  `url('./public/cards_layered/${cardSlug}/${layer.file}')`
+                );
+              }
+
+              // Manejo de error: ocultar todo el wrapper si falla la img
               img.onerror = () => {
-                img.style.display = "none";
+                wrapper.style.display = "none";
               };
-              layersContainer.appendChild(img);
+
+              wrapper.appendChild(img);
+              layersContainer.appendChild(wrapper);
             });
 
-            console.log("✨ Capas cargadas para:", currentCardData.name);
+            console.log(
+              "✨ Capas (Wrappers) cargadas para:",
+              currentCardData.name
+            );
           };
 
           layerImg.onerror = () => {
