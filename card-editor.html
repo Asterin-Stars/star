@@ -309,6 +309,17 @@
       .check-input {
         width: auto;
       }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
     </style>
   </head>
   <body>
@@ -594,7 +605,7 @@
       </div>
 
       <h3>Salida CSS</h3>
-      <label for="cssOut" style="display: none">CSS Output</label>
+      <label for="cssOut" class="sr-only">CSS Output</label>
       <textarea id="cssOut" class="css-output"></textarea>
     </div>
 

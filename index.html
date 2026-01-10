@@ -53,6 +53,28 @@
         --gyro-y: 0;
         --gyro-z: 0;
         --gyro-hue: 0deg;
+
+        /* CAPAS - Defaults Holo-Lab */
+        --card-img-radius: 12px;
+        --card-frame-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+        --layer-base-contrast: 1;
+
+        --layer-nature-opacity: 1;
+        --layer-nature-blend: normal;
+
+        --layer-passion-opacity: 0.6;
+        --layer-passion-blend: soft-light;
+
+        --layer-ink-opacity: 0.9;
+        --layer-ink-blend: multiply;
+
+        --layer-gold-opacity: 0.1;
+        --layer-gold-blend: screen;
+        --layer-gold-brightness: 2.8;
+
+        --layer-spirit-opacity: 0.4;
+        --layer-spirit-blend: screen;
       }
 
       * {
@@ -705,8 +727,12 @@
         /* MASCARA MAGICA (Inyectada por JS en --mask-url) */
         -webkit-mask-image: var(--mask-url);
         mask-image: var(--mask-url);
-        -webkit-mask-size: cover;
-        mask-size: cover;
+        -webkit-mask-size: 100% 100%;
+        mask-size: 100% 100%;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
 
         mix-blend-mode: overlay;
         opacity: 0.8;
@@ -2013,7 +2039,7 @@
         // Add card with timestamp
         collectedCards.push({
           name_short: cardData.name_short,
-          image: `./public/cards/${cardData.name_short}.jpg`,
+          image: `./public/cards_layered/${cardData.name_short}/base.webp`,
           name: cardData.name,
           timestamp: new Date().toISOString(),
           order: collectedCards.length + 1,
@@ -2708,7 +2734,7 @@
           const cardImg = document.getElementById("cardImg");
 
           // Intentar cargar capas primero
-          const baseLayerUrl = `./public/cards_layered/${cardSlug}/base.png`;
+          const baseLayerUrl = `./public/cards_layered/${cardSlug}/base.webp`;
           const layerImg = new Image();
 
           layerImg.onload = () => {
@@ -2718,17 +2744,17 @@
             layersContainer.style.display = "block";
 
             const layers = [
-              { name: "base", file: "base.png", class: "layer-base" },
-              { name: "nature", file: "nature.png", class: "layer-nature" },
-              { name: "passion", file: "passion.png", class: "layer-passion" },
-              { name: "ink", file: "ink.png", class: "layer-ink" },
+              { name: "base", file: "base.webp", class: "layer-base" },
+              { name: "nature", file: "nature.webp", class: "layer-nature" },
+              { name: "passion", file: "passion.webp", class: "layer-passion" },
+              { name: "ink", file: "ink.webp", class: "layer-ink" },
               {
                 name: "gold",
-                file: "gold.png",
+                file: "gold.webp",
                 class: "layer-gold",
                 isHolo: true,
               }, // Marcamos Gold como Holo
-              { name: "spirit", file: "spirit.png", class: "layer-spirit" },
+              { name: "spirit", file: "spirit.webp", class: "layer-spirit" },
             ];
 
             layers.forEach((layer) => {
@@ -2768,11 +2794,11 @@
             // Fallback a imagen plana jpg
             layersContainer.style.display = "none";
             cardImg.style.display = "block";
-            cardImg.src = `./public/cards/${cardSlug}.jpg`;
+            cardImg.src = `./public/cards_layered/${cardSlug}/base.webp`;
 
             // Fallback del fallback
             cardImg.onerror = () => {
-              cardImg.src = "./public/cards/ar00.jpg";
+              cardImg.src = "./public/cards_layered/ar00/base.webp";
             };
             console.log("📂 Usando imagen plana para:", currentCardData.name);
           };
@@ -2815,7 +2841,7 @@
               },
             },
           };
-          cardImg.src = "./public/cards/ar00.jpg";
+          cardImg.src = "./public/cards_layered/ar00/base.webp";
         }
       }
 
