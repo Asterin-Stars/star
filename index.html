@@ -75,6 +75,13 @@
 
         --layer-spirit-opacity: 0.4;
         --layer-spirit-blend: screen;
+
+        /* BREATHING ANIMATION - Variación orgánica por carta */
+        --breathe-base-duration: 6s;
+        --breathe-nature-duration: 8s;
+        --breathe-passion-duration: 7s;
+        --breathe-gold-duration: 5.5s;
+        --breathe-spirit-duration: 9s;
       }
 
       * {
@@ -227,13 +234,283 @@
       }
 
       @keyframes move4 {
+
+      /* BREATHING ANIMATIONS - Variación orgánica */
+      @keyframes breatheBase {
+        0%, 100% { filter: contrast(0.95) brightness(1); }
+        50% { filter: contrast(1.05) brightness(1.02); }
+      }
+
+      @keyframes breatheNature {
+        0%, 100% { opacity: 0.95; }
+        50% { opacity: 1; }
+      }
+
+      @keyframes breathePassion {
+        0%, 100% { opacity: var(--layer-passion-opacity); }
+        50% { opacity: calc(var(--layer-passion-opacity) * 1.15); }
+      }
+
+      @keyframes breatheGold {
+        0%, 100% { 
+          filter: brightness(var(--layer-gold-brightness));
+        }
+        50% { 
+          filter: brightness(calc(var(--layer-gold-brightness) * 1.1));
+        }
+      }
+
+      @keyframes breatheSpirit {
+        0%, 100% { opacity: var(--layer-spirit-opacity); }
+        50% { opacity: calc(var(--layer-spirit-opacity) * 1.25); }
+      }
         from {
+
+      /* BREATHING ANIMATIONS - Variación orgánica */
+      @keyframes breatheBase {
+        0%, 100% { filter: contrast(0.95) brightness(1); }
+        50% { filter: contrast(1.05) brightness(1.02); }
+      }
+
+      @keyframes breatheNature {
+        0%, 100% { opacity: 0.95; }
+        50% { opacity: 1; }
+      }
+
+      @keyframes breathePassion {
+        0%, 100% { opacity: var(--layer-passion-opacity); }
+        50% { opacity: calc(var(--layer-passion-opacity) * 1.15); }
+      }
+
+      @keyframes breatheGold {
+        0%, 100% { 
+          filter: brightness(var(--layer-gold-brightness));
+        }
+        50% { 
+          filter: brightness(calc(var(--layer-gold-brightness) * 1.1));
+        }
+      }
+
+      @keyframes breatheSpirit {
+        0%, 100% { opacity: var(--layer-spirit-opacity); }
+        50% { opacity: calc(var(--layer-spirit-opacity) * 1.25); }
+      }
           transform: translate(-10%, 80%) scale(1.1) rotate(0deg);
+
+      /* BREATHING ANIMATIONS - Variación orgánica */
+      @keyframes breatheBase {
+        0%, 100% { filter: contrast(0.95) brightness(1); }
+        50% { filter: contrast(1.05) brightness(1.02); }
+      }
+
+      @keyframes breatheNature {
+        0%, 100% { opacity: 0.95; }
+        50% { opacity: 1; }
+      }
+
+      @keyframes breathePassion {
+        0%, 100% { opacity: var(--layer-passion-opacity); }
+        50% { opacity: calc(var(--layer-passion-opacity) * 1.15); }
+      }
+
+      @keyframes breatheGold {
+        0%, 100% { 
+          filter: brightness(var(--layer-gold-brightness));
+        }
+        50% { 
+          filter: brightness(calc(var(--layer-gold-brightness) * 1.1));
+        }
+      }
+
+      @keyframes breatheSpirit {
+        0%, 100% { opacity: var(--layer-spirit-opacity); }
+        50% { opacity: calc(var(--layer-spirit-opacity) * 1.25); }
+      }
         }
 
-        to {
-          transform: translate(60%, -20%) scale(1) rotate(-360deg);
+      /* BREATHING ANIMATIONS - Variación orgánica */
+      @keyframes breatheBase {
+        0%, 100% { filter: contrast(0.95) brightness(1); }
+        50% { filter: contrast(1.05) brightness(1.02); }
+      }
+
+      @keyframes breatheNature {
+        0%, 100% { opacity: 0.95; }
+        50% { opacity: 1; }
+      }
+
+      @keyframes breathePassion {
+        0%, 100% { opacity: var(--layer-passion-opacity); }
+        50% { opacity: calc(var(--layer-passion-opacity) * 1.15); }
+      }
+
+      @keyframes breatheGold {
+        0%, 100% { 
+          filter: brightness(var(--layer-gold-brightness));
         }
+        50% { 
+          filter: brightness(calc(var(--layer-gold-brightness) * 1.1));
+        }
+      }
+
+      @keyframes breatheSpirit {
+        0%, 100% { opacity: var(--layer-spirit-opacity); }
+        50% { opacity: calc(var(--layer-spirit-opacity) * 1.25); }
+      }
+
+
+      /* BREATHING ANIMATIONS - Variación orgánica */
+      @keyframes breatheBase {
+        0%, 100% { filter: contrast(0.95) brightness(1); }
+        50% { filter: contrast(1.05) brightness(1.02); }
+      }
+
+      @keyframes breatheNature {
+        0%, 100% { opacity: 0.95; }
+        50% { opacity: 1; }
+      }
+
+      @keyframes breathePassion {
+        0%, 100% { opacity: var(--layer-passion-opacity); }
+        50% { opacity: calc(var(--layer-passion-opacity) * 1.15); }
+      }
+
+      @keyframes breatheGold {
+        0%, 100% { 
+          filter: brightness(var(--layer-gold-brightness));
+        }
+        50% { 
+          filter: brightness(calc(var(--layer-gold-brightness) * 1.1));
+        }
+      }
+
+      @keyframes breatheSpirit {
+        0%, 100% { opacity: var(--layer-spirit-opacity); }
+        50% { opacity: calc(var(--layer-spirit-opacity) * 1.25); }
+      }
+        to {
+
+      /* BREATHING ANIMATIONS - Variación orgánica */
+      @keyframes breatheBase {
+        0%, 100% { filter: contrast(0.95) brightness(1); }
+        50% { filter: contrast(1.05) brightness(1.02); }
+      }
+
+      @keyframes breatheNature {
+        0%, 100% { opacity: 0.95; }
+        50% { opacity: 1; }
+      }
+
+      @keyframes breathePassion {
+        0%, 100% { opacity: var(--layer-passion-opacity); }
+        50% { opacity: calc(var(--layer-passion-opacity) * 1.15); }
+      }
+
+      @keyframes breatheGold {
+        0%, 100% { 
+          filter: brightness(var(--layer-gold-brightness));
+        }
+        50% { 
+          filter: brightness(calc(var(--layer-gold-brightness) * 1.1));
+        }
+      }
+
+      @keyframes breatheSpirit {
+        0%, 100% { opacity: var(--layer-spirit-opacity); }
+        50% { opacity: calc(var(--layer-spirit-opacity) * 1.25); }
+      }
+          transform: translate(60%, -20%) scale(1) rotate(-360deg);
+
+      /* BREATHING ANIMATIONS - Variación orgánica */
+      @keyframes breatheBase {
+        0%, 100% { filter: contrast(0.95) brightness(1); }
+        50% { filter: contrast(1.05) brightness(1.02); }
+      }
+
+      @keyframes breatheNature {
+        0%, 100% { opacity: 0.95; }
+        50% { opacity: 1; }
+      }
+
+      @keyframes breathePassion {
+        0%, 100% { opacity: var(--layer-passion-opacity); }
+        50% { opacity: calc(var(--layer-passion-opacity) * 1.15); }
+      }
+
+      @keyframes breatheGold {
+        0%, 100% { 
+          filter: brightness(var(--layer-gold-brightness));
+        }
+        50% { 
+          filter: brightness(calc(var(--layer-gold-brightness) * 1.1));
+        }
+      }
+
+      @keyframes breatheSpirit {
+        0%, 100% { opacity: var(--layer-spirit-opacity); }
+        50% { opacity: calc(var(--layer-spirit-opacity) * 1.25); }
+      }
+        }
+
+      /* BREATHING ANIMATIONS - Variación orgánica */
+      @keyframes breatheBase {
+        0%, 100% { filter: contrast(0.95) brightness(1); }
+        50% { filter: contrast(1.05) brightness(1.02); }
+      }
+
+      @keyframes breatheNature {
+        0%, 100% { opacity: 0.95; }
+        50% { opacity: 1; }
+      }
+
+      @keyframes breathePassion {
+        0%, 100% { opacity: var(--layer-passion-opacity); }
+        50% { opacity: calc(var(--layer-passion-opacity) * 1.15); }
+      }
+
+      @keyframes breatheGold {
+        0%, 100% { 
+          filter: brightness(var(--layer-gold-brightness));
+        }
+        50% { 
+          filter: brightness(calc(var(--layer-gold-brightness) * 1.1));
+        }
+      }
+
+      @keyframes breatheSpirit {
+        0%, 100% { opacity: var(--layer-spirit-opacity); }
+        50% { opacity: calc(var(--layer-spirit-opacity) * 1.25); }
+      }
+      }
+
+      /* BREATHING ANIMATIONS - Variación orgánica */
+      @keyframes breatheBase {
+        0%, 100% { filter: contrast(0.95) brightness(1); }
+        50% { filter: contrast(1.05) brightness(1.02); }
+      }
+
+      @keyframes breatheNature {
+        0%, 100% { opacity: 0.95; }
+        50% { opacity: 1; }
+      }
+
+      @keyframes breathePassion {
+        0%, 100% { opacity: var(--layer-passion-opacity); }
+        50% { opacity: calc(var(--layer-passion-opacity) * 1.15); }
+      }
+
+      @keyframes breatheGold {
+        0%, 100% { 
+          filter: brightness(var(--layer-gold-brightness));
+        }
+        50% { 
+          filter: brightness(calc(var(--layer-gold-brightness) * 1.1));
+        }
+      }
+
+      @keyframes breatheSpirit {
+        0%, 100% { opacity: var(--layer-spirit-opacity); }
+        50% { opacity: calc(var(--layer-spirit-opacity) * 1.25); }
       }
 
       /* ==================== IRIDESCENT BORDER EFFECTS (iOS 26 Style) ==================== */
@@ -675,17 +952,20 @@
       .layer-base {
         z-index: 1;
         filter: contrast(var(--layer-base-contrast));
+        animation: breatheBase var(--breathe-base-duration) ease-in-out infinite;
       }
 
       .layer-nature {
         z-index: 2;
         mix-blend-mode: normal;
+        animation: breatheNature var(--breathe-nature-duration) ease-in-out infinite;
       }
 
       .layer-passion {
         z-index: 3;
         mix-blend-mode: var(--layer-passion-blend);
         opacity: var(--layer-passion-opacity);
+        animation: breathePassion var(--breathe-passion-duration) ease-in-out infinite;
       }
 
       .layer-ink {
@@ -700,6 +980,7 @@
         z-index: 5;
         mix-blend-mode: var(--layer-gold-blend);
         filter: brightness(var(--layer-gold-brightness));
+        animation: breatheGold var(--breathe-gold-duration) ease-in-out infinite;
       }
 
       /* La tinta dorada SI tiene transparencia */
@@ -744,6 +1025,7 @@
         mix-blend-mode: var(--layer-spirit-blend);
         opacity: var(--layer-spirit-opacity);
         pointer-events: none;
+        animation: breatheSpirit var(--breathe-spirit-duration) ease-in-out infinite;
       }
 
       /* Efecto zoom al revelar */
