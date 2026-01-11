@@ -2204,7 +2204,8 @@
       const cardImg = document.getElementById("cardImg");
 
       const wallpaper = document.getElementById("wallpaper");
-      let isDarkMode = localStorage.getItem("darkMode") === "true";
+      const storedTheme = localStorage.getItem("darkMode");
+      let isDarkMode = storedTheme === null ? true : storedTheme === "true";
       const DARK_GLASS_SURFACE = "rgba(15, 15, 20, 0.72)";
       const DARK_GLASS_BORDER = "rgba(255, 255, 255, 0.18)";
       const DARK_BLOB_OPACITY = "0.35";
