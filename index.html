@@ -162,6 +162,10 @@
         background: #f9f9f9;
       }
 
+      .wallpaper.dark {
+        background: #0b0b0f;
+      }
+
       /* Manchas de color (Blobs) */
       .blob {
         position: absolute;
@@ -520,7 +524,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start; /* Changed from center to allow scroll on zoom */
+        justify-content: center;
         gap: 40px;
         width: 100%;
         max-width: 1400px;
@@ -546,7 +550,7 @@
         height: 550px;
         cursor: pointer;
         z-index: 10;
-        margin-top: 20px;
+        margin: 20px auto 0;
         flex-shrink: 0;
         transform-style: preserve-3d;
         animation: breathe 4s ease-in-out infinite;
@@ -948,7 +952,7 @@
       .insight-panel {
         width: 92%;
         max-width: 720px;
-        background: rgba(255, 255, 255, 0.75);
+        background: var(--glass-surface, rgba(255, 255, 255, 0.75));
         -webkit-backdrop-filter: blur(12px) saturate(120%);
         backdrop-filter: blur(12px) saturate(120%);
         border-radius: 22px;
@@ -1015,6 +1019,23 @@
         animation-delay: 0.8s;
       }
 
+      @keyframes titlePulse {
+        0% {
+          opacity: 0.8;
+          text-shadow: 0 0 6px rgba(255, 255, 255, 0.18);
+        }
+
+        50% {
+          opacity: 1;
+          text-shadow: 0 0 12px rgba(255, 255, 255, 0.32);
+        }
+
+        100% {
+          opacity: 0.85;
+          text-shadow: 0 0 6px rgba(255, 255, 255, 0.18);
+        }
+      }
+
       .section-title {
         font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
         font-size: 0.85rem;
@@ -1033,6 +1054,7 @@
         transition: all 0.3s ease;
         position: relative;
         padding-left: 18px;
+        animation: titlePulse 3s ease-in-out infinite;
       }
 
       .section-title::before {
@@ -1068,6 +1090,11 @@
       .section-title:hover::after {
         opacity: 0.9;
         color: var(--accent-primary);
+      }
+
+      .section-title.title-active {
+        animation: none;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.28);
       }
 
       .intro-section {
@@ -2177,6 +2204,51 @@
       const cardImg = document.getElementById("cardImg");
 
       const wallpaper = document.getElementById("wallpaper");
+      const storedTheme = localStorage.getItem("darkMode");
+      let isDarkMode = storedTheme === null ? true : storedTheme === "true";
+      const DARK_GLASS_SURFACE = "rgba(15, 15, 20, 0.72)";
+      const DARK_GLASS_BORDER = "rgba(255, 255, 255, 0.18)";
+      const DARK_BLOB_OPACITY = "0.35";
+
+      function applyDarkMode(state) {
+        const root = document.documentElement;
+        const btn = document.getElementById("darkModeBtn");
+        const blobs = document.querySelectorAll(".wallpaper .blob");
+
+        wallpaper?.classList.toggle("dark", state);
+        document.body.classList.toggle("dark-mode", state);
+
+        if (state) {
+          root.style.setProperty("--text-primary", "#f5f5f7");
+          root.style.setProperty("--text-secondary", "#cfd3dc");
+          root.style.setProperty("--glass-surface", DARK_GLASS_SURFACE);
+          root.style.setProperty("--glass-border", DARK_GLASS_BORDER);
+          blobs.forEach((b) => {
+            b.style.mixBlendMode = "screen";
+            b.style.opacity = DARK_BLOB_OPACITY;
+          });
+          if (btn) btn.textContent = "☀️";
+        } else {
+          root.style.setProperty("--text-primary", "#1d1d1f");
+          root.style.setProperty("--text-secondary", "#6e6e73");
+          root.style.setProperty("--glass-surface", "rgba(255, 255, 255, 0.75)");
+          root.style.setProperty("--glass-border", "rgba(255, 255, 255, 0.6)");
+          blobs.forEach((b) => {
+            b.style.mixBlendMode = "";
+            b.style.opacity = "";
+          });
+          if (btn) btn.textContent = "🌙";
+        }
+
+        isDarkMode = state;
+        localStorage.setItem("darkMode", state ? "true" : "false");
+      }
+
+      function toggleDarkMode() {
+        applyDarkMode(!isDarkMode);
+      }
+
+      applyDarkMode(isDarkMode);
 
       // Elementos de las 6 secciones
       const textoSignificado = document.getElementById("textoSignificado");
@@ -3268,6 +3340,9 @@
         const modalOverlay = document.getElementById("modalOverlay");
         modalOverlay.style.display = "none";
         document.body.style.overflow = "auto"; // Restaurar scroll del body
+        document
+          .querySelectorAll(".section-title.title-active")
+          .forEach((el) => el.classList.remove("title-active"));
       }
 
       /* ==================== RESET DEL ORÁCULO ==================== */
@@ -4418,28 +4493,25 @@
         // Initialize scroll animations
         initScrollAnimations();
 
-        // Event listeners para los títulos
-        document
-          .getElementById("titleArquetipo")
-          .addEventListener("click", () => openModal("arquetipo"));
-        document
-          .getElementById("titleMisticismo")
-          .addEventListener("click", () => openModal("misticismo"));
-        document
-          .getElementById("titleSombra")
-          .addEventListener("click", () => openModal("sombra"));
-        document
-          .getElementById("titleBotanica")
-          .addEventListener("click", () => openModal("botanica"));
-        document
-          .getElementById("titleCotidiano")
-          .addEventListener("click", () => openModal("cotidiano"));
-        document
-          .getElementById("titleGnosis")
-          .addEventListener("click", () => openModal("gnosis"));
-        document
-          .getElementById("titleResonanciaBiblica")
-          .addEventListener("click", () => openModal("resonancia_biblica"));
+        const attachTitleHandler = (id, category) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.addEventListener("click", () => {
+            document
+              .querySelectorAll(".section-title.title-active")
+              .forEach((node) => node.classList.remove("title-active"));
+            el.classList.add("title-active");
+            openModal(category);
+          });
+        };
+
+        attachTitleHandler("titleArquetipo", "arquetipo");
+        attachTitleHandler("titleMisticismo", "misticismo");
+        attachTitleHandler("titleSombra", "sombra");
+        attachTitleHandler("titleBotanica", "botanica");
+        attachTitleHandler("titleCotidiano", "cotidiano");
+        attachTitleHandler("titleGnosis", "gnosis");
+        attachTitleHandler("titleResonanciaBiblica", "resonancia_biblica");
 
         // Event listener para cerrar modal
         document
