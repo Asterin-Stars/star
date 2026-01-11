@@ -553,7 +553,93 @@
             transform: scale(1.02);
         }
 
-        /* ==================== VIDEO OVERLAY (LONG-PRESS) ==================== */
+        /* ==================== HOLOGRAPHIC OVERLAY SYSTEM (Tier S) ==================== */
+        .holo-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 5;
+        }
+
+        .card-stage.flipped .holo-overlay {
+            opacity: 1;
+        }
+
+        .holo-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            pointer-events: none;
+        }
+
+        /* Layer-specific blend modes and opacity */
+        .holo-nature {
+            mix-blend-mode: screen;
+            opacity: 0.3;
+        }
+
+        .holo-passion {
+            mix-blend-mode: color-dodge;
+            opacity: 0.25;
+        }
+
+        .holo-ink {
+            mix-blend-mode: multiply;
+            opacity: 0.4;
+        }
+
+        .holo-gold {
+            mix-blend-mode: screen;
+            opacity: 0.35;
+            filter: brightness(1.2) saturate(1.3);
+        }
+
+        .holo-spirit {
+            mix-blend-mode: overlay;
+            opacity: 0.3;
+        }
+
+        /* Shimmer effect - reacts to mouse/gyro */
+        .holo-shimmer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                calc(var(--shimmer-angle, 45deg) + var(--gyro-x, 0) * 0.5),
+                transparent 0%,
+                rgba(255, 255, 255, 0.1) 30%,
+                rgba(255, 200, 100, 0.15) 50%,
+                rgba(255, 255, 255, 0.1) 70%,
+                transparent 100%
+            );
+            mix-blend-mode: overlay;
+            opacity: 0.6;
+            transition: background 0.3s ease;
+        }
+
+        /* Mouse-reactive shimmer angle */
+        .card-stage:hover .holo-shimmer {
+            background: linear-gradient(
+                calc(var(--mouse-angle, 45deg)),
+                transparent 0%,
+                rgba(255, 255, 255, 0.2) 30%,
+                rgba(255, 220, 120, 0.25) 50%,
+                rgba(255, 255, 255, 0.2) 70%,
+                transparent 100%
+            );
+        }
+
         .card-video-overlay {
             position: absolute;
             top: 0;
@@ -1486,6 +1572,16 @@
                 </div>
                 <div class="card-face back iridescent-border">
                     <img id="cardImg" src="" alt="Arcano del Tarot" class="tarot-img">
+                    
+                    <!-- Holographic Overlay Layers -->
+                    <div class="holo-overlay" id="holoOverlay">
+                        <div class="holo-layer holo-nature" id="holoNature"></div>
+                        <div class="holo-layer holo-passion" id="holoPassion"></div>
+                        <div class="holo-layer holo-ink" id="holoInk"></div>
+                        <div class="holo-layer holo-gold" id="holoGold"></div>
+                        <div class="holo-layer holo-spirit" id="holoSpirit"></div>
+                        <div class="holo-shimmer" id="holoShimmer"></div>
+                    </div>
                 </div>
 
                 <!-- Video Overlay (activated on long-press) -->
@@ -2404,6 +2500,8 @@
                         const img = new Image();
                         img.onload = () => {
                             cardImg.src = imageUrl;
+                            // Load holographic layers
+                            loadHolographicLayers(cardSlug);
                         };
                         img.onerror = () => {
                             // Fallback: usar imagen del Loco si falla la carga
@@ -2438,6 +2536,39 @@
                         cardImg.src = './public/cards/ar00.jpg';
                     }
                 }
+
+                /* ==================== HOLOGRAPHIC SYSTEM (Tier S) ==================== */
+                function loadHolographicLayers(cardSlug) {
+                    // Load the 5 holographic layers for the given card
+                    const layers = ['nature', 'passion', 'ink', 'gold', 'spirit'];
+                    const basePath = `./public/cards/holo_layers/${cardSlug}`;
+                    
+                    layers.forEach(layerName => {
+                        const element = document.getElementById(`holo${layerName.charAt(0).toUpperCase() + layerName.slice(1)}`);
+                        if (element) {
+                            element.style.backgroundImage = `url('${basePath}/${layerName}.png')`;
+                        }
+                    });
+                }
+
+                // Mouse tracking for holographic shimmer effect
+                const cardStage = document.getElementById('cardStage');
+                let mouseAngle = 45;
+
+                cardStage.addEventListener('mousemove', (e) => {
+                    const rect = cardStage.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top();
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    // Calculate angle from center to mouse position
+                    const angleRad = Math.atan2(y - centerY, x - centerX);
+                    const angleDeg = (angleRad * 180 / Math.PI) + 90; // Adjust for gradient orientation
+                    
+                    mouseAngle = angleDeg;
+                    cardStage.style.setProperty('--mouse-angle', `${angleDeg}deg`);
+                });
 
                 /* ==================== REVELACIÓN ==================== */
                 function revealDestiny() {
