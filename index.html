@@ -2097,6 +2097,22 @@
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7760207436314874"
       crossorigin="anonymous"
     ></script>
+    <style>
+      /* VIDEO KILLER CSS - EMERGENCY OVERRIDE */
+      .card-video-overlay,
+      #videoOverlay,
+      #cardVideo,
+      video {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        position: absolute !important;
+        z-index: -9999 !important;
+      }
+    </style>
   </head>
 
   <body>
