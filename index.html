@@ -3648,8 +3648,8 @@
             const mainArq = document.getElementById("textoMainArquetipo");
             const mainBib = document.getElementById("textoBiblico");
 
-            // Use Misticismo Luz as main summary or Arquetipo Luz
-            if (mainArq) mainArq.innerHTML = cardVoice.voces.mistico.luz;
+            // Use Arquetipo Luz as main summary
+            if (mainArq) mainArq.innerHTML = cardVoice.voces.arquetipo.luz;
             if (mainBib) mainBib.innerHTML = getTemporalBiblicalVerse();
 
             // B. ACCORDIONS (DEEP DIVE)
@@ -3657,20 +3657,17 @@
             if (expl) {
               expl.innerHTML = `
                         ${createAccordion(
-                          "⚡ Tecnomago",
-                          cardVoice.voces.tecnomago
+                          "⚔️ Arquetipo y Simbología",
+                          cardVoice.voces.arquetipo
                         )}
                         ${createAccordion(
-                          "🔧 Psico-Obrero",
-                          cardVoice.voces.psicoobrero
+                          "💼 Proyección Cotidiana",
+                          cardVoice.voces.cotidiano
                         )}
                         ${createAccordion(
-                          "🌀 Divergente",
-                          cardVoice.voces.divergente
+                          "🌑 La Sombra",
+                          cardVoice.voces.sombra
                         )}
-                        <!-- Misticismo & Biblico are now static above, but we can keep full info here or remove duplicates. 
-                             User asked for 'Arquetipo and Biblia' to appear immediately. 
-                             We keep the OTHERS in accordions. -->
                      `;
             }
 
@@ -3682,7 +3679,7 @@
             const arquetipoEjemplo =
               document.getElementById("arquetipoEjemplo");
             if (arquetipoEjemplo) {
-              arquetipoEjemplo.innerHTML = `<p>${cardVoice.voces.mistico.titulo}</p>`; // Just title or short phrase
+              arquetipoEjemplo.innerHTML = `<p>${cardVoice.voces.sombra.titulo}</p>`; // Just title or short phrase
             }
           }
         }
