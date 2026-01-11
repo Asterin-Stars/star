@@ -339,10 +339,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* MEJORAR CENTRADO VERTICAL PARA MINIMIZAR SCROLL */
             justify-content: center;
-            /* Centra verticalmente cuando no hay scroll */
-            /* Eliminada min-height: 100vh para evitar espacio innecesario */
+            min-height: 100vh;
             gap: 40px;
             width: 100%;
             max-width: 1400px;
@@ -515,15 +513,12 @@
         }
 
         @keyframes pulse {
-
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: 0.8;
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 0.75;
             }
-
             50% {
-                transform: scale(1.05);
+                transform: scale(1.08) rotate(180deg);
                 opacity: 1;
             }
         }
@@ -545,7 +540,7 @@
         .tarot-img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             object-position: center center;
             /* ELIMINACIÓN DE FONDO BLANCO (Importante si las imágenes lo tienen) */
             mix-blend-mode: darken;
