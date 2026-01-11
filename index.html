@@ -2699,7 +2699,7 @@
     <script>
       // Load Voces Data
       window.vocesData = [];
-      fetch("/data/voces-tarot.json")
+      fetch("./public/data/voces-tarot.json")
         .then((response) => response.json())
         .then((data) => {
           window.vocesData = data;
@@ -3481,7 +3481,7 @@
               },
             },
           };
-          cardImg.src = "/public/cards/ar00.jpg";
+          cardImg.src = "/public/cards/ar00.png";
         }
       }
 
@@ -3833,10 +3833,7 @@
         aiBtn.disabled = false;
         aiBtn.innerHTML = '<span class="ai-btn-icon">✦</span>';
 
-        // 2.5 Stop video only if actually playing (prevent interrupting startup)
-        if (isVideoPlaying) {
-          stopCardVideo();
-        }
+        // 2.5 Video stop logic removed
 
         // 2.6. Ocultar introducción
         const introSection = document.getElementById("introSection");
@@ -3963,7 +3960,7 @@
 
           // La imagen NO cambia (mismo ID)
           const cardSlug = currentCardData.name_short;
-          const imageUrl = `./public/cards/${cardSlug}.jpg`;
+          const imageUrl = `./public/cards/${cardSlug}.png`;
           cardImg.src = imageUrl;
 
           // Si la carta está revelada, actualizar los textos
@@ -4326,14 +4323,7 @@
         // STATE 2: Double click (wait for 3rd click or timeout)
         else if (clickCount === 2) {
           clickTimer = setTimeout(() => {
-            console.log("✅ Double click confirmed - playing video");
-            // Double click confirmed: PLAY VIDEO
-            // Defer async work to avoid blocking UI (fixes INP issue)
-            requestAnimationFrame(async () => {
-              if (isRevealed && !isVideoPlaying) {
-                await playCardVideo();
-              }
-            });
+            console.log("✅ Double click ignored (Video removed)");
             clickCount = 0;
           }, CLICK_WINDOW);
         }
