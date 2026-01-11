@@ -987,10 +987,123 @@
       .arquetipo-text {
         font-size: 0.95rem;
         line-height: 1.7;
-        color: var(--text-primary);
-        font-weight: 400;
-        margin: 0;
         text-align: justify;
+      }
+
+      /* Fix Image Borders on Front Card */
+      .arquetipo-front {
+        background-size: 106% !important; /* Scale up slightly to crop borders */
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+      }
+
+      /* Accordion Styles */
+      details.voice-accordion {
+        background: rgba(255, 255, 255, 0.05); /* Light Glass */
+        border-radius: 12px;
+        margin-bottom: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        overflow: hidden;
+        transition: background 0.3s;
+      }
+      body.dark-mode details.voice-accordion {
+        background: rgba(0, 0, 0, 0.2);
+        border-color: rgba(255, 255, 255, 0.05);
+      }
+
+      summary {
+        padding: 14px 16px;
+        cursor: pointer;
+        font-weight: 500;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        user-select: none;
+      }
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      summary::after {
+        content: "+";
+        font-size: 1.2em;
+        opacity: 0.7;
+        font-weight: 300;
+      }
+      details[open] summary::after {
+        content: "−";
+      }
+
+      .accordion-content {
+        padding: 0 16px 16px 16px;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        margin-top: 4px;
+        padding-top: 12px;
+      }
+      body.dark-mode .accordion-content {
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      /* Fix Image Borders on Front Card */
+      .arquetipo-front {
+        background-size: 106% !important; /* Scale up slightly to crop borders */
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+      }
+
+      /* Accordion Styles */
+      details.voice-accordion {
+        background: rgba(255, 255, 255, 0.05); /* Light Glass */
+        border-radius: 12px;
+        margin-bottom: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        overflow: hidden;
+        transition: background 0.3s;
+      }
+      body.dark-mode details.voice-accordion {
+        background: rgba(0, 0, 0, 0.2);
+        border-color: rgba(255, 255, 255, 0.05);
+      }
+
+      summary {
+        padding: 14px 16px;
+        cursor: pointer;
+        font-weight: 500;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        user-select: none;
+      }
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      summary::after {
+        content: "+";
+        font-size: 1.2em;
+        opacity: 0.7;
+        font-weight: 300;
+      }
+      details[open] summary::after {
+        content: "−";
+      }
+
+      .accordion-content {
+        padding: 0 16px 16px 16px;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        margin-top: 4px;
+        padding-top: 12px;
+      }
+      body.dark-mode .accordion-content {
+        color: rgba(255, 255, 255, 0.85);
       }
 
       /* Dark Mode Overrides - Tinted Glass Effect */
@@ -2099,14 +2212,9 @@
           </div>
         </div>
 
-        <!-- Resonancia Bíblica -->
-        <div class="section" id="seccionBiblico">
-          <div class="section-title" id="titleResonanciaBiblica">
-            Resonancia Bíblica
-          </div>
-          <div class="section-content">
-            <div class="biblical-verse" id="textoBiblico"></div>
-          </div>
+        <!-- Exploration Accordions (Voces del Tarot) -->
+        <div class="section" id="seccionExploracion" style="margin-top: 20px">
+          <!-- Accordions will be injected here via JS -->
         </div>
       </div>
 
@@ -2593,6 +2701,16 @@
     </div>
 
     <script>
+      // Load Voces Data
+      window.vocesData = [];
+      fetch("data/voces-tarot.json")
+        .then((response) => response.json())
+        .then((data) => {
+          window.vocesData = data;
+          console.log("Voces loaded", data.length);
+        })
+        .catch((err) => console.error("Error loading voces:", err));
+
       /* ==================== CONFIGURACIÓN WORLD APP ==================== */
       const WALLET_ADDRESS = "0xa3cdea9fe705bc16dcd9e9170e217b0f1ba5aaf6";
 
@@ -2990,7 +3108,6 @@
           "energia",
           "vontade",
           "decisão",
-          "controle",
           "domínio",
           "transformação",
           "mudança",
@@ -3324,7 +3441,7 @@
           img.onload = () => {
             cardImg.src = imageUrl;
             // Load holographic layers
-            loadHolographicLayers(cardSlug);
+            updateHoloLayers(cardSlug);
           };
           img.onerror = () => {
             // Fallback: usar imagen del Loco si falla la carga
@@ -3373,19 +3490,14 @@
       }
 
       /* ==================== HOLOGRAPHIC SYSTEM (Tier S) ==================== */
-      function loadHolographicLayers(cardSlug) {
-        // Load the 5 holographic layers for the given card
+      function updateHoloLayers(cardKey) {
         const layers = ["nature", "passion", "ink", "gold", "spirit"];
-        const basePath = `./public/cards/holo_layers/${cardSlug}`;
-
-        layers.forEach((layerName) => {
-          const element = document.getElementById(
-            `holo${layerName.charAt(0).toUpperCase() + layerName.slice(1)}`
+        layers.forEach((layer) => {
+          const el = document.getElementById(
+            `holo${layer.charAt(0).toUpperCase() + layer.slice(1)}`
           );
-          if (element) {
-            // DISABLED to fix ghosting/duplicate image effect
-            // element.style.backgroundImage = `url('${basePath}/${layerName}.png')`;
-            element.style.backgroundImage = "none";
+          if (el) {
+            el.style.backgroundImage = `url('cards/holo_layers/${cardKey}/${layer}.png')`;
           }
         });
       }
@@ -3465,15 +3577,90 @@
           return highlightKeywords(item, lang);
         };
 
-        // Solo llenar Arquetipo y Biblia
-        textoSignificado.innerHTML = getRandomItem("arquetipo");
+        // Remove duplicate text on Front (Image Cover)
+        textoSignificado.innerHTML = ""; // Clear text to show image clean
 
-        // Llenar el back de la carta con el ejemplo (misticismo o sombra)
-        const arquetipoEjemplo = document.getElementById("arquetipoEjemplo");
-        if (arquetipoEjemplo) {
-          arquetipoEjemplo.innerHTML =
-            getRandomItem("misticismo") || getRandomItem("sombra");
+        // Update Holo Layers
+        updateHoloLayers(currentCardData.name_short); // e.g. "ar05"
+
+        // 4. LLENAR LAS SECCIONES (ACORDEONES)
+        if (!window.vocesData) {
+          console.warn("Voces data not loaded");
+        } else {
+          const cardVoice = window.vocesData.find(
+            (v) => v.id === currentCardData.id
+          );
+
+          if (cardVoice && cardVoice.voces) {
+            const expl = document.getElementById("seccionExploracion");
+            if (expl) {
+              expl.innerHTML = `
+                        ${createAccordion(
+                          "⚡ Tecnomago",
+                          cardVoice.voces.tecnomago
+                        )}
+                        ${createAccordion(
+                          "🔧 Psico-Obrero",
+                          cardVoice.voces.psicoobrero
+                        )}
+                        ${createAccordion(
+                          "🌀 Divergente",
+                          cardVoice.voces.divergente
+                        )}
+                        ${createAccordion("✦ Místico", cardVoice.voces.mistico)}
+                        <details class="voice-accordion">
+                            <summary>📖 Resonancia Bíblica</summary>
+                            <div class="accordion-content">
+                                <div class="biblical-verse">${getTemporalBiblicalVerse()}</div>
+                            </div>
+                        </details>
+                     `;
+            }
+
+            // Llenar reverso con Místico Luz o Arquetipo
+            const arquetipoEjemplo =
+              document.getElementById("arquetipoEjemplo");
+            if (arquetipoEjemplo) {
+              arquetipoEjemplo.innerHTML = `<p>${cardVoice.voces.mistico.luz}</p>`;
+            }
+          }
         }
+
+        // Helper to create details
+        // Helper to create details
+        function createAccordion(title, data) {
+          if (!data) return "";
+          return `
+                <details class="voice-accordion">
+                    <summary>${title} <span style="opacity:0.6; font-size:0.8em;">${
+            data.titulo || ""
+          }</span></summary>
+                    <div class="accordion-content">
+                        <p><strong>Luz:</strong> ${data.luz}</p>
+                        <p style="margin-top:8px;"><strong>Sombra:</strong> ${
+                          data.sombra
+                        }</p>
+                    </div>
+                </details>
+            `;
+        }
+
+        function updateHoloLayers(cardKey) {
+          const layers = ["nature", "passion", "ink", "gold", "spirit"];
+          layers.forEach((layer) => {
+            const el = document.getElementById(
+              `holo${layer.charAt(0).toUpperCase() + layer.slice(1)}`
+            );
+            if (el) {
+              // Path must be relative to web root (public folder content is at root)
+              // File: public/cards/holo_layers/arXX/nature.png -> URL: cards/holo_layers/arXX/nature.png
+              el.style.backgroundImage = `url('cards/holo_layers/${cardKey}/${layer}.png')`;
+            }
+          });
+        }
+
+        // Remove duplicate text on Front (Image Cover)
+        textoSignificado.innerHTML = ""; // Clear text to show image clean
 
         // Versículo Bíblico
         textoBiblico.innerHTML = getTemporalBiblicalVerse();
