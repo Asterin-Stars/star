@@ -104,13 +104,12 @@
         padding: 0;
         width: 100%;
         min-height: 100%;
-        font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+          "SF Pro Text", "Helvetica Neue", "Segoe UI", Roboto, sans-serif;
         overflow-y: auto;
         overflow-x: hidden;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        -webkit-overflow-scrolling: touch;
       }
 
       /* BLOQUEO DE SCROLL HASTA QUE LA CARTA SE REVELE */
@@ -488,6 +487,7 @@
           );
 
         /* backdrop-blur-sm (aproximadamente 8px) */
+        -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
 
@@ -548,6 +548,8 @@
         color: rgba(255, 255, 255, 0.8);
         font-weight: 300;
         background: rgba(255, 255, 255, 0.1);
+        -webkit-backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(5px);
         animation: pulse 3s ease-in-out infinite;
       }
@@ -568,6 +570,8 @@
       .back {
         /* Fondo tipo cristal claro para la carta revelada */
         background: rgba(255, 255, 255, 0.8);
+        -webkit-backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
         transform: rotateY(180deg);
         border: 1px solid rgba(255, 255, 255, 0.5);
@@ -739,6 +743,7 @@
         width: 92%;
         max-width: 720px;
         background: rgba(245, 245, 245, 0.45);
+        -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(var(--glass-blur)) saturate(150%);
         -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
         border-radius: 22px;
@@ -817,6 +822,7 @@
         margin: 0 0 8px 0;
         text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
         cursor: pointer;
+        -webkit-user-select: none;
         user-select: none;
         display: flex;
         align-items: center;
@@ -848,6 +854,7 @@
         padding: 16px 20px;
         margin: 0 0 24px 0;
         border: 1px solid rgba(255, 255, 255, 0.2);
+        -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         animation: fadeSlideIn 0.6s ease-out;
@@ -924,6 +931,7 @@
         font-size: 0.95rem;
         color: var(--text-primary);
         list-style: none;
+        -webkit-user-select: none;
         user-select: none;
         transition: all 0.2s ease;
       }
@@ -1055,6 +1063,8 @@
           rgba(156, 39, 176, 0.1)
         );
         border-radius: 20px;
+        -webkit-backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
         border: 1.5px solid rgba(156, 39, 176, 0.3);
         margin: 20px 0;
@@ -1202,6 +1212,7 @@
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.3);
+        -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         display: flex;
@@ -1214,6 +1225,7 @@
 
       .modal-content {
         background: rgba(255, 255, 255, 0.85);
+        -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(40px) saturate(180%);
         -webkit-backdrop-filter: blur(40px) saturate(180%);
         border: 1px solid rgba(255, 255, 255, 0.3);
@@ -1257,6 +1269,7 @@
         border-radius: 50%;
         border: 1.5px solid rgba(255, 255, 255, 0.4);
         background: rgba(255, 255, 255, 0.15);
+        -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         cursor: pointer;
@@ -1300,6 +1313,7 @@
       body.dark-mode .front,
       body.dark-mode .back {
         background: rgba(0, 0, 0, 0.7) !important;
+        -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(var(--glass-blur)) saturate(120%);
         -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(120%);
         border-color: rgba(255, 255, 255, 0.15) !important;
@@ -1660,6 +1674,7 @@
         /* El botón es el MICROCOSMOS: Refleja los colores del MACROCOSMOS (Fondo) */
         /* Fondo base translúcido para las mini-blobs */
         background: rgba(255, 255, 255, 0.3);
+        -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border: none;
@@ -2024,167 +2039,19 @@
       <div class="insight-panel iridescent-border" id="insightPanel">
         <h2 id="cardTitle"></h2>
 
-        <!-- NUEVO: Sistema de Voces con Acordeón -->
-        <div class="voice-accordion" id="voiceAccordion" style="display: none">
-          <details class="voice-item tecnomago">
-            <summary>
-              <span class="voice-icon">⚡</span>
-              <span class="voice-name">Tecnomago</span>
-            </summary>
-            <div class="voice-content">
-              <p class="voice-luz">
-                <span class="duality-icon">☀️</span>
-                <span id="vozTecnomagoLuz"></span>
-              </p>
-              <p class="voice-sombra">
-                <span class="duality-icon">🌑</span>
-                <span id="vozTecnomagoSombra"></span>
-              </p>
-            </div>
-          </details>
-
-          <details class="voice-item psicoobrero">
-            <summary>
-              <span class="voice-icon">🔧</span>
-              <span class="voice-name">Psico-Obrero</span>
-            </summary>
-            <div class="voice-content">
-              <p class="voice-luz">
-                <span class="duality-icon">☀️</span>
-                <span id="vozPsicoobreroLuz"></span>
-              </p>
-              <p class="voice-sombra">
-                <span class="duality-icon">🌑</span>
-                <span id="vozPsicoobreroSombra"></span>
-              </p>
-            </div>
-          </details>
-
-          <details class="voice-item divergente">
-            <summary>
-              <span class="voice-icon">🌀</span>
-              <span class="voice-name">Divergente</span>
-            </summary>
-            <div class="voice-content">
-              <p class="voice-luz">
-                <span class="duality-icon">☀️</span>
-                <span id="vozDivergenteLuz"></span>
-              </p>
-              <p class="voice-sombra">
-                <span class="duality-icon">🌑</span>
-                <span id="vozDivergenteSombra"></span>
-              </p>
-            </div>
-          </details>
-
-          <details class="voice-item mistico">
-            <summary>
-              <span class="voice-icon">✦</span>
-              <span class="voice-name">Místico</span>
-            </summary>
-            <div class="voice-content">
-              <p class="voice-luz">
-                <span class="duality-icon">☀️</span>
-                <span id="vozMisticoLuz"></span>
-              </p>
-              <p class="voice-sombra">
-                <span class="duality-icon">🌑</span>
-                <span id="vozMisticoSombra"></span>
-              </p>
-            </div>
-          </details>
-        </div>
-        <!-- FIN: Sistema de Voces -->
-
-        <div class="intro-section" id="introSection" style="display: none">
-          <p class="intro-text"><em id="introExample"></em></p>
-        </div>
-
+        <!-- Arquetipo -->
         <div class="section" id="seccionSignificado">
-          <div class="section-title" id="titleArquetipo"></div>
+          <div class="section-title" id="titleArquetipo">Arquetipo</div>
           <p class="section-content" id="textoSignificado"></p>
         </div>
 
-        <div class="section" id="seccionAmpliado" style="display: none">
-          <div class="section-title" id="titleMisticismo"></div>
-          <p class="section-content" id="textoAmpliado"></p>
-        </div>
-
-        <div class="section" id="seccionNegativo" style="display: none">
-          <h3 class="section-title" data-i18n="shadowTitle">
-            Sombras y Peligros
-          </h3>
-
-          <!-- Premium Lock UI -->
-          <div class="premium-lock" id="shadowLock">
-            <div class="lock-icon">🔒</div>
-            <p class="lock-message">
-              Desbloquea el análisis de sombras viendo un breve anuncio
-            </p>
-            <button class="unlock-btn" id="unlockShadowBtn">
-              <span class="btn-icon">🎬</span>
-              <span class="btn-text">Ver para Desbloquear</span>
-            </button>
+        <!-- Resonancia Bíblica -->
+        <div class="section" id="seccionBiblico">
+          <div class="section-title" id="titleResonanciaBiblica">
+            Resonancia Bíblica
           </div>
-
-          <!-- Actual Content (hidden until unlocked) -->
-          <p class="section-content u-hidden" id="textoNegativo"></p>
-        </div>
-
-        <div class="section" id="seccionBotanica" style="display: none">
-          <div class="section-title" id="titleBotanica"></div>
-          <p class="section-content" id="textoBotanica"></p>
-        </div>
-
-        <div class="section" id="seccionCotidiano" style="display: none">
-          <div class="section-title" id="titleCotidiano"></div>
-          <p class="section-content" id="textoCotidiano"></p>
-        </div>
-
-        <div class="section" id="seccionMistico" style="display: none">
-          <div class="section-title" id="titleGnosis"></div>
-          <p class="section-content" id="textoMistico"></p>
-        </div>
-
-        <div class="section" id="seccionBiblico" style="display: none">
-          <div class="section-title" id="titleResonanciaBiblica"></div>
           <div class="section-content">
             <div class="biblical-verse" id="textoBiblico"></div>
-          </div>
-        </div>
-
-        <!-- Botón de Síntesis IA -->
-        <div class="ai-synthesis-container">
-          <button
-            class="ai-btn iridescent-border-subtle"
-            id="aiBtn"
-            aria-label="Sintetizar Numerología"
-          >
-            <span class="ai-btn-icon">✦</span>
-          </button>
-          <div class="ai-result" id="aiResult" style="display: none">
-            <div class="ai-header">
-              <span class="ai-icon-small">✦</span> Numerología
-            </div>
-            <p id="aiText"></p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal para ejemplos de los 22 conceptos -->
-      <div class="modal-overlay" id="modalOverlay" style="display: none">
-        <div class="modal-content iridescent-border" id="modalContent">
-          <div class="modal-header">
-            <h3 id="modalTitle"></h3>
-            <button class="modal-close" id="modalClose" onclick="closeModal()">
-              &times;
-            </button>
-          </div>
-          <div class="modal-body">
-            <p id="modalText"></p>
-          </div>
-          <div class="modal-footer">
-            <small id="modalNumber"></small>
           </div>
         </div>
       </div>
@@ -2546,6 +2413,7 @@
               width: 100%;
               padding: 14px 20px;
               background: rgba(255, 255, 255, 0.2);
+              -webkit-backdrop-filter: blur(10px);
               backdrop-filter: blur(10px);
               border: 1px solid rgba(255, 255, 255, 0.3);
               border-radius: 10px;
@@ -3540,22 +3408,10 @@
         // 3. MOSTRAR TÍTULO
         cardTitle.textContent = currentCardData.name;
 
-        // 3.5. MOSTRAR INTRODUCCIÓN CON EJEMPLO
-        const introSection = document.getElementById("introSection");
-        const introExample = document.getElementById("introExample");
         const datos = currentCardData.fullData;
-
-        // Usar el campo cotidiano como introducción (experiencia práctica, sin prefijo)
         const lang = window.i18n ? window.i18n.currentLanguage : "es";
-        // Performance: Defer keyword highlighting to reduce blocking
-        setTimeout(() => {
-          introExample.innerHTML = datos.cotidiano
-            ? highlightKeywords(datos.cotidiano, lang)
-            : "La experiencia de vida práctica.";
-        }, 100);
-        introSection.style.display = "block";
 
-        // 4. LLENAR LAS SECCIONES CON DATOS ALEATORIOS
+        // 4. LLENAR LAS SECCIONES
 
         // Función auxiliar with keyword highlighting
         const getRandomItem = (category) => {
@@ -3564,41 +3420,11 @@
           return highlightKeywords(item, lang);
         };
 
-        // Llenar todas las categorías del JSON - LA SECCIÓN SIGNIFICADO USA SOMBRA (ASPECTOS TEMIBLES)
-        textoSignificado.innerHTML = getRandomItem("sombra");
-
-        textoAmpliado.innerHTML = getRandomItem("misticismo");
-        seccionAmpliado.style.display = textoAmpliado.innerHTML
-          ? "block"
-          : "none";
-
-        textoNegativo.innerHTML = getRandomItem("arquetipo");
-        seccionNegativo.style.display = textoNegativo.innerHTML
-          ? "block"
-          : "none";
-
-        // Nueva sección Botánica
-        textoBotanica.innerHTML = getRandomItem("botanica");
-        seccionBotanica.style.display = textoBotanica.innerHTML
-          ? "block"
-          : "none";
-
-        textoCotidiano.innerHTML = getRandomItem("cotidiano");
-        seccionCotidiano.style.display = textoCotidiano.innerHTML
-          ? "block"
-          : "none";
-
-        textoMistico.innerHTML = getRandomItem("gnosis");
-        seccionMistico.style.display = textoMistico.innerHTML
-          ? "block"
-          : "none";
+        // Solo llenar Arquetipo y Biblia
+        textoSignificado.innerHTML = getRandomItem("arquetipo");
 
         // Versículo Bíblico
         textoBiblico.innerHTML = getTemporalBiblicalVerse();
-        seccionBiblico.style.display = "block";
-
-        // 4.5 CARGAR VOCES (Nuevo Sistema)
-        loadVoicesForCard(currentCardData.id);
 
         // 5. MOSTRAR PANEL (con delay dramático)
         setTimeout(() => {
@@ -3622,59 +3448,6 @@
             playCardVideoOnce();
           }, 800);
         }, 650);
-      }
-
-      /* ==================== SISTEMA DE VOCES ==================== */
-      let vocesData = null;
-
-      async function loadVoicesForCard(cardId) {
-        try {
-          // Cargar voces si no están en cache
-          if (!vocesData) {
-            const response = await fetch("./public/data/voces-tarot.json");
-            if (!response.ok) throw new Error("Failed to load voices");
-            vocesData = await response.json();
-            console.log("✅ Loaded voice data for", vocesData.length, "cards");
-          }
-
-          // Buscar la carta por ID
-          const carta = vocesData.find((c) => c.id === cardId);
-          if (!carta || !carta.voces) {
-            console.warn("No voice data for card", cardId);
-            return;
-          }
-
-          // Llenar el acordeón
-          const voces = carta.voces;
-
-          document.getElementById("vozTecnomagoLuz").textContent =
-            voces.tecnomago?.luz || "";
-          document.getElementById("vozTecnomagoSombra").textContent =
-            voces.tecnomago?.sombra || "";
-
-          document.getElementById("vozPsicoobreroLuz").textContent =
-            voces.psicoobrero?.luz || "";
-          document.getElementById("vozPsicoobreroSombra").textContent =
-            voces.psicoobrero?.sombra || "";
-
-          document.getElementById("vozDivergenteLuz").textContent =
-            voces.divergente?.luz || "";
-          document.getElementById("vozDivergenteSombra").textContent =
-            voces.divergente?.sombra || "";
-
-          document.getElementById("vozMisticoLuz").textContent =
-            voces.mistico?.luz || "";
-          document.getElementById("vozMisticoSombra").textContent =
-            voces.mistico?.sombra || "";
-
-          // Mostrar el acordeón
-          document.getElementById("voiceAccordion").style.display = "flex";
-
-          // Abrir el primer item por defecto
-          document.querySelector(".voice-item.tecnomago").open = true;
-        } catch (error) {
-          console.error("Error loading voices:", error);
-        }
       }
 
       /* ==================== MODAL DE EJEMPLOS ==================== */
@@ -5984,6 +5757,7 @@
         height: 56px;
         /* Ajustado al nuevo estilo glassmorphism */
         background: rgba(255, 255, 255, 0.5);
+        -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(15px);
         -webkit-backdrop-filter: blur(15px);
         border: 1.5px solid rgba(255, 255, 255, 0.6);
