@@ -899,6 +899,65 @@
         text-align: right;
       }
 
+      /* ==================== ARQUETIPO CARD (Flippable) ==================== */
+      .arquetipo-card {
+        perspective: 1000px;
+        cursor: pointer;
+        margin-bottom: 24px;
+      }
+
+      .arquetipo-card-inner {
+        position: relative;
+        width: 100%;
+        min-height: 150px;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-style: preserve-3d;
+      }
+
+      .arquetipo-card.flipped .arquetipo-card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .arquetipo-face {
+        position: absolute;
+        width: 100%;
+        min-height: 150px;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 16px;
+        padding: 24px 28px;
+        box-sizing: border-box;
+        border: 1.5px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+      }
+
+      .arquetipo-card:hover .arquetipo-face {
+        border-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1),
+          0 0 20px rgba(255, 255, 255, 0.6),
+          inset 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+
+      .arquetipo-front {
+        z-index: 2;
+      }
+
+      .arquetipo-back {
+        transform: rotateY(180deg);
+        z-index: 1;
+      }
+
+      .arquetipo-text {
+        font-size: 1rem;
+        line-height: 1.75;
+        color: var(--text-primary);
+        font-weight: 400;
+        margin: 0;
+        text-align: justify;
+      }
+
       /* ==================== SISTEMA DE VOCES (Acordeón) ==================== */
       .voice-accordion {
         display: flex;
@@ -2039,10 +2098,20 @@
       <div class="insight-panel iridescent-border" id="insightPanel">
         <h2 id="cardTitle"></h2>
 
-        <!-- Arquetipo -->
-        <div class="section" id="seccionSignificado">
-          <div class="section-title" id="titleArquetipo">Arquetipo</div>
-          <p class="section-content" id="textoSignificado"></p>
+        <!-- Arquetipo Card (Flippable) -->
+        <div
+          class="arquetipo-card"
+          id="arquetipoCard"
+          onclick="flipArquetipoCard()"
+        >
+          <div class="arquetipo-card-inner" id="arquetipoCardInner">
+            <div class="arquetipo-face arquetipo-front">
+              <p class="arquetipo-text" id="textoSignificado"></p>
+            </div>
+            <div class="arquetipo-face arquetipo-back">
+              <p class="arquetipo-text" id="arquetipoEjemplo"></p>
+            </div>
+          </div>
         </div>
 
         <!-- Resonancia Bíblica -->
@@ -3423,6 +3492,13 @@
         // Solo llenar Arquetipo y Biblia
         textoSignificado.innerHTML = getRandomItem("arquetipo");
 
+        // Llenar el back de la carta con el ejemplo (misticismo o sombra)
+        const arquetipoEjemplo = document.getElementById("arquetipoEjemplo");
+        if (arquetipoEjemplo) {
+          arquetipoEjemplo.innerHTML =
+            getRandomItem("misticismo") || getRandomItem("sombra");
+        }
+
         // Versículo Bíblico
         textoBiblico.innerHTML = getTemporalBiblicalVerse();
 
@@ -3448,6 +3524,14 @@
             playCardVideoOnce();
           }, 800);
         }, 650);
+      }
+
+      /* ==================== ARQUETIPO CARD FLIP ==================== */
+      function flipArquetipoCard() {
+        const card = document.getElementById("arquetipoCard");
+        if (card) {
+          card.classList.toggle("flipped");
+        }
       }
 
       /* ==================== MODAL DE EJEMPLOS ==================== */
