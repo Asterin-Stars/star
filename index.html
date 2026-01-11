@@ -161,19 +161,9 @@
         background: #f9f9f9;
       }
 
-      /* Manchas de color (Blobs) */
+      /* Manchas de color (Blobs) - OCUL TAS */
       .blob {
-        position: absolute;
-        border-radius: 50%;
-        /* El blur intenso crea el efecto líquido/borroso. Ajustado para ser muy fluido. */
-        filter: blur(135px);
-        opacity: 0;
-        /* Transición suave al aparecer */
-        transition: opacity 1.5s ease-in-out;
-        width: 65vmax;
-        height: 65vmax;
-        /* Mejora la mezcla de colores sobre fondo claro */
-        mix-blend-mode: multiply;
+        display: none;
       }
 
       .wallpaper.active .blob {
@@ -812,15 +802,11 @@
 
       /* ANVERSO - La revelación */
       .back {
-        /* Usamos las variables definidas arriba */
         background-color: var(--card-frame-color);
-        padding: var(--card-frame-padding);
-
-        /* Fixes de Safari y Mobile */
+        padding: 0;
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
         transform: rotateY(180deg);
-
         justify-content: center;
         box-shadow: var(--card-frame-shadow);
       }
@@ -1006,23 +992,7 @@
         position: relative;
       }
 
-      h2::after {
-        content: '';
-        position: absolute;
-        bottom: -8px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 60px;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, var(--text-secondary), transparent);
-        opacity: 0.6;
-      }
 
-      /* SECCIONES DE CONTENIDO */
-      .section {
-        margin-bottom: 24px;
-        animation: fadeSlideIn 0.7s var(--ease-smooth) both;
-      }
 
       .section:nth-child(2) {
         animation-delay: 0.3s;
@@ -1077,6 +1047,7 @@
         background: var(--text-secondary);
         opacity: 0.4;
         transition: all 0.3s ease;
+        margin-left: 8px;
       }
 
       .section-title:hover {
@@ -3135,7 +3106,7 @@
 
           // 7. AUTO-PLAY VIDEO ONCE (non-loop, single playback)
           setTimeout(() => {
-            playCardVideoOnce();
+            // playCardVideoOnce(); // REMOVED - function not defined
           }, 800);
         }, 650);
       }
