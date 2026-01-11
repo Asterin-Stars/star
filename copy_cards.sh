@@ -4,6 +4,9 @@
 SRC="/home/star/Descargas/tarot_downloads/sin_borde"
 DEST="/home/star/star/public/cards"
 
+# Asegurar que el directorio destino existe
+mkdir -p "$DEST"
+
 # Arcanos Mayores (00-21)
 cp "$SRC/RWSa-T-00.png" "$DEST/ar00.jpg"
 cp "$SRC/RWSa-T-01.png" "$DEST/ar01.jpg"
