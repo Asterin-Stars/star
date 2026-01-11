@@ -161,9 +161,16 @@
         background: #f9f9f9;
       }
 
-      /* Manchas de color (Blobs) - OCUL TAS */
+      /* Manchas de color (Blobs) */
       .blob {
-        display: none;
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(135px);
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+        width: 65vmax;
+        height: 65vmax;
+        mix-blend-mode: multiply;
       }
 
       .wallpaper.active .blob {
