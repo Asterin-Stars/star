@@ -403,71 +403,6 @@
         0%, 100% { opacity: var(--layer-spirit-opacity); }
         50% { opacity: calc(var(--layer-spirit-opacity) * 1.25); }
       }
-        }
-
-      /* BREATHING ANIMATIONS - Variación orgánica */
-      @keyframes breatheBase {
-        0%, 100% { filter: contrast(0.95) brightness(1); }
-        50% { filter: contrast(1.05) brightness(1.02); }
-      }
-
-      @keyframes breatheNature {
-        0%, 100% { opacity: 0.95; }
-        50% { opacity: 1; }
-      }
-
-      @keyframes breathePassion {
-        0%, 100% { opacity: var(--layer-passion-opacity); }
-        50% { opacity: calc(var(--layer-passion-opacity) * 1.15); }
-      }
-
-      @keyframes breatheGold {
-        0%, 100% { 
-          filter: brightness(var(--layer-gold-brightness));
-        }
-        50% { 
-          filter: brightness(calc(var(--layer-gold-brightness) * 1.1));
-        }
-      }
-
-      @keyframes breatheSpirit {
-        0%, 100% { opacity: var(--layer-spirit-opacity); }
-        50% { opacity: calc(var(--layer-spirit-opacity) * 1.25); }
-      }
-      }
-
-      /* BREATHING ANIMATIONS - Variación orgánica */
-      @keyframes breatheBase {
-        0%, 100% { filter: contrast(0.95) brightness(1); }
-        50% { filter: contrast(1.05) brightness(1.02); }
-      }
-
-      @keyframes breatheNature {
-        0%, 100% { opacity: 0.95; }
-        50% { opacity: 1; }
-      }
-
-      @keyframes breathePassion {
-        0%, 100% { opacity: var(--layer-passion-opacity); }
-        50% { opacity: calc(var(--layer-passion-opacity) * 1.15); }
-      }
-
-      @keyframes breatheGold {
-        0%, 100% { 
-          filter: brightness(var(--layer-gold-brightness));
-        }
-        50% { 
-          filter: brightness(calc(var(--layer-gold-brightness) * 1.1));
-        }
-      }
-
-      @keyframes breatheSpirit {
-        0%, 100% { opacity: var(--layer-spirit-opacity); }
-        50% { opacity: calc(var(--layer-spirit-opacity) * 1.25); }
-      }
-
-      /* ==================== IRIDESCENT BORDER EFFECTS (iOS 26 Style) ==================== */
-        mask: radial-gradient(circle at center, transparent 70%, black 100%);
         pointer-events: none;
         z-index: -1;
 
@@ -834,6 +769,11 @@
         transform: translate3d(0, 0, 0);
       }
 
+      /* ==================== UTILIDADES ==================== */
+      .u-hidden {
+        display: none !important;
+      }
+      
       .tarot-img {
         object-fit: contain;
         display: block;
