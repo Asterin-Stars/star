@@ -2795,7 +2795,9 @@
                     layers.forEach(layerName => {
                         const element = document.getElementById(`holo${layerName.charAt(0).toUpperCase() + layerName.slice(1)}`);
                         if (element) {
-                            element.style.backgroundImage = `url('${basePath}/${layerName}.png')`;
+                            // DISABLED to fix ghosting/duplicate image effect
+                            // element.style.backgroundImage = `url('${basePath}/${layerName}.png')`;
+                            element.style.backgroundImage = 'none';
                         }
                     });
                 }
@@ -4300,7 +4302,7 @@
                         const titleGnosis = document.getElementById('titleGnosis');
                         const titleResonanciaBiblica = document.getElementById('titleResonanciaBiblica');
                         
-                        if (titleArquetipo) titleArquetipo.textContent = window.i18n.t('shadowsTitle');
+                        if (titleArquetipo) titleArquetipo.textContent = window.i18n.t('archetypeTitle');
                         if (titleMisticismo) titleMisticismo.textContent = window.i18n.t('mysticismTitle');
                         if (titleSombra) titleSombra.textContent = window.i18n.t('shadowTitle');
                         if (titleBotanica) titleBotanica.textContent = window.i18n.t('botanicTitle');
