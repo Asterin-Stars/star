@@ -8,7 +8,7 @@
     <meta name="description" content="Oráculo de Tarot y Numerología del presente.">
     <!-- World App MiniKit -->
     <!-- World App MiniKit Wrapper (Local Fallback) -->
-    <script src="./public/libs/minikit-wrapper.js"></script>
+    <!-- MiniKit/WLD integration removed -->
     <!-- i18n Translation Module -->
     <script src="./public/i18n.js"></script>
     
@@ -4292,13 +4292,21 @@
                 // Función para actualizar títulos de secciones con i18n
                 function updateSectionTitles() {
                     if (window.i18n) {
-                        document.getElementById('titleArquetipo').textContent = window.i18n.t('shadowsTitle');
-                        document.getElementById('titleMisticismo').textContent = window.i18n.t('mysticismTitle');
-                        document.getElementById('titleSombra').textContent = window.i18n.t('shadowTitle');
-                        document.getElementById('titleBotanica').textContent = window.i18n.t('botanicTitle');
-                        document.getElementById('titleCotidiano').textContent = window.i18n.t('dailyTitle');
-                        document.getElementById('titleGnosis').textContent = window.i18n.t('gnosisTitle');
-                        document.getElementById('titleResonanciaBiblica').textContent = window.i18n.t('biblicalTitle');
+                        const titleArquetipo = document.getElementById('titleArquetipo');
+                        const titleMisticismo = document.getElementById('titleMisticismo');
+                        const titleSombra = document.getElementById('titleSombra');
+                        const titleBotanica = document.getElementById('titleBotanica');
+                        const titleCotidiano = document.getElementById('titleCotidiano');
+                        const titleGnosis = document.getElementById('titleGnosis');
+                        const titleResonanciaBiblica = document.getElementById('titleResonanciaBiblica');
+                        
+                        if (titleArquetipo) titleArquetipo.textContent = window.i18n.t('shadowsTitle');
+                        if (titleMisticismo) titleMisticismo.textContent = window.i18n.t('mysticismTitle');
+                        if (titleSombra) titleSombra.textContent = window.i18n.t('shadowTitle');
+                        if (titleBotanica) titleBotanica.textContent = window.i18n.t('botanicTitle');
+                        if (titleCotidiano) titleCotidiano.textContent = window.i18n.t('dailyTitle');
+                        if (titleGnosis) titleGnosis.textContent = window.i18n.t('gnosisTitle');
+                        if (titleResonanciaBiblica) titleResonanciaBiblica.textContent = window.i18n.t('biblicalTitle');
                     }
                 }
 
