@@ -995,11 +995,16 @@
 
       /* Dark Mode Overrides - Tinted Glass Effect */
       body.dark-mode .arquetipo-face {
-        background: rgba(45, 25, 60, 0.45); /* Purple Tinted Glass */
-        backdrop-filter: blur(25px) saturate(120%);
+        background: rgba(
+          20,
+          20,
+          25,
+          0.6
+        ); /* Neutral Dark Glass (Opposite of Light) */
+        backdrop-filter: blur(25px) saturate(100%);
         border-color: rgba(255, 255, 255, 0.15);
         color: #f0f0f0;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
       }
 
       body.dark-mode .arquetipo-text {
@@ -1009,9 +1014,18 @@
 
       body.dark-mode .arquetipo-card:hover .arquetipo-face {
         border-color: rgba(255, 255, 255, 0.3);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4),
-          0 0 20px rgba(139, 92, 246, 0.2);
-        background: rgba(45, 25, 60, 0.55);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        background: rgba(30, 30, 35, 0.7);
+      }
+
+      /* Dark Mode Biblical Overrides */
+      body.dark-mode .biblical-verse {
+        color: rgba(255, 255, 255, 0.8); /* Lighter grey for readability */
+        border-left-color: rgba(255, 255, 255, 0.5);
+      }
+
+      body.dark-mode .verse-reference {
+        color: rgba(255, 255, 255, 0.6);
       }
 
       /* ==================== SISTEMA DE VOCES (Acordeón) ==================== */
