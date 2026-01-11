@@ -2359,7 +2359,7 @@
                     // Add card with timestamp
                     collectedCards.push({
                         name_short: cardData.name_short,
-                        image: `./cards/${cardData.name_short}.jpg`,
+                        image: `/cards/${cardData.name_short}.jpg`,
                         name: cardData.name,
                         timestamp: new Date().toISOString(),
                         order: collectedCards.length + 1
@@ -2743,7 +2743,7 @@
 
                         // Configurar imagen local (./cards/arXX.jpg)
                         const cardSlug = currentCardData.name_short;
-                        const imageUrl = `./cards/${cardSlug}.jpg`;
+                        const imageUrl = `/cards/${cardSlug}.jpg`;
 
                         // Precarga de imagen
                         const img = new Image();
