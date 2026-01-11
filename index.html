@@ -2801,7 +2801,7 @@
                 }
 
                 // Mouse tracking for holographic shimmer effect
-                const cardStage = document.getElementById('cardStage');
+                // cardStage already declared above
                 let mouseAngle = 45;
 
                 cardStage.addEventListener('mousemove', (e) => {
@@ -4138,7 +4138,7 @@
 
                 /* ==================== 3D APPLE STYLE EFFECT ==================== */
                 function init3DCardEffect() {
-                    const cardStage = document.getElementById('cardStage');
+                    // Use existing cardStage reference from parent scope
                     const cardInner = document.querySelector('.card-inner');
 
                     if (!cardStage || !cardInner) return;
