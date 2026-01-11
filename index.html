@@ -947,6 +947,85 @@
             color: #2c2c2c;
         }
 
+        /* ==================== DARK/LIGHT MODE TOGGLE ==================== */
+        .mode-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .mode-toggle-btn:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .mode-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .mode-toggle-btn:active .mode-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Dark Mode Theme Variables */
+        body.dark-mode {
+            background: radial-gradient(circle at 30% 30%, rgba(20, 20, 30, 1) 0%, rgba(5, 5, 15, 1) 100%);
+        }
+
+        body.dark-mode .wallpaper.active {
+            opacity: 0.4; /* Más sutil en modo oscuro */
+        }
+
+        /* Glass-Tint Effect for Dark Mode */
+        body.dark-mode .insight-panel,
+        body.dark-mode .front,
+        body.dark-mode .back {
+            background: rgba(0, 0, 0, 0.7) !important;
+            backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+            -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+            border-color: rgba(255, 255, 255, 0.15) !important;
+        }
+
+        /* Text Contrast in Dark Mode */
+        body.dark-mode h2,
+        body.dark-mode h3,
+        body.dark-mode h4,
+        body.dark-mode .section-title,
+        body.dark-mode p,
+        body.dark-mode .section-content {
+            color: #f0f0f0 !important;
+        }
+
+        body.dark-mode .intro-text {
+            color: #cccccc !important;
+        }
+
+        body.dark-mode .verse-reference {
+            color: #a0a0a0 !important;
+        }
+
+        /* Dark mode toggle button border */
+        body.dark-mode .mode-toggle-btn {
+            background: rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
         .ai-btn {
             /* El botón es el MICROCOSMOS: Refleja los colores del MACROCOSMOS (Fondo) */
             background: linear-gradient(135deg, var(--color1, #ffffff), var(--color2, #e0e0e0));
@@ -1563,6 +1642,11 @@
 
         }
     </style>
+
+    <!-- Dark/Light Mode Toggle Button -->
+    <button id="darkModeToggle" class="mode-toggle-btn" aria-label="Toggle Dark Mode">
+        <span class="mode-icon">🌙</span>
+    </button>
 
     <div class="interface">
         <div class="card-stage" id="cardStage">
@@ -3656,6 +3740,30 @@
 
                 /* ==================== INICIALIZACIÓN ==================== */
                 // Cargar la primera carta al cargar la página
+                /* ==================== DARK/LIGHT MODE TOGGLE ==================== */
+                const darkModeToggle = document.getElementById('darkModeToggle');
+                const darkModeIcon = darkModeToggle.querySelector('.mode-icon');
+                
+                // Check localStorage for saved preference
+                const savedMode = localStorage.getItem('darkMode');
+                if (savedMode === 'true') {
+                    document.body.classList.add('dark-mode');
+                    darkModeIcon.textContent = '☀️';
+                }
+
+                // Toggle function
+                darkModeToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('dark-mode');
+                    const isDark = document.body.classList.contains('dark-mode');
+                    
+                    // Update icon
+                    darkModeIcon.textContent = isDark ? '☀️' : '🌙';
+                    
+                    // Save preference
+                    localStorage.setItem('darkMode', isDark);
+                });
+
+                /* ==================== GYROSCOPE (MOBILE) ==================== */
                 window.addEventListener('load', () => {
                     // Aplicar traducciones según idioma del navegador
                     if (window.i18n) {
