@@ -10,3 +10,4 @@ public/videos/*.mp4
 chess-wld/.next/cache/
 chess-wld/.next/
 chess-wld/
+.env*.local

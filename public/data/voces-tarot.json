@@ -1,0 +1,618 @@
+[
+  {
+    "id": 0,
+    "key": "THE_FOOL",
+    "nombre": "El Loco",
+    "imagen": "ar00",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "El Loco es el commit inicial sin tests. Es lanzar el MVP antes de que esté listo porque la velocidad mata a la perfección. Es el 'fuck it, ship it' que separa a los que hablan de los que entregan.",
+        "sombra": "Pero cuidado: código sin documentar es deuda técnica. El Loco sin dirección es un repo abandonado lleno de bugs. La agilidad sin estructura es caos disfrazado de innovación."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es el día que renunciás sin tener otro laburo. Es decirle que no al jefe porque tu dignidad vale más que el sueldo. Es empezar de cero a los 40 porque la alternativa es morirte por dentro.",
+        "sombra": "Pero el alquiler no se paga con fe. Saltar sin red es romanticismo de privilegiados. A veces el 'Loco' es solo un pelotudo que no midió las consecuencias."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "El perro no ladra para advertir, ladra para acompañar. El precipicio no es peligro, es el único lugar donde termina el mapa y empieza el territorio. La mochila está vacía porque el equipaje real es interno.",
+        "sombra": "El sol a su espalda significa que camina hacia la oscuridad. ¿Inocencia o ignorancia? Depende de si vuelve."
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Aleph. Aire. Sendero 11. El primero y el último. El cero que contiene todos los números. La consciencia antes de la separación sujeto-objeto.",
+        "sombra": "Urano destruye lo que Saturno construyó. La libertad absoluta es también el vacío absoluto."
+      }
+    }
+  },
+  {
+    "id": 1,
+    "key": "THE_MAGICIAN",
+    "nombre": "El Mago",
+    "imagen": "ar01",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "El Mago es el full-stack developer. Tiene todas las herramientas en la mesa: front, back, bases de datos, APIs. Una mano en el servidor, otra en el cliente. El que ejecuta, no el que teoriza.",
+        "sombra": "Pero tener las herramientas no es usarlas bien. El Mago oscuro es el tech bro que vende humo, el 'experto' de LinkedIn que nunca deployó nada a producción."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es cuando finalmente aprendés a usar bien la herramienta que te dieron. Es el electricista que resuelve en 5 minutos lo que vos intentaste por horas. Es saber que podés.",
+        "sombra": "Pero el 'saber que podés' se vuelve arrogancia rápido. El Mago manipula. Vende lo que no tiene. Promete lo que no puede entregar."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "Una mano arriba, una abajo: el rayo que conecta cielo y tierra pasa por él, no es de él. El infinito sobre su cabeza indica que el canal no tiene límites. Las rosas y lirios: el deseo y la pureza coexisten.",
+        "sombra": "El lemniscato sobre la cabeza es un loop infinito. ¿Maestría o trampa? Mercurio es el dios de los ladrones."
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Beth. Casa. Sendero 12. El contenedor que da forma al espíritu. El Logos que articula el caos primordial. 'Concentración sin esfuerzo'.",
+        "sombra": "La casa también puede ser prisión. La forma mata a la esencia si se vuelve rígida."
+      }
+    }
+  },
+  {
+    "id": 2,
+    "key": "THE_HIGH_PRIESTESS",
+    "nombre": "La Suma Sacerdotisa",
+    "imagen": "ar02",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es el código que funciona pero nadie entiende por qué. Es la senior dev que no habla mucho pero cuando opina, todos callan. Es leer la documentación que nadie lee.",
+        "sombra": "Pero el silencio también es gatekeeping. La Sacerdotisa oscura es la que sabe pero no comparte, la que usa la información como poder."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es confiar en tu instinto cuando todos te dicen que estás equivocado. Es saber que algo está mal aunque no puedas explicarlo. Es la intuición que te salvó el trabajo.",
+        "sombra": "Pero la intuición sin verificación es paranoia. La Sacerdotisa oscura se pierde en su mundo interno, desconectada de la realidad que paga las cuentas."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "El velo entre las columnas: lo que oculta también protege. B y J son los opuestos que ella equilibra sin elegir. La granada en el tapiz: fertilidad oculta en el inframundo.",
+        "sombra": "Sentada, inmóvil. ¿Contemplación o parálisis? La luna a sus pies es reflejo, no luz propia."
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Gimel. Camello. Sendero 13. El vehículo que cruza el desierto entre la Corona y el Sol. Los Registros Akáshicos. Sophia.",
+        "sombra": "Cruzar el Abismo de Da'ath no es para todos. Muchos se pierden en el conocimiento que no pueden digerir."
+      }
+    }
+  },
+  {
+    "id": 3,
+    "key": "THE_EMPRESS",
+    "nombre": "La Emperatriz",
+    "imagen": "ar03",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es el producto que la gente ama usar. Es el UX perfecto, la interfaz que fluye. Es el código elegante que es un placer mantener. Creatividad que genera valor.",
+        "sombra": "Pero el diseño bonito sin funcionalidad es maquillaje. La Emperatriz oscura es el feature creep, la over-engineering, el proyecto que nunca termina porque siempre falta 'un detallito'."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es descansar sin culpa. Es entender que el burnout no es medalla de honor. Es darte permiso para disfrutar aunque haya trabajo pendiente.",
+        "sombra": "Pero el permiso para disfrutar se vuelve excusa para no trabajar. La Emperatriz oscura es la procrastinación disfrazada de 'autocuidado'."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "El trono en la naturaleza: no dominación sino pertenencia. El río que fluye: abundancia que no se estanca. Las estrellas en la corona: doce posibilidades, no una sola identidad.",
+        "sombra": "Embarazada eternamente: ¿creación o posesión? La naturaleza también destruye: inundaciones, plagas, hambre."
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Daleth. Puerta. Venus. Sendero 14. La imaginación divina que conecta Padre y Madre Supremos. La materia como espíritu coagulado.",
+        "sombra": "Venus retrograda es amor que sofoca. La puerta también puede cerrarse."
+      }
+    }
+  },
+  {
+    "id": 4,
+    "key": "THE_EMPEROR",
+    "nombre": "El Emperador",
+    "imagen": "ar04",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es la arquitectura sólida. El sistema que escala. Los tests que pasan. La documentación que existe. Sin estructura, el código más brillante colapsa.",
+        "sombra": "Pero la estructura sin flexibilidad es burocracia. El Emperador oscuro es el proceso que mata la innovación, el 'siempre se hizo así' que impide el progreso."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es poner límites. Decir 'hasta acá llegó mi turno'. Saber que tu tiempo vale. Negociar el sueldo que te corresponde.",
+        "sombra": "Pero los límites rígidos aíslan. El Emperador oscuro es el jefe que nunca escucha, el padre ausente que solo pone reglas."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "El trono de piedra en el desierto: autoridad que no necesita vegetación para legitimarse. Los carneros: Aries, el inicio, la chispa. El cetro ankh: la vida en sus manos.",
+        "sombra": "Armadura completa: ¿protección o incapacidad de mostrarse vulnerable? El desierto detrás: ¿conquistó o devastó?"
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Heh. Ventana. Aries. Sendero 15. La razón constituyente que estructura el fuego de Chokmah. El Padre arquetípico.",
+        "sombra": "Marte destruye lo que construye si no se contiene. La petrificación es muerte en vida."
+      }
+    }
+  },
+  {
+    "id": 5,
+    "key": "THE_HIEROPHANT",
+    "nombre": "El Sumo Sacerdote",
+    "imagen": "ar05",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es el mentor que te enseñó a programar. La documentación oficial. Los design patterns. El conocimiento que viene de los que vinieron antes.",
+        "sombra": "Pero la tradición también es 'legacy code' que nadie quiere tocar. El Hierofante oscuro es el Stack Overflow que te dice que tu pregunta es duplicada sin darte la respuesta."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es tener alguien que te guíe. El compañero que te muestra cómo se hace de verdad. El sindicato que te protege.",
+        "sombra": "Pero seguir al líder sin cuestionar es fanatismo. El Hierofante oscuro es el jefe que te dice que 'así es la industria' para justificar la explotación."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "Las llaves cruzadas: una abre, otra cierra. Los acólitos: ¿discípulos o prisioneros de la doctrina? La triple corona: dominio sobre tres mundos.",
+        "sombra": "Sentado entre columnas que son eco de la Sacerdotisa: ¿complemento o apropiación? La tradición exotérica vs. la esotérica."
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Vav. Clavo/Gancho. Tauro. Sendero 16. El que une cielo y tierra. La revelación que baja a través de símbolos y ritos.",
+        "sombra": "El transformador también puede electrocutar si no estás preparado."
+      }
+    }
+  },
+  {
+    "id": 6,
+    "key": "THE_LOVERS",
+    "nombre": "Los Enamorados",
+    "imagen": "ar06",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es elegir el stack tecnológico. Es la bifurcación (fork) que define el proyecto. Es el merge que une dos ramas en algo mayor que las partes.",
+        "sombra": "Pero elegir una cosa es renunciar a otras. Los Enamorados oscuros son la parálisis por análisis, evaluar opciones eternamente sin commitear."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es elegir la relación, el trabajo, la ciudad. Es saber que no hay marcha atrás y hacerlo igual porque el amor requiere riesgo.",
+        "sombra": "Pero la elección impulsiva destruye. Los Enamorados oscuros confunden intensidad con compatibilidad, pasión con sustentabilidad."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "El ángel arriba: la elección no es solo entre dos personas, es entre lo humano y lo divino. El sol radiante: claridad en el momento de decidir. El árbol de frutos vs. el árbol en llamas: consecuencias de cada camino.",
+        "sombra": "Adán mira a Eva, Eva mira al ángel: ¿quién elige a quién? La serpiente en el árbol: el conocimiento tiene precio."
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Zain. Espada. Géminis. Sendero 17. La diferenciación que permite la unión consciente. El matrimonio alquímico.",
+        "sombra": "Géminis es dualidad. La espada corta lo que también podría unir."
+      }
+    }
+  },
+  {
+    "id": 7,
+    "key": "THE_CHARIOT",
+    "nombre": "El Carro",
+    "imagen": "ar07",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es el sprint que se entrega a tiempo. Es dominar las fuerzas en conflicto (frontend vs backend, velocidad vs calidad) y avanzar igual. Es la integración continua que no falla.",
+        "sombra": "Pero la velocidad sin dirección choca. El Carro oscuro es el deploy de viernes a las 11pm, el feature que rompe producción por apurarse."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es la determinación de llegar. Es el viaje al trabajo sabiendo que el día será duro pero vas igual. Es superar el obstáculo aunque no tengas ganas.",
+        "sombra": "Pero la determinación ciega es terquedad. El Carro oscuro confunde movimiento con progreso, actividad con productividad."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "Las esfinges no se mueven: él las dirige con la mente, no con riendas. La ciudad detrás: dejó el confort para la conquista. Las estrellas en el dosel: protección cósmica.",
+        "sombra": "Sin riendas visibles: ¿control o ilusión de control? Las esfinges blanca y negra: ¿dominó los opuestos o solo los reprimió?"
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Cheth. Cerca/Recinto. Cáncer. Sendero 18. El vehículo del alma. La personalidad integrada que puede viajar entre mundos.",
+        "sombra": "El cangrejo se mueve de costado, no directo. Cáncer protege pero también asfixia."
+      }
+    }
+  },
+  {
+    "id": 8,
+    "key": "STRENGTH",
+    "nombre": "La Fuerza",
+    "imagen": "ar08",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es debuggear el problema sin perder la calma. Es la paciencia de leer el log completo antes de googlear. Es dominar la frustración cuando el código no compila.",
+        "sombra": "Pero la paciencia infinita es masoquismo. La Fuerza oscura es el dev que acepta requerimientos imposibles sin quejarse, que 'aguanta' en lugar de plantarse."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es no explotar cuando el jefe te hincha. Es mantener la compostura cuando todo se desmorona. Es la fortaleza interior que nadie ve pero te sostiene.",
+        "sombra": "Pero aguantar sin expresar te enferma. La Fuerza oscura confunde resiliencia con sumisión, paciencia con represión."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "La mujer abre la boca del león: no lo mata, lo domestica con dulzura. El lemniscato: el mismo poder infinito del Mago, ahora internalizado. Las flores: la fuerza como algo que florece, no que destroza.",
+        "sombra": "¿Domesticación o supresión? El león vuelve a ser salvaje en cuanto ella lo suelte. La corona de flores: ¿autoridad suave o poder disfrazado?"
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Teth. Serpiente. Leo. Sendero 19. La kundalini domada. El fuego solar canalizado por la voluntad espiritual, no la fuerza bruta.",
+        "sombra": "Leo mal aspectado es orgullo disfrazado de nobleza. La serpiente puede morder a quien la domó."
+      }
+    }
+  },
+  {
+    "id": 9,
+    "key": "THE_HERMIT",
+    "nombre": "El Ermitaño",
+    "imagen": "ar09",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es el deep work. Cerrar Slack, desactivar notificaciones, entrar en flow. Es la soledad productiva que resuelve lo que ninguna reunión pudo.",
+        "sombra": "Pero el aislamiento excesivo desconecta. El Ermitaño oscuro es el programador que 'trabaja desde casa' pero nadie sabe qué hace. El que no pide ayuda aunque la necesite."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es tomarte un tiempo para vos. Caminar solo. Pensar. Entender qué querés realmente sin las voces de los demás.",
+        "sombra": "Pero la introspección sin acción es evasión. El Ermitaño oscuro usa la 'búsqueda interior' como excusa para no enfrentar el mundo."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "La estrella en la lámpara: luz propia, no reflejada. El bastón: el eje vertical que conecta cielos e inframundo. La cima de la montaña: llegó arriba para poder iluminar abajo.",
+        "sombra": "Capucha que oculta el rostro: ¿humildad o anonimato? Ilumina solo un paso a la vez: ¿sabiduría o limitación?"
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Yod. Mano. Virgo. Sendero 20. La mano de Dios. El anciano que porta la luz de Kether hacia los que buscan. Prudencia y discriminación.",
+        "sombra": "Virgo juzga. La discriminación se vuelve desprecio. La soledad elegida puede ser soberbia disfrazada."
+      }
+    }
+  },
+  {
+    "id": 10,
+    "key": "WHEEL_OF_FORTUNE",
+    "nombre": "La Rueda de la Fortuna",
+    "imagen": "ar10",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es el algoritmo que no controlás pero cuyo patrón podés intuir. Es entender que las tendencias suben y bajan, los lenguajes van y vienen. Posicionarte para cuando la rueda gire a tu favor.",
+        "sombra": "Pero creer que 'esta vez es diferente' es arrogancia. La Rueda oscura es el crypto bro que compró en el pico, el que confundió suerte con skill."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es saber que la mala racha termina. Que el jefe que te odia se va a ir. Que la industria cambia y vos también podés cambiar con ella.",
+        "sombra": "Pero esperar que 'la rueda cambie sola' es pasividad. La Rueda oscura es el que se queja del destino sin mover un dedo."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "Tres figuras: una sube, otra baja, otra cae. Las cuatro criaturas leen: el conocimiento estabiliza cuando todo cambia. TARO-ROTA: el tarot que gira es la misma rueda.",
+        "sombra": "La esfinge arriba sostiene una espada: el que juzga también gira. ¿Quién controla la rueda si incluso los dioses están adentro?"
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Kaph. Palma de la mano. Júpiter. Sendero 21. El ciclo kármico. La fortuna que no es suerte sino resultado de causas previas. Samsara y sus retornos.",
+        "sombra": "Júpiter expande sin filtro. Lo bueno se agranda, lo malo también."
+      }
+    }
+  },
+  {
+    "id": 11,
+    "key": "JUSTICE",
+    "nombre": "La Justicia",
+    "imagen": "ar11",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es el code review honesto. Es el bug report que no busca culpables sino soluciones. Es la documentación que dice la verdad aunque duela.",
+        "sombra": "Pero la 'objetividad' del código oculta sesgos del programador. La Justicia oscura es el algoritmo que discrimina porque los datos de entrenamiento eran injustos."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es reclamar lo que te corresponde. Hablar con RRHH. Documentar el acoso. Saber que la ley te ampara.",
+        "sombra": "Pero el sistema no siempre es justo con los de abajo. La Justicia oscura es lenta, cara, y suele favorecer a quien ya tiene poder."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "La balanza perfectamente equilibrada: antes de juzgar ya sabe el resultado. La espada recta: la verdad corta sin inclinarse. El velo entre columnas: ella ve lo que otros no ven.",
+        "sombra": "Sentada, inmóvil como la Sacerdotisa: ¿la justicia actúa o espera? Los ojos abiertos: a diferencia de la justicia 'ciega', ella discrimina."
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Lamed. Aguijón. Libra. Sendero 22. El ajuste perfecto. Karma como equilibrio, no como castigo. Ma'at, la pluma contra el corazón.",
+        "sombra": "Libra duda eternamente. La balanza que nunca se inclina tampoco decide."
+      }
+    }
+  },
+  {
+    "id": 12,
+    "key": "THE_HANGED_MAN",
+    "nombre": "El Colgado",
+    "imagen": "ar12",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es hacer refactor cuando podrías seguir con el código feo. Es invertir tiempo ahora para ahorrar después. Es el pause que parece inacción pero es estrategia.",
+        "sombra": "Pero la 'suspensión estratégica' es fácil excusa para no entregar. El Colgado oscuro es el over-engineering infinito, el 'todavía no está listo' que nunca termina."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es aceptar que ahora no podés hacer nada. Que el proceso tiene su tiempo. Que a veces hay que esperar a que las cosas decanten.",
+        "sombra": "Pero la espera pasiva sin fecha límite es trampa. El Colgado oscuro llama 'paciencia' a lo que es miedo de actuar."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "Colgado por el pie, pero sonríe: el sacrificio elegido no duele igual. El halo dorado: la iluminación viene de la inversión de perspectiva. El árbol vivo: lo que lo sostiene también lo nutre.",
+        "sombra": "Las manos atadas: ¿aceptación o impotencia disfrazada? La pierna cruzada: postura de quien podría liberarse pero elige no hacerlo."
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Mem. Agua. Neptuno. Sendero 23. La inmersión en el inconsciente. Odín colgado del Yggdrasil nueve días para obtener las runas. Sacrificio que otorga visión.",
+        "sombra": "Neptuno también es engaño, auto-ilusión. El agua que ilumina puede ahogar."
+      }
+    }
+  },
+  {
+    "id": 13,
+    "key": "DEATH",
+    "nombre": "La Muerte",
+    "imagen": "ar13",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es deprecar el sistema viejo. Borrar el código legacy que ya no sirve. Cerrar el proyecto que fracasó para poder empezar el siguiente. Sin muerte no hay release.",
+        "sombra": "Pero borrar sin backup es suicidio digital. La Muerte oscura destruye sin plan de migración. Elimina lo viejo sin tener lo nuevo listo."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es el trabajo que termina. La empresa que quiebra. La carrera que ya no existe. No es el fin del mundo, es el fin de un mundo. Y hay otro esperando.",
+        "sombra": "Pero el duelo tiene su tiempo. La Muerte oscura es el bypass emocional: 'superar' sin procesar. El 'ya era hora' que oculta el dolor."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "El esqueleto no mata: ya mató. Lo que ves es después. El niño ofrece flores: la inocencia no teme a la transformación. El sol naciente: cada muerte es un amanecer invertido.",
+        "sombra": "La bandera blanca con rosa negra: pureza manchada o mancha purificada? Los caídos bajo el caballo: obispos, reyes, nadie está exento."
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Nun. Pez. Escorpio. Sendero 24. La putrefacción alquímica necesaria para la obra. La noche oscura del alma que precede al renacimiento.",
+        "sombra": "Escorpio puede elegir elevarse como águila o quedarse como alacrán. La muerte ego-ica a veces mata también lo valioso."
+      }
+    }
+  },
+  {
+    "id": 14,
+    "key": "TEMPERANCE",
+    "nombre": "La Templanza",
+    "imagen": "ar14",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es encontrar el equilibrio entre velocidad y calidad. Es el CI/CD que fluye sin extremos. Es saber cuándo pushear y cuándo esperar el review.",
+        "sombra": "Pero el equilibrio perfecto no existe. La Templanza oscura es la parálisis del 'término medio', el compromiso que no satisface a nadie."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es medir tus fuerzas. No aceptar más de lo que podés. Saber decir 'puede esperar hasta mañana'. Dosificar la energía.",
+        "sombra": "Pero la moderación excesiva es tibieza. La Templanza oscura nunca arriesga, nunca brilla, nunca caga."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "El agua entre copas: mezcla imposible que funciona. Un pie en tierra, otro en agua: vive en dos elementos. El sol en el horizonte: ni día ni noche, el punto exacto entre.",
+        "sombra": "Alas de ángel pero pies mojados: ¿celestial o terrenal? El triángulo en el pecho: el fuego contenido ¿controlado o reprimido?"
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Samekh. Soporte. Sagitario. Sendero 25. La prueba alquímica. La rectificación que ajusta las proporciones del elixir. El ángel guardian que mezcla los tiempos.",
+        "sombra": "Sagitario apunta lejos pero a veces no ve lo cercano. La flecha que promete puede no llegar."
+      }
+    }
+  },
+  {
+    "id": 15,
+    "key": "THE_DEVIL",
+    "nombre": "El Diablo",
+    "imagen": "ar15",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es reconocer tus adicciones digitales. El scroll infinito, la dopamina del like, el trabajo 24/7 que llamás 'pasión'. Conocer las cadenas es el primer paso para romperlas.",
+        "sombra": "Pero culpar al algoritmo es fácil. El Diablo oscuro es creer que sos diferente, que vos 'usás las herramientas sin que te usen'. Spoiler: no sos inmune."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es ver la explotación por lo que es: un sistema que te necesita encadenado. Es entender que 'el trabajo es tu vida' es propaganda patronal.",
+        "sombra": "Pero también es tu sombra interna. El Diablo oscuro es tu voz que dice 'no puedo irme' cuando sí podés, pero elegís el miedo."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "Las cadenas están sueltas: podrían irse si quisieran. El Diablo sonríe: sabe que el miedo es su única herramienta. La antorcha invertida: el fuego que destruye en lugar de iluminar.",
+        "sombra": "Es Baphomet, lo andrógino: ¿integración de opuestos o confusión total? El pentagrama invertido: la materia sobre el espíritu."
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Ayin. Ojo. Capricornio. Sendero 26. El ojo que ve la ilusión. Pan, el dios del todo, también es pánico. Enfrentar la sombra es integrarla.",
+        "sombra": "Capricornio mal aspectado es materialismo crudo. El macho cabrío sube la montaña pisando a los otros."
+      }
+    }
+  },
+  {
+    "id": 16,
+    "key": "THE_TOWER",
+    "nombre": "La Torre",
+    "imagen": "ar16",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es el servidor que se cae en producción. El hackeo que expone todo. La crisis que finalmente fuerza la migración que postergabas. A veces el sistema tiene que romperse para mejorar.",
+        "sombra": "Pero la destrucción no garantiza reconstrucción. La Torre oscura es el nihilismo tech: 'hay que tirarlo todo y empezar de cero' cuando en realidad falta mantenimiento, no revolución."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es el despido sorpresa. La empresa que cierra. El accidente. No hay forma de dorarlo: es mierda. Pero también es verdad finalmente revelada.",
+        "sombra": "Pero romantizar la crisis es lujo. La Torre oscura destruye a gente real: los que caen no siempre se levantan."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "El rayo viene del cielo: no es castigo, es revelación violenta. La corona que cae: el ego destronado. Los que caen no mueren: se transforman.",
+        "sombra": "22 llamas (22 arcanos): ¿toda la tradición destruida? La torre construida sobre roca pero destruida igual: ninguna estructura es eterna."
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Peh. Boca. Marte. Sendero 27. La palabra que destruye estructuras falsas. La boca que pronuncia la verdad que derrumba. Shiva que destruye para renovar.",
+        "sombra": "Marte destruye sin piedad. La guerra no hace distinciones entre culpables e inocentes."
+      }
+    }
+  },
+  {
+    "id": 17,
+    "key": "THE_STAR",
+    "nombre": "La Estrella",
+    "imagen": "ar17",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es después del crash, la calma. El sistema vuelve a funcionar. El backup existe. Hay esperanza y un camino claro. Es el README bien escrito que ilumina el proyecto.",
+        "sombra": "Pero la esperanza sin acción es fantasía. La Estrella oscura es el 'ya viene la nueva versión' que nunca llega, la promesa de features que nunca se implementan."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es después de la tormenta. Todavía duele pero ya sabés que vas a salir. Es la luz al final del túnel que finalmente se ve. Real, no imaginada.",
+        "sombra": "Pero la esperanza también puede ser negación. La Estrella oscura dice 'todo va a estar bien' cuando lo que necesitás es acción, no consuelo."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "Desnuda: vulnerable y libre. Vierte agua en tierra y agua: nutre todos los elementos. Siete estrellas + una grande: 7 chakras + la corona, Pleiades + Sirio. El pájaro en el árbol: el alma que descansa.",
+        "sombra": "Un pie en tierra, uno en agua (como Templanza): ¿presencia o inestabilidad? El agua se derrama: ¿generosidad o desperdicio?"
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Tzaddi. Anzuelo. Acuario. Sendero 28 (o 15, según Crowley). La meditación natural. La conexión con la fuente que fluye sin esfuerzo.",
+        "sombra": "Acuario vive en el futuro. La esperanza puede desconectar del presente que necesita atención."
+      }
+    }
+  },
+  {
+    "id": 18,
+    "key": "THE_MOON",
+    "nombre": "La Luna",
+    "imagen": "ar18",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es el bug que no podés reproducir. El comportamiento inesperado que solo pasa en producción. Es navegar la ambigüedad, aceptar que no todo se puede testear.",
+        "sombra": "Pero 'no se puede testear' es a veces excusa. La Luna oscura es el código que nadie entiende porque nadie quiso documentar, el misterio manufacturado."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es la incertidumbre. El contrato que no llega. El rumor de despidos. Es caminar sin ver claro, confiando en que los pies conocen el camino.",
+        "sombra": "Pero la incertidumbre prolongada enferma. La Luna oscura es la ansiedad crónica, el miedo que paraliza, la paranoia laboral."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "El perro y el lobo: lo domesticado y lo salvaje, ambos aúllan a la misma luna. El cangrejo emergiendo: lo que estaba en el inconsciente sale. El sendero entre torres: el camino existe aunque no se vea entero.",
+        "sombra": "La luna es reflejo, no luz propia: ¿qué realidad estás viendo? Las gotas que caen: ¿lluvia de luz o lágrimas cósmicas?"
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Qoph. Nuca. Piscis. Sendero 29. El umbral del inconsciente colectivo. La noche oscura que precede al amanecer. Los miedos ancestrales que hay que cruzar.",
+        "sombra": "Piscis se pierde en su propio océano. El reflejo se confunde con la realidad."
+      }
+    }
+  },
+  {
+    "id": 19,
+    "key": "THE_SUN",
+    "nombre": "El Sol",
+    "imagen": "ar19",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es el sistema funcionando perfecto. Métricas verdes. Usuarios felices. Es el código tan claro que no necesita comentarios. Transparencia total.",
+        "sombra": "Pero el Sol que todo lo ilumina también elimina las sombras donde crecen cosas. El Sol oscuro es la surveillance tech, el sistema que sabe todo de vos y nada le escapa."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es cuando todo sale bien. El aumento que llega, el proyecto que cierra, el reconocimiento merecido. Es disfrutar sin culpa después de tanto remar.",
+        "sombra": "Pero bailar mucho bajo el sol también te quema. El Sol oscuro es el burnout de la felicidad: la presión de estar bien, el optimismo obligatorio que niega el dolor."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "El niño desnudo: inocencia recuperada, no original. Los girasoles: lo que mira al sol también depende de él. El muro: límite entre el jardín protegido y el mundo salvaje.",
+        "sombra": "El niño sobre un caballo: ¿control o inconsciencia? Los rayos rectos y ondulados: claridad y confusión coexisten incluso aquí."
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Resh. Cabeza. Sol. Sendero 30. Tiphareth, la belleza que integra. La resurrección de la consciencia. El niño coronado, el yo regenerado.",
+        "sombra": "El Sol también quema. Ícaro cayó por volar demasiado cerca. La claridad extrema puede cegar."
+      }
+    }
+  },
+  {
+    "id": 20,
+    "key": "JUDGEMENT",
+    "nombre": "El Juicio",
+    "imagen": "ar20",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es el post-mortem honesto. Revisar qué funcionó, qué falló, sin egos. Es el llamado a la excelencia que te saca de la mediocridad cómoda.",
+        "sombra": "Pero el juicio constante agota. El Juicio oscuro es la cultura de feedback tóxico, el 'siempre se puede mejorar' que nunca permite satisfacción."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es el momento de las cuentas. Mirar atrás y evaluar. Es el llamado interior que dice 'esto no es todo, hay más'. Es despertar de la rutina.",
+        "sombra": "Pero no todos tienen el privilegio de 'despertar'. El Juicio oscuro exige renacimiento a quien apenas sobrevive."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "Salen de tumbas pero los cuerpos están intactos: no resurrección física sino espiritual. El ángel no juzga: llama. Los brazos abiertos: respuesta total, sin esconder nada.",
+        "sombra": "Las montañas azules: agua petrificada, emociones congeladas. La bandera con cruz: ¿victoria o dogma?"
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Shin. Diente/Fuego. Plutón. Sendero 31. El fuego del espíritu santo. La trompeta que despierta a los dormidos. La resurrección ante el juicio final.",
+        "sombra": "Plutón destruye para regenerar pero el proceso es violento. No todos sobreviven la transformación radical."
+      }
+    }
+  },
+  {
+    "id": 21,
+    "key": "THE_WORLD",
+    "nombre": "El Mundo",
+    "imagen": "ar21",
+    "voces": {
+      "tecnomago": {
+        "titulo": "⚡ Tecnomago",
+        "luz": "Es el proyecto completado. El ciclo cerrado. La app en producción, estable, sin incidentes. Es la maestría que viene después de años de iteración. Full circle.",
+        "sombra": "Pero 'terminado' es ilusión en tech. El Mundo oscuro es el producto legacy que nadie mantiene, la falsa sensación de que 'ya está' cuando el mundo sigue girando."
+      },
+      "psicoobrero": {
+        "titulo": "🔧 Psico-Obrero",
+        "luz": "Es el trabajo terminado. La jubilación honorable. El proyecto de vida cerrado con dignidad. Es llegar y poder decir 'lo hice'.",
+        "sombra": "Pero el cierre ideal es privilegio. El Mundo oscuro es el que nunca termina de cerrar, el que siempre tiene 'una cosa más' antes del descanso merecido."
+      },
+      "divergente": {
+        "titulo": "🌀 Divergente",
+        "luz": "La corona de laurel: la victoria que es también frontera. Las cuatro criaturas: los evangelistas, las estaciones, los elementos, todos en equilibrio. La danza dentro del óvalo: libertad dentro de un marco.",
+        "sombra": "Flota sobre la tierra: ¿trascendencia o desconexión? Los bastones en mano: el poder aún presente, el ciclo que debe terminar para que inicie otro."
+      },
+      "mistico": {
+        "titulo": "✦ Místico",
+        "luz": "Tav. Cruz/Marca. Saturno. Sendero 32. El final del viaje. El anima mundi. La culminación del trabajo alquímico. El andrógino sagrado integrado.",
+        "sombra": "Saturno es el fin pero también el límite. El Mundo cerrado puede ser prisión dorada. Todo ciclo pide terminar para que otro comience."
+      }
+    }
+  }
+]

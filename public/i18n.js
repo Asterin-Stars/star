@@ -595,7 +595,7 @@ function applyTranslations() {
   const titleCotidiano = document.getElementById("titleCotidiano");
   const titleGnosis = document.getElementById("titleGnosis");
   const titleResonanciaBiblica = document.getElementById(
-    "titleResonanciaBiblica"
+    "titleResonanciaBiblica",
   );
 
   if (titleArquetipo) titleArquetipo.textContent = t("archetypeTitle");
@@ -637,7 +637,7 @@ function applyTranslations() {
     const iconSpan = el.querySelector(".ai-icon-small");
     if (iconSpan) {
       el.innerHTML = `<span class="ai-icon-small">✦</span> ${t(
-        "numerologyHeader"
+        "numerologyHeader",
       )}`;
     }
   });
