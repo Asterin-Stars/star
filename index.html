@@ -2218,13 +2218,7 @@
             </div>
           </div>
 
-          <!-- Video Overlay (activated on long-press) -->
-          <div class="card-video-overlay" id="videoOverlay">
-            <video id="cardVideo" muted playsinline preload="auto">
-              <source id="videoSource" src="" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
+          <!-- Video Overlay Removed -->
         </div>
       </div>
 
@@ -2689,7 +2683,7 @@
     <script>
       // Load Voces Data
       window.vocesData = [];
-      fetch("data/voces-tarot.json")
+      fetch("/data/voces-tarot.json")
         .then((response) => response.json())
         .then((data) => {
           window.vocesData = data;
@@ -2751,7 +2745,7 @@
         // Add card with timestamp
         collectedCards.push({
           name_short: cardData.name_short,
-          image: `/public/cards/${cardData.name_short}.jpg`,
+          image: `/public/cards/${cardData.name_short}.png`,
           name: cardData.name,
           timestamp: new Date().toISOString(),
           order: collectedCards.length + 1,
@@ -3420,7 +3414,7 @@
 
           // Configurar imagen local (./public/cards/arXX.jpg)
           const cardSlug = currentCardData.name_short;
-          const imageUrl = `/public/cards/${cardSlug}.jpg`;
+          const imageUrl = `/public/cards/${cardSlug}.png`;
 
           // Precarga de imagen
           const img = new Image();
@@ -3431,7 +3425,7 @@
           };
           img.onerror = () => {
             // Fallback: usar imagen del Loco si falla la carga
-            cardImg.src = "/public/cards/ar00.jpg";
+            cardImg.src = "/public/cards/ar00.png";
           };
           img.src = imageUrl;
 
@@ -3692,10 +3686,10 @@
           // 6. ADD TO 3-CARD COLLECTION
           addCardToCollection(currentCardData);
 
-          // 7. AUTO-PLAY VIDEO ONCE (non-loop, single playback)
-          setTimeout(() => {
-            playCardVideoOnce();
-          }, 800);
+          // Video removed
+          // setTimeout(() => {
+          //   playCardVideoOnce();
+          // }, 800);
         }, 650);
       }
 
@@ -4472,193 +4466,24 @@
         { passive: true }
       );
 
-      /* ==================== LONG-PRESS VIDEO PLAYBACK ==================== */
+      /* ==================== LONG-PRESS VIDEO PLAYBACK (REMOVED) ==================== */
+      // Video elements removed
+      /*
       const videoOverlay = document.getElementById("videoOverlay");
       const cardVideo = document.getElementById("cardVideo");
       const videoSource = document.getElementById("videoSource");
+      */
 
       let longPressTimer = null;
       let isVideoPlaying = false;
 
-      function startLongPress() {
-        // Only activate on revealed card
-        if (!isRevealed || !currentCardData) return;
-
-        longPressTimer = setTimeout(() => {
-          playCardVideo();
-        }, 500); // 500ms threshold
-      }
-
-      function cancelLongPress() {
-        if (longPressTimer) {
-          clearTimeout(longPressTimer);
-          longPressTimer = null;
-        }
-      }
-
-      // Play video once on card reveal (no loop)
-      async function playCardVideoOnce() {
-        if (!currentCardData || isVideoPlaying) return;
-
-        const baseNameShort = currentCardData.name_short;
-        const maxVariations = 4;
-        const availableVariations = [];
-
-        for (let i = 1; i <= maxVariations; i++) {
-          availableVariations.push(`./public/videos/${baseNameShort}.${i}.mp4`);
-        }
-        availableVariations.push(`./public/videos/${baseNameShort}.mp4`);
-
-        const randomIndex = Math.floor(
-          Math.random() * availableVariations.length
-        );
-        const selectedVideoPath = availableVariations[randomIndex];
-
-        console.log(
-          `🎴 Auto-playing video for ${baseNameShort}: ${selectedVideoPath}`
-        );
-
-        videoSource.src = selectedVideoPath;
-        cardVideo.loop = false; // Single playback
-        cardVideo.load();
-
-        videoOverlay.classList.add("active");
-
-        try {
-          await cardVideo.play();
-          isVideoPlaying = true;
-
-          // Auto-hide when video ends
-          cardVideo.addEventListener(
-            "ended",
-            function videoEnded() {
-              stopCardVideo();
-              cardVideo.removeEventListener("ended", videoEnded);
-            },
-            { once: true }
-          );
-        } catch (err) {
-          console.error("Auto-play failed:", err);
-          stopCardVideo();
-        }
-      }
-
-      // Play video on long-press (with loop for continuous viewing)
-      async function playCardVideo() {
-        if (!currentCardData || isVideoPlaying) return;
-
-        // Try to find available video variations for this card
-        // Format: ar00.1.mp4, ar00.2.mp4, ar00.3.mp4, ar00.4.mp4
-        const baseNameShort = currentCardData.name_short;
-        const maxVariations = 4; // Maximum variations to check
-        const availableVariations = [];
-
-        // Check which variations exist by attempting to load them
-        for (let i = 1; i <= maxVariations; i++) {
-          const testPath = `./public/videos/${baseNameShort}.${i}.mp4`;
-          // Add to available list (we'll validate on play)
-          availableVariations.push(testPath);
-        }
-
-        // Also check for base version without variation number
-        availableVariations.push(`./public/videos/${baseNameShort}.mp4`);
-
-        // Select a random variation
-        const randomIndex = Math.floor(
-          Math.random() * availableVariations.length
-        );
-        const selectedVideoPath = availableVariations[randomIndex];
-
-        console.log(
-          `🎴 Selected video for ${baseNameShort}: ${selectedVideoPath}`
-        );
-
-        // Set video source
-        videoSource.src = selectedVideoPath;
-        cardVideo.load();
-        cardVideo.loop = true; // Enable loop for continuous viewing
-
-        // Show overlay and play
-        videoOverlay.classList.add("active");
-
-        try {
-          await cardVideo.play();
-          isVideoPlaying = true;
-        } catch (err) {
-          console.error("Video playback failed:", err);
-          // If random variation failed, try base version as fallback
-          if (selectedVideoPath.includes(".")) {
-            const fallbackPath = `./public/videos/${baseNameShort}.mp4`;
-            console.log(`Trying fallback: ${fallbackPath}`);
-            videoSource.src = fallbackPath;
-            cardVideo.load();
-            try {
-              await cardVideo.play();
-              isVideoPlaying = true;
-            } catch (fallbackErr) {
-              console.error("Fallback video also failed:", fallbackErr);
-              stopCardVideo();
-            }
-          } else {
-            stopCardVideo();
-          }
-        }
-      }
-
-      function stopCardVideo() {
-        videoOverlay.classList.remove("active");
-        cardVideo.pause();
-        cardVideo.currentTime = 0;
-        isVideoPlaying = false;
-      }
-
-      // Long-press detection (touch devices)
-      cardStage.addEventListener(
-        "touchstart",
-        (e) => {
-          if (isRevealed && !isVideoPlaying) {
-            startLongPress();
-          }
-        },
-        { passive: true }
-      );
-
-      cardStage.addEventListener(
-        "touchend",
-        () => {
-          cancelLongPress();
-        },
-        { passive: true }
-      );
-
-      cardStage.addEventListener(
-        "touchmove",
-        () => {
-          cancelLongPress(); // Cancel if user moves finger
-        },
-        { passive: true }
-      );
-
-      // Long-press detection (mouse)
-      cardStage.addEventListener("mousedown", (e) => {
-        if (isRevealed && !isVideoPlaying && e.button === 0) {
-          startLongPress();
-        }
-      });
-
-      cardStage.addEventListener("mouseup", () => {
-        cancelLongPress();
-      });
-
-      cardStage.addEventListener("mouseleave", () => {
-        cancelLongPress();
-      });
-
-      // Click on video overlay to close
-      videoOverlay.addEventListener("click", (e) => {
-        e.stopPropagation(); // Prevent triggering card reset
-        stopCardVideo();
-      });
+      /* VIDEO LOGIC REMOVED
+      function startLongPress() {}
+      function cancelLongPress() {}
+      function playCardVideoOnce() {}
+      function playCardVideo() {}
+      function stopCardVideo() {}
+      */
 
       /* ==================== FLOATING STARS (MAGNETIC SCROLL EFFECT) ==================== */
       function initFloatingStars() {
@@ -5131,9 +4956,10 @@
         // Solo mantener el listener de Biblia (ya no hay título de Arquetipo porque la carta es clickeable)
 
         // Event listener para cerrar modal
-        document
-          .getElementById("modalClose")
-          .addEventListener("click", closeModal);
+        const closeBtn = document.getElementById("modalClose");
+        if (closeBtn) {
+          closeBtn.addEventListener("click", closeModal);
+        }
 
         // Cerrar modal al hacer click fuera del contenido
         document
