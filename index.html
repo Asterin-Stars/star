@@ -947,6 +947,7 @@
         position: absolute;
         width: 100%;
         min-height: 150px;
+        max-height: 500px;
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
         background: rgba(255, 255, 255, 0.85);
@@ -956,6 +957,8 @@
         border: 1.5px solid rgba(255, 255, 255, 0.5);
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        overflow-y: auto;
+        overflow-x: hidden;
       }
 
       .arquetipo-card:hover .arquetipo-face {
@@ -966,17 +969,23 @@
       }
 
       .arquetipo-front {
+        position: absolute;
+        top: 0;
+        left: 0;
         z-index: 2;
       }
 
       .arquetipo-back {
+        position: absolute;
+        top: 0;
+        left: 0;
         transform: rotateY(180deg);
         z-index: 1;
       }
 
       .arquetipo-text {
-        font-size: 1rem;
-        line-height: 1.75;
+        font-size: 0.95rem;
+        line-height: 1.7;
         color: var(--text-primary);
         font-weight: 400;
         margin: 0;
@@ -2624,15 +2633,6 @@
       const urlParams = new URLSearchParams(window.location.search);
       const IS_FRIENDS_MODE = urlParams.get("mode") === "friends";
 
-      // Inicializar MiniKit
-      try {
-        if (window.MiniKit) {
-          window.MiniKit.install();
-        }
-      } catch (e) {
-        console.log("MiniKit not initialized (running outside World App?)");
-      }
-
       /* =====================================================
                    LÓGICA DEL ORÁCULO
                 ===================================================== */
@@ -3711,99 +3711,16 @@
       }
 
       /* ==================== LÓGICA DE VERIFICACIÓN Y PAGO ==================== */
+      // FUNCIÓN DESACTIVADA - MiniKit eliminado
+      /*
       async function requestPayment() {
-        // 1. Si es modo amigos, pase directo
-        if (IS_FRIENDS_MODE) {
-          console.log(
-            window.i18n
-              ? window.i18n.t("friendsMode")
-              : "Modo Amigos: Pago omitido."
-          );
-          return true;
-        }
-
-        // 2. Si no está en World App (y no es modo amigos), mostrar advertencia o simulación local
-        // 2. Verificación de entorno (Relaxed for Simulator)
-        if (!window.MiniKit || !window.MiniKit.isInstalled()) {
-          console.log(
-            "⚠️ MiniKit not detected via isInstalled(). Attempting lazy install..."
-          );
-          // Intento de último de recurso
-          try {
-            if (window.MiniKit) window.MiniKit.install();
-          } catch (e) {
-            console.error(e);
-          }
-
-          // Fallback solo para localhost real
-          const isLocalhost =
-            window.location.hostname === "localhost" ||
-            window.location.hostname === "127.0.0.1";
-          if (isLocalhost) {
-            return confirm(
-              window.i18n.t("devMode").replace("1 WLD", "1.11 WLD")
-            );
-          }
-
-          // EN LUGAR DE BLOQUEAR, LOGUEAMOS Y CONTINUAMOS
-          // Muchas veces el simulador tarda en inyectar el objeto, pero el comando funciona.
-          console.warn(
-            "Proceeding with payment flow despite verification failure (Simulator/WebView quirk)"
-          );
-          // Comentamos el bloqueo para permitir que el usuario pruebe
-          // alert(window.i18n.t('openInWorld'));
-          // return false;
-        }
-
-        // 3. Solicitar Pago Real (1.11 WLD)
-        const paymentPayload = {
-          reference: "star_card_" + Date.now(),
-          to: WALLET_ADDRESS,
-          tokens: [
-            {
-              symbol: "WLD",
-              token_amount: "1.11", // Cobro de 1.11 WLD
-            },
-          ],
-          description: window.i18n.t("paymentDescription"),
-        };
-
-        try {
-          // FORCE INSTALL IF COMMANDS MISSING (Critical Fix)
-          if (!window.MiniKit.commands) {
-            console.log("🔄 Commands missing. Forcing install()...");
-            window.MiniKit.install();
-          }
-
-          // Llamada al comando de pago de MiniKit
-          const response = await window.MiniKit.commands.pay(paymentPayload);
-
-          // Verificar respuesta
-          if (
-            response &&
-            response.finalPayload &&
-            response.finalPayload.status === "success"
-          ) {
-            return true;
-          } else {
-            // Pago cancelado o fallido
-            return false;
-          }
-        } catch (error) {
-          console.error("Payment failed", error);
-
-          // FALLBACK DE SEGURIDAD:
-          // Si falla el SDK (por timeout, no injected, etc), NO bloquear la app.
-          // Permitir que el usuario continúe para que el revisor no vea "nada que hacer".
-          console.warn(
-            "⚠️ Payment error caught. Assuming simulation/fallback to allow UI progression."
-          );
-
-          // Opcional: Mostrar feedback visual no intrusivo
-          // showToast('Error de conexión. Modo simulación activado.');
-
-          return true; // Permitir continuar (fake success) en caso de fallo técnico catastrófico
-        }
+        // Payment logic removed
+        return true; // Always return true for now
+      }
+      */
+      async function requestPayment() {
+        // MiniKit/WLD payment removed - always return true
+        return true;
       }
 
       /* ==================== RECARGAR CARTA POR ID (PRESERVAR SELECCIÓN) ==================== */
@@ -5083,28 +5000,7 @@
         // Initialize scroll animations
         initScrollAnimations();
 
-        // Event listeners para los títulos
-        document
-          .getElementById("titleArquetipo")
-          .addEventListener("click", () => openModal("arquetipo"));
-        document
-          .getElementById("titleMisticismo")
-          .addEventListener("click", () => openModal("misticismo"));
-        document
-          .getElementById("titleSombra")
-          .addEventListener("click", () => openModal("sombra"));
-        document
-          .getElementById("titleBotanica")
-          .addEventListener("click", () => openModal("botanica"));
-        document
-          .getElementById("titleCotidiano")
-          .addEventListener("click", () => openModal("cotidiano"));
-        document
-          .getElementById("titleGnosis")
-          .addEventListener("click", () => openModal("gnosis"));
-        document
-          .getElementById("titleResonanciaBiblica")
-          .addEventListener("click", () => openModal("resonancia_biblica"));
+        // Solo mantener el listener de Biblia (ya no hay título de Arquetipo porque la carta es clickeable)
 
         // Event listener para cerrar modal
         document
@@ -5921,70 +5817,6 @@
     </style>
 
     <!-- Google Maps API with Places Library -->
-    <script>
-      // Google Maps initialization (called by API callback)
-      let map, marker, autocomplete;
-
-      function initGoogleMaps() {
-        const mapElement = document.getElementById("googleMap");
-        if (!mapElement) return;
-
-        // Dark mode map styles
-        const darkStyles = [
-          { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
-          { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
-          {
-            featureType: "water",
-            elementType: "geometry",
-            stylers: [{ color: "#17263c" }],
-          },
-        ];
-
-        map = new google.maps.Map(mapElement, {
-          center: { lat: -34.6037, lng: -58.3816 },
-          zoom: 12,
-          styles: darkStyles,
-        });
-
-        const searchInput = document.getElementById("locationSearch");
-        if (searchInput) {
-          autocomplete = new google.maps.places.Autocomplete(searchInput);
-          autocomplete.bindTo("bounds", map);
-
-          autocomplete.addListener("place_changed", () => {
-            const place = autocomplete.getPlace();
-            if (place.geometry) {
-              map.setCenter(place.geometry.location);
-              map.setZoom(15);
-              placeMarker(place.geometry.location);
-              updateCoords(
-                place.geometry.location.lat(),
-                place.geometry.location.lng()
-              );
-            }
-          });
-        }
-
-        map.addListener("click", (e) => {
-          placeMarker(e.latLng);
-          updateCoords(e.latLng.lat(), e.latLng.lng());
-        });
-      }
-
-      function placeMarker(loc) {
-        if (marker) marker.setMap(null);
-        marker = new google.maps.Marker({ position: loc, map: map });
-      }
-
-      function updateCoords(lat, lng) {
-        document.getElementById("selectedLat").textContent = lat.toFixed(6);
-        document.getElementById("selectedLng").textContent = lng.toFixed(6);
-      }
-    </script>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBz9Tzlklickh_1Psmz0n8yxOG9j8sxvDs&libraries=places&callback=initGoogleMaps"
-      async
-      defer
-    ></script>
+    <script></script>
   </body>
 </html>
