@@ -946,6 +946,32 @@
 
       }
 
+      /* ==================== DARK MODE TOGGLE ==================== */
+      let isDarkMode = false;
+
+      function toggleDarkMode() {
+        isDarkMode = !isDarkMode;
+        const btn = document.getElementById('darkModeBtn');
+        
+        if (isDarkMode) {
+          // Dark mode
+          document.documentElement.style.setProperty('--text-primary', '#ffffff');
+          document.documentElement.style.setProperty('--text-secondary', '#b0b0b0');
+          document.documentElement.style.setProperty('--glass-surface', 'rgba(30, 30, 30, 0.75)');
+          document.documentElement.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.2)');
+          document.body.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)';
+          btn.textContent = '☀️';
+        } else {
+          // Light mode
+          document.documentElement.style.setProperty('--text-primary', '#1d1d1f');
+          document.documentElement.style.setProperty('--text-secondary', '#6e6e73');
+          document.documentElement.style.setProperty('--glass-surface', 'rgba(255, 255, 255, 0.5)');
+          document.documentElement.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.6)');
+          document.body.style.background = '';
+          btn.textContent = '🌙';
+        }
+      }
+
       /* ==================== PANEL DE LECTURA ==================== */
       /* Estilo Apple Music Lyrics */
       .insight-panel {
@@ -1753,6 +1779,40 @@
     >
       🌐
     </button>
+
+    <!-- Botón de Dark Mode -->
+    <button
+      class="dark-mode-btn iridescent-border-subtle"
+      id="darkModeBtn"
+      onclick="toggleDarkMode()"
+      aria-label="Toggle Dark Mode"
+    >
+      🌙
+    </button>
+    <style>
+      .dark-mode-btn {
+        position: fixed;
+        top: 20px;
+        right: 70px;
+        z-index: 100;
+        background: transparent;
+        border: none;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1.5rem;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+      }
+
+      .dark-mode-btn:hover {
+        transform: scale(1.15);
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+      }
+    </style>
 
     <!-- Collection Button (Top-Left, Transparent) -->
     <button
