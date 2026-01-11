@@ -2908,7 +2908,7 @@
           const cardImg = document.getElementById("cardImg");
 
           // Intentar cargar capas primero
-          const baseLayerUrl = `./public/cards_layered/${cardSlug}/base.png`;
+          const baseLayerUrl = `./public/cards_layered/${cardSlug}/base.webp`;
           const layerImg = new Image();
 
           layerImg.onload = () => {
@@ -2918,17 +2918,17 @@
             layersContainer.style.display = "block";
 
             const layers = [
-              { name: "base", file: "base.png", class: "layer-base" },
-              { name: "nature", file: "nature.png", class: "layer-nature" },
-              { name: "passion", file: "passion.png", class: "layer-passion" },
-              { name: "ink", file: "ink.png", class: "layer-ink" },
+              { name: "base", file: "base.webp", class: "layer-base" },
+              { name: "nature", file: "nature.webp", class: "layer-nature" },
+              { name: "passion", file: "passion.webp", class: "layer-passion" },
+              { name: "ink", file: "ink.webp", class: "layer-ink" },
               {
                 name: "gold",
-                file: "gold.png",
+                file: "gold.webp",
                 class: "layer-gold",
                 isHolo: true,
               }, // Marcamos Gold como Holo
-              { name: "spirit", file: "spirit.png", class: "layer-spirit" },
+              { name: "spirit", file: "spirit.webp", class: "layer-spirit" },
             ];
 
             layers.forEach((layer) => {
