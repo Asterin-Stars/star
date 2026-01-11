@@ -937,6 +937,9 @@
         min-height: 150px;
         transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         transform-style: preserve-3d;
+        /* Grid Layout for auto-height */
+        display: grid;
+        grid-template-areas: "card";
       }
 
       .arquetipo-card.flipped .arquetipo-card-inner {
@@ -944,13 +947,11 @@
       }
 
       .arquetipo-face {
-        position: absolute;
-        width: 100%;
         min-height: 150px;
-        max-height: 500px;
+        max-height: 600px; /* Increased max-height */
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
-        background: rgba(255, 255, 255, 0.85);
+        background: rgba(255, 255, 255, 0.9);
         border-radius: 16px;
         padding: 24px 28px;
         box-sizing: border-box;
@@ -959,6 +960,11 @@
         transition: box-shadow 0.3s ease, border-color 0.3s ease;
         overflow-y: auto;
         overflow-x: hidden;
+
+        /* Grid Item positioning */
+        grid-area: card;
+        width: 100%;
+        position: relative; /* Allows grid sizing */
       }
 
       .arquetipo-card:hover .arquetipo-face {
@@ -969,16 +975,11 @@
       }
 
       .arquetipo-front {
-        position: absolute;
-        top: 0;
-        left: 0;
         z-index: 2;
+        transform: rotateY(0deg);
       }
 
       .arquetipo-back {
-        position: absolute;
-        top: 0;
-        left: 0;
         transform: rotateY(180deg);
         z-index: 1;
       }
@@ -990,6 +991,25 @@
         font-weight: 400;
         margin: 0;
         text-align: justify;
+      }
+
+      /* Dark Mode Overrides */
+      body.dark-mode .arquetipo-face {
+        background: rgba(30, 30, 40, 0.9);
+        border-color: rgba(255, 255, 255, 0.1);
+        color: #f0f0f0;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      }
+
+      body.dark-mode .arquetipo-text {
+        color: #f0f0f0;
+      }
+
+      /* Remove old positioning rules */
+      body.dark-mode .arquetipo-card:hover .arquetipo-face {
+        border-color: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3),
+          0 0 15px rgba(255, 255, 255, 0.1);
       }
 
       /* ==================== SISTEMA DE VOCES (Acordeón) ==================== */
@@ -1210,77 +1230,6 @@
 
       .unlock-btn .btn-icon {
         font-size: 1.3rem;
-      }
-
-      /* Interstitial Ad Overlay */
-      .ad-interstitial-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.95);
-        z-index: 10000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        animation: fadeIn 0.3s ease;
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-
-      .ad-interstitial-content {
-        text-align: center;
-        color: white;
-        max-width: 600px;
-        padding: 40px;
-      }
-
-      .ad-message {
-        font-size: 1.3rem;
-        margin-bottom: 30px;
-        font-weight: 500;
-      }
-
-      .ad-placeholder {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        padding: 80px 40px;
-        margin: 30px 0;
-        border: 2px dashed rgba(255, 255, 255, 0.3);
-      }
-
-      .ad-placeholder p {
-        font-size: 2rem;
-        margin-bottom: 10px;
-      }
-
-      .ad-placeholder small {
-        color: rgba(255, 255, 255, 0.6);
-      }
-
-      .ad-close-btn {
-        background: white;
-        color: #333;
-        border: none;
-        padding: 14px 32px;
-        border-radius: 50px;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-
-      .ad-close-btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
       }
 
       /* Dark mode adjustments */
@@ -2054,23 +2003,6 @@
         filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
       }
     </style>
-
-    <!-- Interstitial Ad Overlay (shown after reading completion) -->
-    <div
-      id="adInterstitial"
-      class="ad-interstitial-overlay"
-      style="display: none"
-    >
-      <div class="ad-interstitial-content">
-        <p class="ad-message">Gracias por usar Star ✦</p>
-        <!-- AdSense Interstitial Code Goes Here -->
-        <div class="ad-placeholder">
-          <p>📺 Anuncio</p>
-          <small>Activa AdSense para mostrar aquí</small>
-        </div>
-        <button id="closeAdBtn" class="ad-close-btn">Continuar →</button>
-      </div>
-    </div>
 
     <!-- Dark/Light Mode Toggle Button -->
     <button
@@ -4582,50 +4514,8 @@
       // Interstitial Ad (after reading completion)
       let hasShownInterstitial = false;
 
-      function showInterstitialAd() {
-        if (hasShownInterstitial) return; // Show only once per session
-
-        const adOverlay = document.getElementById("adInterstitial");
-        if (adOverlay) {
-          adOverlay.style.display = "flex";
-          hasShownInterstitial = true;
-          console.log("📺 Interstitial ad displayed");
-
-          // Close button
-          const closeBtn = document.getElementById("closeAdBtn");
-          if (closeBtn) {
-            closeBtn.addEventListener(
-              "click",
-              () => {
-                adOverlay.style.display = "none";
-              },
-              { once: true }
-            );
-          }
-        }
-      }
-
-      // Trigger interstitial when user scrolls to bottom of insights
-      // (indicating they finished reading)
-      // insightPanel already declared above
-      if (insightPanel) {
-        let hasTriggered = false;
-        window.addEventListener("scroll", () => {
-          if (hasTriggered || !insightPanel.classList.contains("active"))
-            return;
-
-          const panelBottom = insightPanel.getBoundingClientRect().bottom;
-          const windowBottom = window.innerHeight;
-
-          // If user scrolled past 80% of the panel
-          if (panelBottom < windowBottom * 1.2) {
-            hasTriggered = true;
-            setTimeout(() => {
-              showInterstitialAd();
-            }, 2000); // 2 second delay after they finish reading
-          }
-        });
-      }
+      // Interstitial Ad Logic Removed
+      // (function showInterstitialAd() ... deleted)
 
       /* ==================== DARK/LIGHT MODE TOGGLE ==================== */
       const darkModeToggle = document.getElementById("darkModeToggle");
