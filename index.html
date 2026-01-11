@@ -1020,6 +1020,9 @@
         justify-content: space-between;
         align-items: center;
         user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
       }
       summary::-webkit-details-marker {
         display: none;
@@ -2053,6 +2056,21 @@
       }
 
       /* TIP DE INTERACCIÓN ELIMINADO */
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
     </style>
     <!-- Google AdSense -->
     <script
@@ -2212,8 +2230,41 @@
           </div>
         </div>
 
+        <!-- Static Content: Arquetipo & Biblia (Immediate View) -->
+        <div
+          class="section"
+          id="seccionBiblico"
+          style="margin-top: 20px; display: block"
+        >
+          <div class="section-content">
+            <p
+              id="textoMainArquetipo"
+              style="
+                font-weight: 600;
+                margin-bottom: 10px;
+                color: var(--color1);
+              "
+            ></p>
+            <div class="biblical-verse" id="textoBiblico"></div>
+          </div>
+        </div>
+
+        <!-- Arrow Indicator -->
+        <div
+          id="moreContentIndicator"
+          style="
+            text-align: center;
+            padding: 10px;
+            animation: bounce 2s infinite;
+            opacity: 0.7;
+            cursor: pointer;
+          "
+        >
+          ⬇️
+        </div>
+
         <!-- Exploration Accordions (Voces del Tarot) -->
-        <div class="section" id="seccionExploracion" style="margin-top: 20px">
+        <div class="section" id="seccionExploracion">
           <!-- Accordions will be injected here via JS -->
         </div>
       </div>
@@ -3581,17 +3632,27 @@
         textoSignificado.innerHTML = ""; // Clear text to show image clean
 
         // Update Holo Layers
-        updateHoloLayers(currentCardData.name_short); // e.g. "ar05"
+        updateHoloLayers(currentCardData.name_short);
 
-        // 4. LLENAR LAS SECCIONES (ACORDEONES)
+        // 4. PREPARE DATA
         if (!window.vocesData) {
           console.warn("Voces data not loaded");
+          // Fill basics if possible
         } else {
           const cardVoice = window.vocesData.find(
             (v) => v.id === currentCardData.id
           );
 
           if (cardVoice && cardVoice.voces) {
+            // A. STATIC CONTENT (IMMEDIATE VIEW)
+            const mainArq = document.getElementById("textoMainArquetipo");
+            const mainBib = document.getElementById("textoBiblico");
+
+            // Use Misticismo Luz as main summary or Arquetipo Luz
+            if (mainArq) mainArq.innerHTML = cardVoice.voces.mistico.luz;
+            if (mainBib) mainBib.innerHTML = getTemporalBiblicalVerse();
+
+            // B. ACCORDIONS (DEEP DIVE)
             const expl = document.getElementById("seccionExploracion");
             if (expl) {
               expl.innerHTML = `
@@ -3607,21 +3668,21 @@
                           "🌀 Divergente",
                           cardVoice.voces.divergente
                         )}
-                        ${createAccordion("✦ Místico", cardVoice.voces.mistico)}
-                        <details class="voice-accordion">
-                            <summary>📖 Resonancia Bíblica</summary>
-                            <div class="accordion-content">
-                                <div class="biblical-verse">${getTemporalBiblicalVerse()}</div>
-                            </div>
-                        </details>
+                        <!-- Misticismo & Biblico are now static above, but we can keep full info here or remove duplicates. 
+                             User asked for 'Arquetipo and Biblia' to appear immediately. 
+                             We keep the OTHERS in accordions. -->
                      `;
             }
 
-            // Llenar reverso con Místico Luz o Arquetipo
+            // Show Arrow
+            const arrow = document.getElementById("moreContentIndicator");
+            if (arrow) arrow.style.display = "block";
+
+            // Back Card Text (optional)
             const arquetipoEjemplo =
               document.getElementById("arquetipoEjemplo");
             if (arquetipoEjemplo) {
-              arquetipoEjemplo.innerHTML = `<p>${cardVoice.voces.mistico.luz}</p>`;
+              arquetipoEjemplo.innerHTML = `<p>${cardVoice.voces.mistico.titulo}</p>`; // Just title or short phrase
             }
           }
         }
