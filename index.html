@@ -69,6 +69,38 @@
         box-sizing: border-box;
       }
 
+      /* ==================== UTILITY CLASSES ==================== */
+      .u-hidden {
+        display: none !important;
+      }
+
+      .u-flex-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .u-flex-col {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .u-gap-8 {
+        gap: 8px;
+      }
+
+      .u-gap-12 {
+        gap: 12px;
+      }
+
+      .u-text-center {
+        text-align: center;
+      }
+
+      .u-mb-16 {
+        margin-bottom: 16px;
+      }
+
       /* Eliminar outline azul de selección (Requerimiento del usuario) */
       *,
       *:focus,
@@ -1290,6 +1322,10 @@
         animation: modalSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       }
 
+      .modal-content--wide {
+        max-width: 800px;
+      }
+
       .modal-header {
         padding: 24px 28px 20px 28px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -1947,20 +1983,8 @@
           </div>
         </div>
 
-        <div
-          class="composite-message"
-          id="compositeMessage"
-          style="display: none"
-        >
-          <div
-            style="
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              gap: 8px;
-              margin-bottom: 8px;
-            "
-          >
+        <div class="composite-message u-hidden" id="compositeMessage">
+          <div class="u-flex-center u-gap-8 u-mb-16">
             <span class="composite-icon">✨</span>
             <span class="composite-text">Lectura Compuesta Completa</span>
           </div>
@@ -2111,8 +2135,8 @@
       </div>
 
       <!-- Portal de Análisis Personal - Modal Expandido -->
-      <div class="modal-overlay" id="collectionModal" style="display: none">
-        <div class="modal-content iridescent-border" style="max-width: 800px">
+      <div class="modal-overlay u-hidden" id="collectionModal">
+        <div class="modal-content iridescent-border modal-content--wide">
           <div class="modal-header">
             <h3>✨ Portal de Análisis Personal</h3>
             <button class="modal-close" id="collectionClose">&times;</button>
