@@ -3583,8 +3583,25 @@
             const mainArq = document.getElementById("textoMainArquetipo");
             const mainBib = document.getElementById("textoBiblico");
 
-            // Use Arquetipo Luz as main summary
-            if (mainArq) mainArq.innerHTML = cardVoice.voces.arquetipo.luz;
+            console.log("DEBUG: Rendering Text for", currentCardData.name);
+            console.log("DEBUG: Voces Data:", cardVoice);
+            console.log("DEBUG: Arquetipo Element:", mainArq);
+
+            if (cardVoice && cardVoice.voces && cardVoice.voces.arquetipo) {
+              // Use Arquetipo Luz as main summary
+              if (mainArq) {
+                mainArq.innerHTML = cardVoice.voces.arquetipo.luz;
+                console.log(
+                  "DEBUG: Text Injected:",
+                  cardVoice.voces.arquetipo.luz
+                );
+              } else {
+                console.error("DEBUG: Element #textoMainArquetipo NOT FOUND");
+              }
+            } else {
+              console.error("DEBUG: Missing cardVoice.voces.arquetipo data");
+            }
+
             if (mainBib) mainBib.innerHTML = getTemporalBiblicalVerse();
 
             // B. ACCORDIONS (DEEP DIVE)
