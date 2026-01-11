@@ -519,13 +519,15 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        /* MEJORAR CENTRADO VERTICAL PARA MINIMIZAR SCROLL */
-        justify-content: center;
-        /* Centra verticalmente cuando no hay scroll */
-        /* Eliminada min-height: 100vh para evitar espacio innecesario */
+        justify-content: flex-start; /* Changed from center to allow scroll on zoom */
         gap: 40px;
         width: 100%;
         max-width: 1400px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        min-height: 100vh; /* Ensure full height but allow growth */
+        box-sizing: border-box;
+      }
         padding: 40px 20px;
         margin: 0 auto;
       }
