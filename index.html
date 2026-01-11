@@ -911,9 +911,16 @@
           root.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.15)');
           // Fondo base oscuro pero transparente para dejar ver blobs
           document.body.style.backgroundColor = '#111'; 
-          // Blobs más sutiles en modo oscuro
-          document.querySelectorAll('.blob').forEach(b => b.style.opacity = '0.4');
           
+          // Blobs más sutiles en modo oscuro pero visibles
+          // Se mantiene multiply para conservar color, pero se reduce la opacidad global de los blobs active
+          const activeBlobs = document.querySelectorAll('.wallpaper.active .blob');
+          activeBlobs.forEach(b => {
+             // Forzamos un override inline para bajar la opacidad en dark mode
+             b.style.opacity = '0.3'; 
+             b.style.mixBlendMode = 'screen'; // Cambiar a screen para que se vean sobre fondo oscuro
+          });
+
           btn.textContent = '☀️';
         } else {
           // Light Mode (Default)
@@ -922,7 +929,12 @@
           root.style.setProperty('--glass-surface', 'rgba(255, 255, 255, 0.75)');
           root.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.6)');
           document.body.style.backgroundColor = ''; 
-          document.querySelectorAll('.blob').forEach(b => b.style.opacity = '');
+          
+          const activeBlobs = document.querySelectorAll('.wallpaper.active .blob');
+          activeBlobs.forEach(b => {
+             b.style.opacity = ''; // Restaurar opacidad CSS original (0.7)
+             b.style.mixBlendMode = ''; // Restaurar multiply (default)
+          });
           
           btn.textContent = '🌙';
         }
