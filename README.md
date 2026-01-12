@@ -4,43 +4,40 @@ Una experiencia mística digital que fusiona el Tarot tradicional con la numerol
 
 ## ✨ Características
 
-- **Diseño "Microcosmos/Macrocosmos"**: El botón de IA refleja dinámicamente los colores del fondo (el universo).
-- **Oráculo Holístico**: La IA sintetiza la Sombra, la Botánica, la Gnosis y la Resonancia Bíblica para ofrecer una solución única.
-- **Numerología del Ahora**: Calcula una vibración única basada en la hora exacta de la consulta.
-- **22 Cartas del Arca Mayor**: Con interpretaciones profundas y multifacéticas.
-- **Diseño Glassmorphism**: Estética etérea y moderna.
+- **Diseño Premium**: Estética glassmorphism profunda inspirada en Apple Music.
+- **Análisis Profundo con IA**: Integración con Google Gemini para interpretar arquetipos, sombras y misticismo.
+- **Multilingüe**: Soporte para múltiples idiomas (Español, Inglés, Portugués, etc.).
+- **Pagos con World Chain**: Integración para verificaciones de pago en blockchain.
+- **Optimización de Activos**: Sistema de carga de imágenes y datos optimizado.
 
 ## 🚀 Despliegue
 
-Consulta el archivo `deployment.md` para instrucciones detalladas.
+Este proyecto está configurado para desplegarse en **Vercel** como una aplicación Full Stack.
 
-### Opción Rápida (Static)
-Este proyecto está optimizado para desplegarse como un sitio estático (Frontend puro) gracias a su "Smart Mock" de IA.
-- Usa **Vercel**, **Netlify** o **GitHub Pages**.
-- Configuración lista en `vercel.json`.
+- Frontend: `index.html` (Servido de forma estática)
+- Backend API: Carpeta `api/` (Python en Vercel)
+- Configuración: `vercel.json`
 
-### Opción Full Stack
-Incluye un backend en Python (`backend.py`) preparado para integración real con Google Gemini si se desea escalar.
-
-## 📁 Estructura
+## 📁 Estructura Actualizada
 
 ```
 star/
-├── index.html          # Aplicación principal (Frontend + Smart Mock)
-├── deployment.md       # Guía de despliegue
-├── vercel.json         # Configuración para Vercel
-├── backend.py          # Backend Python (Opcional)
-├── cards/              # Imágenes de las cartas
-├── data/               # Datos JSON de las cartas
-└── requirements.txt    # Dependencias Python
+├── index.html          # Aplicación principal
+├── vercel.json         # Configuración de despliegue
+├── api/                # Handlers de Backend (Python)
+├── public/             # Activos estáticos (Imágenes, Datos, JS)
+│   ├── cards/          # Imágenes de las cartas
+│   ├── data/           # Definiciones JSON
+│   └── i18n.js         # Traducciones
+├── requirements.txt    # Dependencias del Backend
+└── _archive/           # Scripts y herramientas de desarrollo (Legado)
 ```
 
 ## 🔮 Cómo Usar
 
-1.  **Haz clic** en la carta para iniciar.
-2.  **Confirma** la ofrenda (simulación de pago).
-3.  **Revela** tu destino.
-4.  **Presiona** el botón de la Estrella (✦) para recibir la síntesis numerológica del momento.
+1. **Selecciona** tus cartas.
+2. **Solicita** un análisis profundo (requiere verificación).
+3. **Descubre** tu camino a través de la síntesis de IA.
 
 ---
 

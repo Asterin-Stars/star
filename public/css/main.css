@@ -1491,3 +1491,37 @@ p {
     height: 22px;
   }
 }
+
+/* --- ANIMACIONES FALTANTES --- */
+@keyframes breathe {
+  0%, 100% { transform: translateY(0) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg)); }
+  50% { transform: translateY(-15px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg)); }
+}
+
+@keyframes liquidButton {
+  0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+}
+
+/* Console UI Styles */
+#console-log-ui {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-height: 150px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #00ff00;
+  font-family: monospace;
+  font-size: 10px;
+  overflow-y: auto;
+  z-index: 10001;
+  padding: 10px;
+  pointer-events: none;
+  display: none;
+}
+#console-log-ui.active {
+  display: block;
+  pointer-events: auto;
+}
