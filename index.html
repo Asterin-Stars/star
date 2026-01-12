@@ -1363,12 +1363,29 @@
         color: white;
         border: none;
         padding: 16px 36px;
-        border-radius: 50px;
-        font-size: 1.1rem;
-        font-weight: 600;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 2rem;
+        animation: breathe 2s ease-in-out infinite;
         cursor: pointer;
-        display: inline-flex;
-        align-items: center;
+        display: none; /* Hidden by default */
+        text-align: center;
+        margin: 10px auto;
+      }
+
+      @keyframes breathe {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+          opacity: 0.6;
+        }
+        50% {
+          transform: translateY(5px) scale(1.1);
+          opacity: 1;
+        }
+      }
+
+      .lang-btn {
+        -items: center;
         gap: 10px;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
@@ -2268,7 +2285,21 @@
         </div>
 
         <!-- Arrow Indicator -->
-        <div id="moreContentIndicator" class="arrow-indicator">⬇️</div>
+        <div id="moreContentIndicator" class="arrow-indicator">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="7 13 12 18 17 13"></polyline>
+            <polyline points="7 6 12 11 17 6"></polyline>
+          </svg>
+        </div>
 
         <!-- Exploration Accordions (Voces del Tarot) -->
         <div class="section" id="seccionExploracion">
@@ -3597,59 +3628,63 @@
             console.log("DEBUG: Voces Data:", cardVoice);
             console.log("DEBUG: Arquetipo Element:", mainArq);
 
-            if (cardVoice && cardVoice.voces && cardVoice.voces.arquetipo) {
-              // Use Arquetipo Luz as main summary
-              if (mainArq) {
-                mainArq.innerHTML = cardVoice.voces.arquetipo.luz;
-                console.log(
-                  "DEBUG: Text Injected:",
-                  cardVoice.voces.arquetipo.luz
+            // Populate Static Text
+            const textoSignificado =
+              document.getElementById("textoSignificado");
+            const arquetipoEjemplo =
+              document.getElementById("arquetipoEjemplo");
+            const textoMainArquetipo =
+              document.getElementById("textoMainArquetipo");
+
+            if (currentCardData && currentCardData.fullData) {
+              if (textoSignificado)
+                textoSignificado.innerHTML = highlightKeywords(
+                  currentCardData.fullData.arquetipo
                 );
-              } else {
-                console.error("DEBUG: Element #textoMainArquetipo NOT FOUND");
-              }
-            } else {
-              console.error("DEBUG: Missing cardVoice.voces.arquetipo data");
+              if (arquetipoEjemplo)
+                arquetipoEjemplo.innerHTML = highlightKeywords(
+                  currentCardData.fullData.cotidiano
+                );
+              if (textoMainArquetipo)
+                textoMainArquetipo.innerHTML = highlightKeywords(
+                  currentCardData.fullData.misticismo
+                ); // Or Sombra?
             }
 
             if (mainBib) mainBib.innerHTML = getTemporalBiblicalVerse();
 
-            // B. ACCORDIONS (DEEP DIVE)
+            // B. ACCORDIONS (DEEP DIVE from fullData)
             const expl = document.getElementById("seccionExploracion");
-            if (expl) {
-              expl.innerHTML = `
-                        ${createAccordion(
-                          "⚔️ Arquetipo y Simbología",
-                          cardVoice.voces.arquetipo
-                        )}
-                        ${createAccordion(
-                          "💼 Proyección Cotidiana",
-                          cardVoice.voces.cotidiano
-                        )}
-                        ${createAccordion(
-                          "🌑 La Sombra",
-                          cardVoice.voces.sombra
-                        )}
-                     `;
+            // NOTE: Accordions will be populated by updateRevealedCardTexts later
+            // But if we need them now:
+            if (expl && currentCardData.fullData) {
+              // Let updateRevealedCardTexts handle it to avoid duplication logic
             }
 
             // Show Arrow
             const arrow = document.getElementById("moreContentIndicator");
             if (arrow) arrow.style.display = "block";
-
-            // Back Card Text (optional)
-            const arquetipoEjemplo =
-              document.getElementById("arquetipoEjemplo");
-            if (arquetipoEjemplo) {
-              arquetipoEjemplo.innerHTML = `<p>${cardVoice.voces.sombra.titulo}</p>`; // Just title or short phrase
-            }
           }
         }
 
         // Helper to create details
         // Helper to create details
-        function createAccordion(title, data) {
+        // Helper to create details - Modified for simple string data or obj
+        function createAccordion(title, data, isSimpleCode = false) {
           if (!data) return "";
+          if (isSimpleCode) {
+            // Handle simple string data from 0-5.json keys
+            const content = data.luz || data;
+            return `
+                <details class="voice-accordion">
+                    <summary>${title}</summary>
+                    <div class="accordion-content">
+                        <p>${content}</p>
+                    </div>
+                </details>
+            `;
+          }
+          // Legacy format
           return `
                 <details class="voice-accordion">
                     <summary>${title} <span style="opacity:0.6; font-size:0.8em;">${
@@ -3680,7 +3715,8 @@
         }
 
         // Remove duplicate text on Front (Image Cover)
-        textoSignificado.innerHTML = ""; // Clear text to show image clean
+        // Duplicate text clearing REMOVED to keep Arquetipo visible
+        // textoSignificado.innerHTML = "";
 
         // Versículo Bíblico
         textoBiblico.innerHTML = getTemporalBiblicalVerse();
@@ -4027,8 +4063,42 @@
         }
 
         // Actualizar secciones y asegurar que sean visibles si tienen contenido
-        textoSignificado.innerHTML = getRandomItem("sombra");
+        // WHITE SQUARE: Arquetipo (Front) & Cotidiano (Back)
+        textoSignificado.innerHTML = getRandomItem("arquetipo"); // FRONT
+        const arquetipoEjemplo = document.getElementById("arquetipoEjemplo");
+        if (arquetipoEjemplo)
+          arquetipoEjemplo.innerHTML = getRandomItem("cotidiano"); // BACK
 
+        // MAIN PARAGRAPH (Below Square):
+        // User asked for "quantity 7" logic here. For now we use Sombra or Misticismo.
+        if (document.getElementById("textoMainArquetipo")) {
+          document.getElementById("textoMainArquetipo").innerHTML =
+            getRandomItem("misticismo");
+        }
+
+        // ACCORDIONS: Sombra, Gnosis, Botanica
+        const expl = document.getElementById("seccionExploracion");
+        if (expl && datos) {
+          expl.innerHTML = `
+                ${createAccordion(
+                  "🌑 La Sombra",
+                  { luz: datos.sombra, sombra: "", titulo: "" },
+                  true
+                )}
+                ${createAccordion(
+                  "🌿 Botánica Oculta",
+                  { luz: datos.botanica, sombra: "", titulo: "" },
+                  true
+                )}
+                ${createAccordion(
+                  "👁️ Gnosis",
+                  { luz: datos.gnosis, sombra: "", titulo: "" },
+                  true
+                )}
+            `;
+        }
+
+        /* REMOVED OLD ASSIGNMENTS that were confused
         textoAmpliado.innerHTML = getRandomItem("misticismo");
         if (seccionAmpliado && textoAmpliado.innerHTML)
           seccionAmpliado.style.display = "block";
@@ -4048,6 +4118,7 @@
         textoMistico.innerHTML = getRandomItem("gnosis");
         if (seccionMistico && textoMistico.innerHTML)
           seccionMistico.style.display = "block";
+        */
 
         // Actualizar versículo bíblico
         textoBiblico.innerHTML = getTemporalBiblicalVerse();
