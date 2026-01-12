@@ -885,6 +885,20 @@
         animation: fadeSlideIn 0.6s ease-out;
       }
 
+      .keyword-text {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: rgba(
+          255,
+          255,
+          255,
+          0.95
+        ); /* Tinte blanco transparente, elegante */
+        margin-bottom: 24px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        font-weight: 300;
+      }
+
       .intro-text {
         font-size: 0.9rem;
         line-height: 1.6;
@@ -1548,7 +1562,19 @@
       body.dark-mode .section-title,
       body.dark-mode p,
       body.dark-mode .section-content {
-        color: #f0f0f0 !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+      }
+
+      body.dark-mode .accordion-header h3 {
+        color: white !important;
+      }
+
+      body.dark-mode .accordion-content {
+        color: rgba(255, 255, 255, 0.85) !important;
+      }
+
+      body.dark-mode .accordion-content p {
+        color: rgba(255, 255, 255, 0.85) !important;
       }
 
       body.dark-mode .intro-text {
@@ -2728,8 +2754,30 @@
     </div>
 
     <script>
-      // Load Voces Data
+      // Load Voces Data and Language
       window.vocesData = [];
+
+      // Language Detection
+      const userLang = navigator.language.startsWith("en") ? "en" : "es";
+      console.log(`🌍 Detected language: ${userLang}`);
+
+      // Initialize translation system if not exists
+      if (!window.i18n) {
+        window.i18n = {
+          lang: userLang,
+          translations: {},
+        };
+      }
+
+      // Load Translations based on language
+      if (userLang === "en") {
+        // Example: logic to load english file
+        // For now we will rely on dynamically fetching content when needed or preloading
+        // Actually, let's load the main English content file if it exists, or fallback
+        // The implementation_plan suggests just detection for now.
+      }
+
+      // Load Voces Data (Original Spanish Structure)
       fetch("./public/data/voces-tarot.json")
         .then((response) => response.json())
         .then((data) => {
