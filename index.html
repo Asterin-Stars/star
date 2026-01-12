@@ -3814,11 +3814,20 @@
       /* ==================== REVELACIÓN ==================== */
 
       function revealDestiny() {
-        if (!currentCardData) return;
+        console.log("🎴 === REVEAL DESTINY CALLED ===");
+        console.log("   - currentCardData:", currentCardData);
+        console.log("   - isRevealed (before):", isRevealed);
 
+        if (!currentCardData) {
+          console.log("❌ ABORT: No currentCardData");
+          return;
+        }
+
+        console.log("✅ Proceeding with reveal...");
         isRevealed = true;
 
         // 0. HABILITAR SCROLL DEL BODY AHORA QUE LA CARTA SE REVELÓ
+        console.log("   - Enabling scroll...");
         document.body.classList.remove("no-scroll");
         // Cambiar la interfaz a flex-start para permitir scroll normal
         document.querySelector(".interface").classList.add("revealed");
@@ -4381,12 +4390,24 @@
       const FINAL_WAIT = 1200; // 1.2s wait for triple click (faster)
 
       cardStage.addEventListener("click", (e) => {
+        console.log("🎯 CARD CLICKED - Starting click handler");
+        console.log("   - clickDebounce:", clickDebounce);
+        console.log("   - isProcessing:", isProcessing);
+        console.log("   - isRevealed:", isRevealed);
+        console.log("   - currentCardData:", currentCardData);
+
         // Reduced debounce to avoid interfering with multi-clicks
-        if (clickDebounce) return;
+        if (clickDebounce) {
+          console.log("❌ BLOCKED: clickDebounce is true");
+          return;
+        }
         clickDebounce = true;
         setTimeout(() => (clickDebounce = false), 150); // Reduced from 300ms
 
-        if (isProcessing) return;
+        if (isProcessing) {
+          console.log("❌ BLOCKED: isProcessing is true");
+          return;
+        }
 
         // Ocultar pista visual
         const tapHint = document.getElementById("tapHint");
@@ -4404,12 +4425,20 @@
 
         // STATE 1: First click (wait for more clicks or timeout)
         if (clickCount === 1) {
+          console.log("⏱️ Starting timer for single click detection");
           clickTimer = setTimeout(() => {
-            console.log("✅ Single click confirmed - revealing card");
+            console.log("✅ Single click confirmed - attempting to reveal card");
+            console.log("   - isRevealed before reveal:", isRevealed);
+            console.log("   - currentCardData:", currentCardData);
             // Single click confirmed: REVEAL CARD DIRECTLY (no payment)
             requestAnimationFrame(() => {
               if (!isRevealed && currentCardData) {
+                console.log("🎴 Calling revealDestiny()...");
                 revealDestiny();
+              } else {
+                console.log("❌ NOT revealing:");
+                console.log("   - isRevealed:", isRevealed);
+                console.log("   - currentCardData:", currentCardData);
               }
             });
             clickCount = 0;
