@@ -3595,77 +3595,12 @@
         const datos = currentCardData.fullData;
         const lang = window.i18n ? window.i18n.currentLanguage : "es";
 
-        // 4. LLENAR LAS SECCIONES
-
-        // Función auxiliar with keyword highlighting
-        const getRandomItem = (category) => {
-          const item = datos[category];
-          if (!item || typeof item !== "string") return "";
-          return highlightKeywords(item, lang);
-        };
-
-        // Remove duplicate text on Front (Image Cover)
-        textoSignificado.innerHTML = ""; // Clear text to show image clean
+        // 4. PREPARE DATA & RENDER TEXTS
+        // Unified rendering call
+        updateRevealedCardTexts();
 
         // Update Holo Layers
         updateHoloLayers(currentCardData.name_short);
-
-        // 4. PREPARE DATA
-        if (!window.vocesData) {
-          console.warn("Voces data not loaded");
-          // Fill basics if possible
-        } else {
-          const cardVoice = window.vocesData.find(
-            (v) => v.id == currentCardData.id
-          );
-
-          if (cardVoice && cardVoice.voces) {
-            // A. STATIC CONTENT (IMMEDIATE VIEW)
-            const mainArq = document.getElementById("textoMainArquetipo");
-            const mainBib = document.getElementById("textoBiblico");
-
-            console.log("DEBUG: Rendering Text for", currentCardData.name);
-            console.log("DEBUG: Voces Data:", cardVoice);
-            console.log("DEBUG: Arquetipo Element:", mainArq);
-
-            // Populate Static Text
-            const textoSignificado =
-              document.getElementById("textoSignificado");
-            const arquetipoEjemplo =
-              document.getElementById("arquetipoEjemplo");
-            const textoMainArquetipo =
-              document.getElementById("textoMainArquetipo");
-
-            if (currentCardData && currentCardData.fullData) {
-              if (textoSignificado)
-                textoSignificado.innerHTML = highlightKeywords(
-                  currentCardData.fullData.arquetipo
-                );
-              if (arquetipoEjemplo)
-                arquetipoEjemplo.innerHTML = highlightKeywords(
-                  currentCardData.fullData.cotidiano
-                );
-              if (textoMainArquetipo)
-                textoMainArquetipo.innerHTML = highlightKeywords(
-                  currentCardData.fullData.misticismo
-                ); // Or Sombra?
-            }
-
-            if (mainBib) mainBib.innerHTML = getTemporalBiblicalVerse();
-
-            // B. ACCORDIONS (DEEP DIVE from fullData)
-            const expl = document.getElementById("seccionExploracion");
-            // NOTE: Accordions will be populated by updateRevealedCardTexts later
-            // But if we need them now:
-            if (expl && currentCardData.fullData) {
-              // Let updateRevealedCardTexts handle it to avoid duplication logic
-            }
-
-            // Show Arrow
-            const arrow = document.getElementById("moreContentIndicator");
-            if (arrow) arrow.style.display = "block";
-          }
-        }
 
         // Helper to create details
         // Helper to create details
@@ -4123,6 +4058,10 @@
         // Actualizar versículo bíblico
         textoBiblico.innerHTML = getTemporalBiblicalVerse();
         if (seccionBiblico) seccionBiblico.style.display = "block";
+
+        // Show Arrow Indicator
+        const arrow = document.getElementById("moreContentIndicator");
+        if (arrow) arrow.style.display = "block";
 
         // Aplicar traducciones de títulos INMEDIATAMENTE
         if (
@@ -4706,6 +4645,18 @@
 
         // Initialize floating stars
         initFloatingStars();
+
+        // Arrow Click Listener
+        const arrow = document.getElementById("moreContentIndicator");
+        if (arrow) {
+          arrow.addEventListener("click", () => {
+            const expl = document.getElementById("seccionExploracion");
+            if (expl) {
+              expl.style.display = "block";
+              expl.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          });
+        }
 
         // Start Gyroscope Border Effects
         initGyroscopeBorders();
