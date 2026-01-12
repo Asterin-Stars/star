@@ -2407,32 +2407,32 @@
 
         <!-- SECCIONES SECUNDARIAS - Con títulos clickeables para modal -->
         <div class="secondary-sections">
-          <div class="section" id="seccionMisticismo" style="display: none">
+          <div class="section u-hidden" id="seccionMisticismo">
             <div class="section-title clickable" id="titleMisticismo"></div>
             <p class="section-content" id="textoMisticismo"></p>
           </div>
 
-          <div class="section" id="seccionSombra" style="display: none">
+          <div class="section u-hidden" id="seccionSombra">
             <div class="section-title clickable" id="titleSombra"></div>
             <p class="section-content" id="textoSombra"></p>
           </div>
 
-          <div class="section" id="seccionBotanica" style="display: none">
+          <div class="section u-hidden" id="seccionBotanica">
             <div class="section-title clickable" id="titleBotanica"></div>
             <p class="section-content" id="textoBotanica"></p>
           </div>
 
-          <div class="section" id="seccionCotidiano" style="display: none">
+          <div class="section u-hidden" id="seccionCotidiano">
             <div class="section-title clickable" id="titleCotidiano"></div>
             <p class="section-content" id="textoCotidiano"></p>
           </div>
 
-          <div class="section" id="seccionGnosis" style="display: none">
+          <div class="section u-hidden" id="seccionGnosis">
             <div class="section-title clickable" id="titleGnosis"></div>
             <p class="section-content" id="textoGnosis"></p>
           </div>
 
-          <div class="section" id="seccionBiblico" style="display: none">
+          <div class="section u-hidden" id="seccionBiblico">
             <div
               class="section-title clickable"
               id="titleResonanciaBiblica"
@@ -2445,7 +2445,7 @@
       </div>
 
       <!-- Modal para mostrar todos los ejemplos de una categoría -->
-      <div class="modal-overlay" id="modalOverlay" style="display: none">
+      <div class="modal-overlay u-hidden" id="modalOverlay">
         <div class="modal-content iridescent-border" id="modalContent">
           <div class="modal-header">
             <h3 id="modalTitle"></h3>
@@ -4175,33 +4175,33 @@
         // SECCIONES SECUNDARIAS - Mostrar si tienen contenido
         if (textoMisticismo && getItem("misticismo")) {
           textoMisticismo.innerHTML = getItem("misticismo");
-          seccionMisticismo.style.display = "block";
+          seccionMisticismo.classList.remove("u-hidden");
         }
 
         if (textoSombra && getItem("sombra")) {
           textoSombra.innerHTML = getItem("sombra");
-          seccionSombra.style.display = "block";
+          seccionSombra.classList.remove("u-hidden");
         }
 
         if (textoBotanica && getItem("botanica")) {
           textoBotanica.innerHTML = getItem("botanica");
-          seccionBotanica.style.display = "block";
+          seccionBotanica.classList.remove("u-hidden");
         }
 
         if (textoCotidiano && getItem("cotidiano")) {
           textoCotidiano.innerHTML = getItem("cotidiano");
-          seccionCotidiano.style.display = "block";
+          seccionCotidiano.classList.remove("u-hidden");
         }
 
         if (textoGnosis && getItem("gnosis")) {
           textoGnosis.innerHTML = getItem("gnosis");
-          seccionGnosis.style.display = "block";
+          seccionGnosis.classList.remove("u-hidden");
         }
 
         // Versículo Bíblico
         if (textoBiblico && datos.resonancia_biblica) {
           textoBiblico.innerHTML = getTemporalBiblicalVerse();
-          seccionBiblico.style.display = "block";
+          seccionBiblico.classList.remove("u-hidden");
         }
 
         // Aplicar traducciones de títulos
