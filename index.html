@@ -839,6 +839,37 @@
         animation-delay: 0.8s;
       }
 
+      /* TEXTO PRINCIPAL (Arquetipo) - Destacado, sin interactividad */
+      .main-text-section {
+        background: rgba(255, 255, 255, 0.35);
+        border-radius: 16px;
+        padding: 24px 28px;
+        margin: 0 0 32px 0;
+        border: 1.5px solid rgba(255, 255, 255, 0.4);
+        -webkit-backdrop-filter: blur(15px);
+        backdrop-filter: blur(15px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        animation: fadeSlideIn 0.6s ease-out;
+      }
+
+      .main-text-content {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--text-primary);
+        font-weight: 400;
+        margin: 0;
+        text-align: justify;
+      }
+
+      /* CONTENEDOR DE SECCIONES SECUNDARIAS */
+      .secondary-sections {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      /* TÍTULOS DE SECCIÓN - Por defecto NO clickeables */
       .section-title {
         font-size: 0.85rem;
         font-weight: 600;
@@ -847,21 +878,25 @@
         color: var(--text-secondary);
         margin: 0 0 8px 0;
         text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
-        cursor: pointer;
-        -webkit-user-select: none;
-        user-select: none;
         display: flex;
         align-items: center;
         gap: 4px;
         transition: all 0.2s ease;
       }
 
-      .section-title:hover {
+      /* TÍTULOS CLICKEABLES - Solo cuando tienen la clase .clickable */
+      .section-title.clickable {
+        cursor: pointer;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+
+      .section-title.clickable:hover {
         color: var(--accent-primary);
         text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9);
       }
 
-      .section-title::after {
+      .section-title.clickable::after {
         content: ">";
         opacity: 0.6;
         font-weight: 300;
@@ -869,7 +904,7 @@
         transition: opacity 0.2s ease;
       }
 
-      .section-title:hover::after {
+      .section-title.clickable:hover::after {
         opacity: 0.9;
         color: var(--accent-primary);
       }
@@ -2286,50 +2321,66 @@
       <div class="insight-panel iridescent-border" id="insightPanel">
         <h2 id="cardTitle"></h2>
 
-        <!-- Arquetipo Card (Flippable) -->
-        <div
-          class="arquetipo-card"
-          id="arquetipoCard"
-          onclick="flipArquetipoCard()"
-        >
-          <div class="arquetipo-card-inner" id="arquetipoCardInner">
-            <div class="arquetipo-face arquetipo-front">
-              <p class="arquetipo-text" id="textoSignificado"></p>
-            </div>
-            <div class="arquetipo-face arquetipo-back">
-              <p class="arquetipo-text" id="arquetipoEjemplo"></p>
+        <!-- TEXTO PRINCIPAL (Arquetipo) - Destacado, sin título clickeable -->
+        <div class="main-text-section" id="mainTextSection">
+          <p class="main-text-content" id="textoArquetipoPrincipal"></p>
+        </div>
+
+        <!-- SECCIONES SECUNDARIAS - Con títulos clickeables para modal -->
+        <div class="secondary-sections">
+          <div class="section" id="seccionMisticismo" style="display: none">
+            <div class="section-title clickable" id="titleMisticismo"></div>
+            <p class="section-content" id="textoMisticismo"></p>
+          </div>
+
+          <div class="section" id="seccionSombra" style="display: none">
+            <div class="section-title clickable" id="titleSombra"></div>
+            <p class="section-content" id="textoSombra"></p>
+          </div>
+
+          <div class="section" id="seccionBotanica" style="display: none">
+            <div class="section-title clickable" id="titleBotanica"></div>
+            <p class="section-content" id="textoBotanica"></p>
+          </div>
+
+          <div class="section" id="seccionCotidiano" style="display: none">
+            <div class="section-title clickable" id="titleCotidiano"></div>
+            <p class="section-content" id="textoCotidiano"></p>
+          </div>
+
+          <div class="section" id="seccionGnosis" style="display: none">
+            <div class="section-title clickable" id="titleGnosis"></div>
+            <p class="section-content" id="textoGnosis"></p>
+          </div>
+
+          <div class="section" id="seccionBiblico" style="display: none">
+            <div
+              class="section-title clickable"
+              id="titleResonanciaBiblica"
+            ></div>
+            <div class="section-content">
+              <div class="biblical-verse" id="textoBiblico"></div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Static Content: Arquetipo & Biblia (Immediate View) -->
-        <div class="section section-biblico" id="seccionBiblico">
-          <div class="section-content">
-            <p id="textoMainArquetipo" class="text-main-arquetipo"></p>
-            <div class="biblical-verse" id="textoBiblico"></div>
+      <!-- Modal para mostrar todos los ejemplos de una categoría -->
+      <div class="modal-overlay" id="modalOverlay" style="display: none">
+        <div class="modal-content iridescent-border" id="modalContent">
+          <div class="modal-header">
+            <h3 id="modalTitle"></h3>
+            <button class="modal-close" id="modalClose">&times;</button>
           </div>
-        </div>
-
-        <!-- Arrow Indicator -->
-        <div id="moreContentIndicator" class="arrow-indicator">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <polyline points="7 13 12 18 17 13"></polyline>
-            <polyline points="7 6 12 11 17 6"></polyline>
-          </svg>
-        </div>
-
-        <!-- Exploration Accordions (Voces del Tarot) -->
-        <div class="section" id="seccionExploracion">
-          <!-- Accordions will be injected here via JS -->
+          <div class="modal-body" id="modalBody">
+            <p id="modalText"></p>
+          </div>
+          <div class="modal-footer">
+            <small
+              >Los 22 Arcanos Mayores tienen diferentes perspectivas sobre cada
+              aspecto</small
+            >
+          </div>
         </div>
       </div>
 
@@ -2794,8 +2845,8 @@
       const IS_FRIENDS_MODE = urlParams.get("mode") === "friends";
 
       /* =====================================================
-                   LÓGICA DEL ORÁCULO
-                ===================================================== */
+                         LÓGICA DEL ORÁCULO
+                      ===================================================== */
 
       const cardStage = document.getElementById("cardStage");
       const cardInner = document.querySelector(".card-inner"); // Reference to inner for class toggling
@@ -2805,20 +2856,22 @@
 
       const wallpaper = document.getElementById("wallpaper");
 
-      // Elementos de las 6 secciones
-      const textoSignificado = document.getElementById("textoSignificado");
-      const textoAmpliado = document.getElementById("textoAmpliado");
-      const textoNegativo = document.getElementById("textoNegativo");
+      // Elementos - Nueva estructura
+      const textoArquetipoPrincipal = document.getElementById(
+        "textoArquetipoPrincipal"
+      );
+      const textoMisticismo = document.getElementById("textoMisticismo");
+      const textoSombra = document.getElementById("textoSombra");
       const textoBotanica = document.getElementById("textoBotanica");
       const textoCotidiano = document.getElementById("textoCotidiano");
-      const textoMistico = document.getElementById("textoMistico");
+      const textoGnosis = document.getElementById("textoGnosis");
       const textoBiblico = document.getElementById("textoBiblico");
 
-      const seccionAmpliado = document.getElementById("seccionAmpliado");
-      const seccionNegativo = document.getElementById("seccionNegativo");
+      const seccionMisticismo = document.getElementById("seccionMisticismo");
+      const seccionSombra = document.getElementById("seccionSombra");
       const seccionBotanica = document.getElementById("seccionBotanica");
       const seccionCotidiano = document.getElementById("seccionCotidiano");
-      const seccionMistico = document.getElementById("seccionMistico");
+      const seccionGnosis = document.getElementById("seccionGnosis");
       const seccionBiblico = document.getElementById("seccionBiblico");
 
       let isRevealed = false;
@@ -2877,8 +2930,8 @@
       let resetColorTimeout = null;
 
       /* =====================================================
-                   FULL 78-CARD TAROT DECK WITH REVERSALS
-                ===================================================== */
+                         FULL 78-CARD TAROT DECK WITH REVERSALS
+                      ===================================================== */
 
       // Major Arcana (22 cards)
       const MAJOR_ARCANA = [
@@ -3603,28 +3656,28 @@
           // Handle simple string data from 0-5.json keys
           const content = data.luz || data;
           return `
-                <details class="voice-accordion">
-                    <summary>${title}</summary>
-                    <div class="accordion-content">
-                        <p>${content}</p>
-                    </div>
-                </details>
-            `;
+                      <details class="voice-accordion">
+                          <summary>${title}</summary>
+                          <div class="accordion-content">
+                              <p>${content}</p>
+                          </div>
+                      </details>
+                  `;
         }
         // Legacy format
         return `
-                <details class="voice-accordion">
-                    <summary>${title} <span style="opacity:0.6; font-size:0.8em;">${
+                      <details class="voice-accordion">
+                          <summary>${title} <span style="opacity:0.6; font-size:0.8em;">${
           data.titulo || ""
         }</span></summary>
-                    <div class="accordion-content">
-                        <p><strong>Luz:</strong> ${data.luz}</p>
-                        <p style="margin-top:8px;"><strong>Sombra:</strong> ${
-                          data.sombra
-                        }</p>
-                    </div>
-                </details>
-            `;
+                          <div class="accordion-content">
+                              <p><strong>Luz:</strong> ${data.luz}</p>
+                              <p style="margin-top:8px;"><strong>Sombra:</strong> ${
+                                data.sombra
+                              }</p>
+                          </div>
+                      </details>
+                  `;
       }
 
       function updateHoloLayers(cardKey) {
@@ -3791,16 +3844,16 @@
         if (category === "resonancia_biblica") {
           // Formatear contenido de resonancia bíblica
           modalText.innerHTML = `
-                    <strong>${window.i18n.t("citation")}</strong> "${
+                          <strong>${window.i18n.t("citation")}</strong> "${
             selectedConcept.cita
           }"<br><br>
-                    <strong>${window.i18n.t("reference")}</strong> ${
+                          <strong>${window.i18n.t("reference")}</strong> ${
             selectedConcept.referencia
           }<br><br>
-                    <strong>${window.i18n.t("connection")}</strong> ${
+                          <strong>${window.i18n.t("connection")}</strong> ${
             selectedConcept.conexion
           }
-                `;
+                      `;
         } else {
           // Mostrar concepto normal
           modalText.textContent = selectedConcept;
@@ -3901,11 +3954,11 @@
       /* ==================== LÓGICA DE VERIFICACIÓN Y PAGO ==================== */
       // FUNCIÓN DESACTIVADA - MiniKit eliminado
       /*
-      async function requestPayment() {
-        // Payment logic removed
-        return true; // Always return true for now
-      }
-      */
+            async function requestPayment() {
+              // Payment logic removed
+              return true; // Always return true for now
+            }
+            */
       async function requestPayment() {
         // MiniKit/WLD payment removed - always return true
         return true;
@@ -4062,22 +4115,22 @@
           document.getElementById("seccionExploracion");
         if (contenedorAcordeones && datos) {
           contenedorAcordeones.innerHTML = `
-                ${createAccordion(
-                  "🌑 La Sombra",
-                  { luz: datos.sombra, sombra: "", titulo: "" },
-                  true
-                )}
-                ${createAccordion(
-                  "🌿 Botánica Oculta",
-                  { luz: datos.botanica, sombra: "", titulo: "" },
-                  true
-                )}
-                ${createAccordion(
-                  "👁️ Gnosis",
-                  { luz: datos.gnosis, sombra: "", titulo: "" },
-                  true
-                )}
-            `;
+                      ${createAccordion(
+                        "🌑 La Sombra",
+                        { luz: datos.sombra, sombra: "", titulo: "" },
+                        true
+                      )}
+                      ${createAccordion(
+                        "🌿 Botánica Oculta",
+                        { luz: datos.botanica, sombra: "", titulo: "" },
+                        true
+                      )}
+                      ${createAccordion(
+                        "👁️ Gnosis",
+                        { luz: datos.gnosis, sombra: "", titulo: "" },
+                        true
+                      )}
+                  `;
         }
 
         // Actualizar versículo bíblico
@@ -4288,34 +4341,28 @@
         if (clickCount === 1) {
           clickTimer = setTimeout(() => {
             console.log("✅ Single click confirmed - revealing card");
-            // Single click confirmed: REVEAL CARD
-            // Defer async work to avoid blocking UI (fixes INP issue)
-            requestAnimationFrame(async () => {
+            // Single click confirmed: REVEAL CARD DIRECTLY (no payment)
+            requestAnimationFrame(() => {
               if (!isRevealed && currentCardData) {
-                const paymentSuccess = await requestPayment();
-                if (paymentSuccess) {
-                  revealDestiny();
-                }
+                revealDestiny();
               }
             });
             clickCount = 0;
           }, CLICK_WINDOW);
         }
 
-        // STATE 2: Double click (wait for 3rd click or timeout)
+        // STATE 2: Double click (ignored - reserved for future features)
         else if (clickCount === 2) {
           clickTimer = setTimeout(() => {
-            console.log("✅ Double click ignored (Video removed)");
+            console.log("✅ Double click ignored (reserved)");
             clickCount = 0;
           }, CLICK_WINDOW);
         }
 
-        // STATE 3: Triple click (final action with shorter wait)
+        // STATE 3: Triple click (RESET)
         else if (clickCount === 3) {
           clickTimer = setTimeout(() => {
             console.log("✅ Triple click confirmed - resetting oracle");
-            // Triple click confirmed: FLIP BACK
-            // Defer work to avoid blocking UI (fixes INP issue)
             requestAnimationFrame(() => {
               if (isRevealed) {
                 resetOracle();
@@ -4339,10 +4386,7 @@
           if (isProcessing) return;
 
           if (!isRevealed && currentCardData) {
-            const paymentSuccess = await requestPayment();
-            if (paymentSuccess) {
-              revealDestiny();
-            }
+            revealDestiny();
           } else if (isRevealed) {
             resetOracle();
           }
@@ -4414,12 +4458,12 @@
           const cardImg = document.getElementById("cardImg");
           if (cardImg) {
             cardImg.style.background = `
-                    radial-gradient(circle at ${lightX}% ${lightY}%,
-                        rgba(255,255,255,0.4) 0%,
-                        rgba(255,255,255,0.1) 40%,
-                        transparent 70%),
-                    url(${cardImg.src})
-                `;
+                          radial-gradient(circle at ${lightX}% ${lightY}%,
+                              rgba(255,255,255,0.4) 0%,
+                              rgba(255,255,255,0.1) 40%,
+                              transparent 70%),
+                          url(${cardImg.src})
+                      `;
             cardImg.style.backgroundSize = "cover";
             cardImg.style.backgroundPosition = "center";
           }
@@ -4457,21 +4501,21 @@
       /* ==================== LONG-PRESS VIDEO PLAYBACK (REMOVED) ==================== */
       // Video elements removed
       /*
-      const videoOverlay = document.getElementById("videoOverlay");
-      const cardVideo = document.getElementById("cardVideo");
-      const videoSource = document.getElementById("videoSource");
-      */
+            const videoOverlay = document.getElementById("videoOverlay");
+            const cardVideo = document.getElementById("cardVideo");
+            const videoSource = document.getElementById("videoSource");
+            */
 
       let longPressTimer = null;
       let isVideoPlaying = false;
 
       /* VIDEO LOGIC REMOVED
-      function startLongPress() {}
-      function cancelLongPress() {}
-      function playCardVideoOnce() {}
-      function playCardVideo() {}
-      function stopCardVideo() {}
-      */
+            function startLongPress() {}
+            function cancelLongPress() {}
+            function playCardVideoOnce() {}
+            function playCardVideo() {}
+            function stopCardVideo() {}
+            */
 
       /* ==================== FLOATING STARS (MAGNETIC SCROLL EFFECT) ==================== */
       function initFloatingStars() {
@@ -5072,14 +5116,14 @@
               });
 
               html += `
-                            <div style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.1); padding:12px; border-radius:10px;">
-                                <img src="${card.image}" style="width:40px; height:60px; object-fit:cover; border-radius:5px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
-                                <div style="flex: 1;">
-                                    <div style="font-weight:600; margin-bottom:4px;">${card.name}</div>
-                                    <div style="font-size:0.85rem; opacity:0.7;">${timeStr}</div>
-                                </div>
-                            </div>
-                        `;
+                                  <div style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.1); padding:12px; border-radius:10px;">
+                                      <img src="${card.image}" style="width:40px; height:60px; object-fit:cover; border-radius:5px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                                      <div style="flex: 1;">
+                                          <div style="font-weight:600; margin-bottom:4px;">${card.name}</div>
+                                          <div style="font-size:0.85rem; opacity:0.7;">${timeStr}</div>
+                                      </div>
+                                  </div>
+                              `;
             });
             html += "</div>";
             collectionList.innerHTML = html;
@@ -5296,9 +5340,9 @@
             });
 
             resultDiv.innerHTML = `
-                        <h5 style="margin:0 0 15px; font-weight:700;">🧠 Análisis de Mente</h5>
-                        <div style="white-space:pre-line; line-height:1.7;">${response.analysis}</div>
-                    `;
+                              <h5 style="margin:0 0 15px; font-weight:700;">🧠 Análisis de Mente</h5>
+                              <div style="white-space:pre-line; line-height:1.7;">${response.analysis}</div>
+                          `;
           } catch (error) {
             resultDiv.innerHTML =
               '<p style="color:#ff6b6b;">❌ Error en análisis.</p>';
@@ -5359,9 +5403,9 @@
             });
 
             resultDiv.innerHTML = `
-                        <h5 style="margin:0 0 15px; font-weight:700;">⚖️ Análisis de Cuerpo</h5>
-                        <div style="white-space:pre-line; line-height:1.7;">${response.analysis}</div>
-                    `;
+                              <h5 style="margin:0 0 15px; font-weight:700;">⚖️ Análisis de Cuerpo</h5>
+                              <div style="white-space:pre-line; line-height:1.7;">${response.analysis}</div>
+                          `;
           } catch (error) {
             resultDiv.innerHTML =
               '<p style="color:#ff6b6b;">❌ Error en análisis.</p>';
@@ -5428,14 +5472,14 @@
             });
 
             resultDiv.innerHTML = `
-                        <h5 style="margin:0 0 15px; font-weight:700;">⭐ Análisis Holístico Completo</h5>
-                        <p style="margin-bottom:15px;"><strong>${fullName}</strong> - ${new Date(
+                              <h5 style="margin:0 0 15px; font-weight:700;">⭐ Análisis Holístico Completo</h5>
+                              <p style="margin-bottom:15px;"><strong>${fullName}</strong> - ${new Date(
               birthDate + "T" + birthTime
             ).toLocaleString("es-AR")}</p>
-                        <div style="white-space:pre-line; line-height:1.7;">${
-                          response.analysis
-                        }</div>
-                    `;
+                              <div style="white-space:pre-line; line-height:1.7;">${
+                                response.analysis
+                              }</div>
+                          `;
           } catch (error) {
             resultDiv.innerHTML =
               '<p style="color:#ff6b6b;">❌ Error al generar análisis.</p>';
@@ -5475,9 +5519,9 @@
             const response = await callDeepAnalysisAPI("brain");
 
             resultDiv.innerHTML = `
-                        <h5 style="margin: 0 0 15px 0; font-weight: 700;">🧠 Análisis Cerebral Completo</h5>
-                        <div style="white-space: pre-line; line-height: 1.7;">${response.analysis}</div>
-                    `;
+                              <h5 style="margin: 0 0 15px 0; font-weight: 700;">🧠 Análisis Cerebral Completo</h5>
+                              <div style="white-space: pre-line; line-height: 1.7;">${response.analysis}</div>
+                          `;
           } catch (error) {
             resultDiv.innerHTML =
               '<p style="color: #ff6b6b;">❌ Error al realizar el análisis. Por favor intenta nuevamente.</p>';
@@ -5513,9 +5557,9 @@
             const response = await callDeepAnalysisAPI("body");
 
             resultDiv.innerHTML = `
-                        <h5 style="margin: 0 0 15px 0; font-weight: 700;">⚖️ Análisis de Equilibrio Corporal</h5>
-                        <div style="white-space: pre-line; line-height: 1.7;">${response.analysis}</div>
-                    `;
+                              <h5 style="margin: 0 0 15px 0; font-weight: 700;">⚖️ Análisis de Equilibrio Corporal</h5>
+                              <div style="white-space: pre-line; line-height: 1.7;">${response.analysis}</div>
+                          `;
           } catch (error) {
             resultDiv.innerHTML =
               '<p style="color: #ff6b6b;">❌ Error al realizar el análisis.</p>';
@@ -5553,29 +5597,29 @@
             const response = await callDeepAnalysisAPI("personality");
 
             resultDiv.innerHTML = `
-                        <h5 style="margin: 0 0 15px 0; font-weight: 700;">🎴 Perfil de Personalidad (Stats)</h5>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-                            <div style="padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                                <strong>💪 Fuerza:</strong> ${response.stats.fuerza}/20
-                            </div>
-                            <div style="padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                                <strong>🧠 Inteligencia:</strong> ${response.stats.inteligencia}/20
-                            </div>
-                            <div style="padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                                <strong>🦉 Sabiduría:</strong> ${response.stats.sabiduria}/20
-                            </div>
-                            <div style="padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                                <strong>✨ Carisma:</strong> ${response.stats.carisma}/20
-                            </div>
-                            <div style="padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                                <strong>❤️ Constitución:</strong> ${response.stats.constitucion}/20
-                            </div>
-                            <div style="padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                                <strong>🎯 Destreza:</strong> ${response.stats.destreza}/20
-                            </div>
-                        </div>
-                        <div style="white-space: pre-line; line-height: 1.7;">${response.analysis}</div>
-                    `;
+                              <h5 style="margin: 0 0 15px 0; font-weight: 700;">🎴 Perfil de Personalidad (Stats)</h5>
+                              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                                  <div style="padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                      <strong>💪 Fuerza:</strong> ${response.stats.fuerza}/20
+                                  </div>
+                                  <div style="padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                      <strong>🧠 Inteligencia:</strong> ${response.stats.inteligencia}/20
+                                  </div>
+                                  <div style="padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                      <strong>🦉 Sabiduría:</strong> ${response.stats.sabiduria}/20
+                                  </div>
+                                  <div style="padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                      <strong>✨ Carisma:</strong> ${response.stats.carisma}/20
+                                  </div>
+                                  <div style="padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                      <strong>❤️ Constitución:</strong> ${response.stats.constitucion}/20
+                                  </div>
+                                  <div style="padding: 10px; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                                      <strong>🎯 Destreza:</strong> ${response.stats.destreza}/20
+                                  </div>
+                              </div>
+                              <div style="white-space: pre-line; line-height: 1.7;">${response.analysis}</div>
+                          `;
           } catch (error) {
             resultDiv.innerHTML =
               '<p style="color: #ff6b6b;">❌ Error al generar el perfil.</p>';
@@ -5649,21 +5693,21 @@
             });
 
             resultDiv.innerHTML = `
-                        <h5 style="margin: 0 0 15px 0; font-weight: 700;">⭐ Análisis Holístico Completo</h5>
-                        <p style="margin-bottom: 15px;"><strong>Fecha y Hora:</strong> ${new Date(
-                          birthDate + "T" + birthTime
-                        ).toLocaleString("es-AR", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}</p>
-                        <p style="margin-bottom: 15px;"><strong>Ubicación:</strong> ${location}</p>
-                        <div style="white-space: pre-line; line-height: 1.7;">${
-                          response.analysis
-                        }</div>
-                    `;
+                              <h5 style="margin: 0 0 15px 0; font-weight: 700;">⭐ Análisis Holístico Completo</h5>
+                              <p style="margin-bottom: 15px;"><strong>Fecha y Hora:</strong> ${new Date(
+                                birthDate + "T" + birthTime
+                              ).toLocaleString("es-AR", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              })}</p>
+                              <p style="margin-bottom: 15px;"><strong>Ubicación:</strong> ${location}</p>
+                              <div style="white-space: pre-line; line-height: 1.7;">${
+                                response.analysis
+                              }</div>
+                          `;
           } catch (error) {
             resultDiv.innerHTML =
               '<p style="color: #ff6b6b;">❌ Error al calcular el análisis completo.</p>';
