@@ -4081,67 +4081,51 @@
         // Actualizar título
         cardTitle.textContent = currentCardData.name;
 
-        // Función auxiliar para obtener item seguro with highlighting
-        const getRandomItem = (category) => {
+        // Función auxiliar para obtener item seguro
+        const getItem = (category) => {
           const item = datos[category];
           if (!item || typeof item !== "string") return "";
-          return highlightKeywords(item, lang);
+          return item;
         };
 
-        // Actualizar introducción (Cotidiano) y asegurar que sea visible
-        const introSection = document.getElementById("introSection");
-        const introExample = document.getElementById("introExample");
-        if (introExample && datos.cotidiano) {
-          introExample.innerHTML = highlightKeywords(datos.cotidiano, lang);
-          if (introSection) introSection.style.display = "block";
+        // TEXTO PRINCIPAL (Arquetipo) - Siempre visible, sin título
+        if (textoArquetipoPrincipal) {
+          textoArquetipoPrincipal.innerHTML = getItem("arquetipo");
         }
 
-        // Actualizar secciones y asegurar que sean visibles si tienen contenido
-        // WHITE SQUARE: Arquetipo (Front) & Cotidiano (Back)
-        textoSignificado.innerHTML = getRandomItem("arquetipo"); // FRONT
-        const arquetipoEjemplo = document.getElementById("arquetipoEjemplo");
-        if (arquetipoEjemplo)
-          arquetipoEjemplo.innerHTML = getRandomItem("cotidiano"); // BACK
-
-        // MAIN PARAGRAPH (Below Square):
-        // User asked for "quantity 7" logic here. For now we use Sombra or Misticismo.
-        if (document.getElementById("textoMainArquetipo")) {
-          document.getElementById("textoMainArquetipo").innerHTML =
-            getRandomItem("misticismo");
+        // SECCIONES SECUNDARIAS - Mostrar si tienen contenido
+        if (textoMisticismo && getItem("misticismo")) {
+          textoMisticismo.innerHTML = getItem("misticismo");
+          seccionMisticismo.style.display = "block";
         }
 
-        // ACCORDIONS: Sombra, Gnosis, Botanica
-        const contenedorAcordeones =
-          document.getElementById("seccionExploracion");
-        if (contenedorAcordeones && datos) {
-          contenedorAcordeones.innerHTML = `
-                      ${createAccordion(
-                        "🌑 La Sombra",
-                        { luz: datos.sombra, sombra: "", titulo: "" },
-                        true
-                      )}
-                      ${createAccordion(
-                        "🌿 Botánica Oculta",
-                        { luz: datos.botanica, sombra: "", titulo: "" },
-                        true
-                      )}
-                      ${createAccordion(
-                        "👁️ Gnosis",
-                        { luz: datos.gnosis, sombra: "", titulo: "" },
-                        true
-                      )}
-                  `;
+        if (textoSombra && getItem("sombra")) {
+          textoSombra.innerHTML = getItem("sombra");
+          seccionSombra.style.display = "block";
         }
 
-        // Actualizar versículo bíblico
-        textoBiblico.innerHTML = getTemporalBiblicalVerse();
-        if (seccionBiblico) seccionBiblico.style.display = "block";
+        if (textoBotanica && getItem("botanica")) {
+          textoBotanica.innerHTML = getItem("botanica");
+          seccionBotanica.style.display = "block";
+        }
 
-        // Show Arrow Indicator
-        const arrow = document.getElementById("moreContentIndicator");
-        if (arrow) arrow.style.display = "block";
+        if (textoCotidiano && getItem("cotidiano")) {
+          textoCotidiano.innerHTML = getItem("cotidiano");
+          seccionCotidiano.style.display = "block";
+        }
 
-        // Aplicar traducciones de títulos INMEDIATAMENTE
+        if (textoGnosis && getItem("gnosis")) {
+          textoGnosis.innerHTML = getItem("gnosis");
+          seccionGnosis.style.display = "block";
+        }
+
+        // Versículo Bíblico
+        if (textoBiblico && datos.resonancia_biblica) {
+          textoBiblico.innerHTML = getTemporalBiblicalVerse();
+          seccionBiblico.style.display = "block";
+        }
+
+        // Aplicar traducciones de títulos
         if (
           window.i18n &&
           typeof window.i18n.applyTranslations === "function"
@@ -4156,44 +4140,7 @@
           if (typeof updateSectionTitles === "function") {
             updateSectionTitles();
           }
-
-          // Verificar que se aplicó
-          console.log(
-            "✅ Translation applied. Sample title:",
-            document.getElementById("titleArquetipo")?.textContent
-          );
-        } else {
-          console.error(
-            "❌ i18n not available or applyTranslations not a function"
-          );
         }
-
-        // CRÍTICO: Activar inmediatamente los reading-units para evitar blur en carta revelada
-        // Cuando cambia el idioma en una carta ya revelada, los nuevos elementos necesitan activarse
-        setTimeout(() => {
-          const readingUnits = document.querySelectorAll(".reading-unit");
-          readingUnits.forEach((unit) => {
-            // Activar inmediatamente (sin blur)
-            unit.classList.add("active");
-
-            // Activar animaciones de letras si existen
-            const letters = unit.querySelectorAll(".letter-animate");
-            const keywords = unit.querySelectorAll(".keyword-highlight");
-
-            letters.forEach((letter, index) => {
-              letter.classList.add("reveal");
-              setTimeout(() => {
-                letter.classList.add("fill");
-              }, index * 30 + 400);
-            });
-
-            if (letters.length > 0) {
-              setTimeout(() => {
-                keywords.forEach((kw) => kw.classList.add("filled"));
-              }, letters.length * 30 + 800);
-            }
-          });
-        }, 50); // Pequeño delay para asegurar que el DOM se actualice
       }
 
       /* ==================== BOTÓN IA - SÍNTESIS NUMEROLÓGICA ==================== */
