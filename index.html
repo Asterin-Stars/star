@@ -403,8 +403,11 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        /* CENTRADO VERTICAL Y HORIZONTAL EN TODOS LOS DISPOSITIVOS */
         justify-content: center;
+        /* Centra verticalmente cuando no hay scroll */
         min-height: 100vh;
+        /* Asegura altura mínima para centrado */
         gap: 40px;
         width: 100%;
         max-width: 1400px;
@@ -415,6 +418,7 @@
       /* Cuando la carta está revelada, volver a flex-start para permitir scroll normal */
       .interface.revealed {
         justify-content: flex-start;
+        min-height: 100vh;
       }
 
       /* ==================== CARTA - ZONA INTERACTIVA ==================== */
@@ -425,7 +429,8 @@
         height: 500px;
         cursor: pointer;
         z-index: 10;
-        margin-top: 20px;
+        /* CENTRADO ADICIONAL PARA MÓVILES */
+        margin: 20px auto;
         flex-shrink: 0;
         transform-style: preserve-3d;
         /* SIN RESPIRACIÓN - Solo levitación sutil con sombra */
@@ -1959,6 +1964,45 @@
         p,
         .section-content {
           font-size: 0.85rem;
+        }
+      }
+
+      /* ==================== RESPONSIVE ==================== */
+      /* REGLAS DE CENTRADO PARA MÓVILES */
+      @media (max-width: 768px) {
+        .interface {
+          padding: 20px 10px;
+          gap: 30px;
+          /* Asegurar centrado en móviles */
+          justify-content: center;
+        }
+
+        .card-stage {
+          width: 250px;
+          height: 444px;
+          /* Centrado horizontal explícito */
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .insight-panel {
+          width: 95%;
+          padding: 24px 20px;
+        }
+
+        h2 {
+          font-size: 1.3rem;
+        }
+      }
+
+      /* MÓVIL PEQUEÑO - Extra centrado */
+      @media (max-width: 480px) {
+        .interface {
+          padding: 15px 5px;
+          /* Forzar centrado vertical */
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
         }
       }
 
