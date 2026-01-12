@@ -74,6 +74,15 @@
         display: none !important;
       }
 
+      .u-full-width {
+        width: 100%;
+      }
+
+      .u-result-hidden {
+        display: none;
+        margin-top: 20px;
+      }
+
       .u-flex-center {
         display: flex;
         align-items: center;
@@ -2621,69 +2630,55 @@
                       deck completo (78 cartas).
                     </p>
                     <button
-                      class="analysis-btn"
+                      class="analysis-btn u-full-width"
                       id="requestMindAnalysis"
-                      style="width: 100%"
                     >
                       <span class="btn-icon">🧬</span>
                       Realizar Tirada de Mente
                     </button>
                     <div
                       id="mindAnalysisResult"
-                      class="analysis-result"
-                      style="display: none; margin-top: 20px"
+                      class="analysis-result u-result-hidden"
                     ></div>
                   </div>
 
                   <!-- Sub-Tab Content: Body Analysis -->
-                  <div
-                    class="analysis-sub-content"
-                    id="subtab-body"
-                    style="display: none"
-                  >
+                  <div class="analysis-sub-content u-hidden" id="subtab-body">
                     <h4>⚖️ Análisis de Cuerpo (10 Cartas)</h4>
                     <p class="section-description">
                       Analiza el equilibrio hemisférico (lógica vs intuición) y
                       armonización corporal con 10 cartas.
                     </p>
                     <button
-                      class="analysis-btn"
+                      class="analysis-btn u-full-width"
                       id="requestBodyAnalysis"
-                      style="width: 100%"
                     >
                       <span class="btn-icon">🌓</span>
                       Realizar Tirada de Cuerpo
                     </button>
                     <div
                       id="bodyAnalysisResult"
-                      class="analysis-result"
-                      style="display: none; margin-top: 20px"
+                      class="analysis-result u-result-hidden"
                     ></div>
                   </div>
 
                   <!-- Sub-Tab Content: Natal Chart -->
-                  <div
-                    class="analysis-sub-content"
-                    id="subtab-natal"
-                    style="display: none"
-                  >
+                  <div class="analysis-sub-content u-hidden" id="subtab-natal">
                     <h4>⭐ Carta Natal Completa</h4>
                     <p class="section-description">
                       Síntesis holística que integra tu carta natal astrológica
                       con los análisis de Mente y Cuerpo.
                     </p>
                     <button
-                      class="analysis-btn"
+                      class="analysis-btn u-full-width"
                       id="calculateNatalChart"
-                      style="width: 100%"
                     >
                       <span class="btn-icon">✨</span>
                       Generar Análisis Completo
                     </button>
                     <div
                       id="natalChartResult"
-                      class="analysis-result"
-                      style="display: none; margin-top: 20px"
+                      class="analysis-result u-result-hidden"
                     ></div>
                   </div>
                 </div>

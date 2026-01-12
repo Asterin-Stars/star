@@ -919,7 +919,8 @@ h2 {
   flex-grow: 1;
   /* Smooth scrolling */
   scroll-behavior: smooth;
-  /* Custom scrollbar */
+  /* Custom scrollbar - Progressive enhancement (Firefox 64+, Chrome 121+) */
+  /* Browsers that don't support these will use default scrollbars */
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
