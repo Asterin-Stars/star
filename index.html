@@ -3550,11 +3550,11 @@
 
       /* ==================== HELPER: CREATE ACCORDION ==================== */
       function createAccordion(title, data, isSimpleCode = false) {
-          if (!data) return "";
-          if (isSimpleCode) {
-            // Handle simple string data from 0-5.json keys
-            const content = data.luz || data;
-            return `
+        if (!data) return "";
+        if (isSimpleCode) {
+          // Handle simple string data from 0-5.json keys
+          const content = data.luz || data;
+          return `
                 <details class="voice-accordion">
                     <summary>${title}</summary>
                     <div class="accordion-content">
@@ -3562,21 +3562,34 @@
                     </div>
                 </details>
             `;
-          }
-          // Legacy format
-          return `
+        }
+        // Legacy format
+        return `
                 <details class="voice-accordion">
                     <summary>${title} <span style="opacity:0.6; font-size:0.8em;">${
-            data.titulo || ""
-          }</span></summary>
+          data.titulo || ""
+        }</span></summary>
                     <div class="accordion-content">
                         <p><strong>Luz:</strong> ${data.luz}</p>
                         <p style="margin-top:8px;"><strong>Sombra:</strong> ${
-            data.sombra
-          }</p>
+                          data.sombra
+                        }</p>
                     </div>
                 </details>
             `;
+      }
+
+      function updateHoloLayers(cardKey) {
+        const layers = ["nature", "passion", "ink", "gold", "spirit"];
+        layers.forEach((layer) => {
+          const el = document.getElementById(
+            `holo${layer.charAt(0).toUpperCase() + layer.slice(1)}`
+          );
+          if (el) {
+            // Path must be relative to web root (public folder content is at root)
+            el.style.backgroundImage = `url('cards/holo_layers/${cardKey}/${layer}.png')`;
+          }
+        });
       }
 
       /* ==================== REVELACIÓN ==================== */
@@ -3633,16 +3646,6 @@
 
         // Update Holo Layers
         updateHoloLayers(currentCardData.name_short);
-
-              `holo${layer.charAt(0).toUpperCase() + layer.slice(1)}`
-            );
-            if (el) {
-              // Path must be relative to web root (public folder content is at root)
-              // File: public/cards/holo_layers/arXX/nature.png -> URL: cards/holo_layers/arXX/nature.png
-              el.style.backgroundImage = `url('cards/holo_layers/${cardKey}/${layer}.png')`;
-            }
-          });
-        }
 
         // Remove duplicate text on Front (Image Cover)
         // Duplicate text clearing REMOVED to keep Arquetipo visible
@@ -4120,9 +4123,9 @@
 
       // Función de pago simplificada (GRATIS/FREE)
       async function requestAIPayment() {
-          // Directamente generamos la lectura, sin cobro.
-          await generateAIReading("free_bypass_" + Date.now());
-          return true;
+        // Directamente generamos la lectura, sin cobro.
+        await generateAIReading("free_bypass_" + Date.now());
+        return true;
       }
 
       // Función para generar la lectura de IA
