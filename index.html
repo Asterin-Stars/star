@@ -3548,7 +3548,39 @@
         cardStage.style.setProperty("--mouse-angle", `${angleDeg}deg`);
       });
 
+      /* ==================== HELPER: CREATE ACCORDION ==================== */
+      function createAccordion(title, data, isSimpleCode = false) {
+          if (!data) return "";
+          if (isSimpleCode) {
+            // Handle simple string data from 0-5.json keys
+            const content = data.luz || data;
+            return `
+                <details class="voice-accordion">
+                    <summary>${title}</summary>
+                    <div class="accordion-content">
+                        <p>${content}</p>
+                    </div>
+                </details>
+            `;
+          }
+          // Legacy format
+          return `
+                <details class="voice-accordion">
+                    <summary>${title} <span style="opacity:0.6; font-size:0.8em;">${
+            data.titulo || ""
+          }</span></summary>
+                    <div class="accordion-content">
+                        <p><strong>Luz:</strong> ${data.luz}</p>
+                        <p style="margin-top:8px;"><strong>Sombra:</strong> ${
+            data.sombra
+          }</p>
+                    </div>
+                </details>
+            `;
+      }
+
       /* ==================== REVELACIÓN ==================== */
+
       function revealDestiny() {
         if (!currentCardData) return;
 
@@ -3602,43 +3634,6 @@
         // Update Holo Layers
         updateHoloLayers(currentCardData.name_short);
 
-        // Helper to create details
-        // Helper to create details
-        // Helper to create details - Modified for simple string data or obj
-        function createAccordion(title, data, isSimpleCode = false) {
-          if (!data) return "";
-          if (isSimpleCode) {
-            // Handle simple string data from 0-5.json keys
-            const content = data.luz || data;
-            return `
-                <details class="voice-accordion">
-                    <summary>${title}</summary>
-                    <div class="accordion-content">
-                        <p>${content}</p>
-                    </div>
-                </details>
-            `;
-          }
-          // Legacy format
-          return `
-                <details class="voice-accordion">
-                    <summary>${title} <span style="opacity:0.6; font-size:0.8em;">${
-            data.titulo || ""
-          }</span></summary>
-                    <div class="accordion-content">
-                        <p><strong>Luz:</strong> ${data.luz}</p>
-                        <p style="margin-top:8px;"><strong>Sombra:</strong> ${
-                          data.sombra
-                        }</p>
-                    </div>
-                </details>
-            `;
-        }
-
-        function updateHoloLayers(cardKey) {
-          const layers = ["nature", "passion", "ink", "gold", "spirit"];
-          layers.forEach((layer) => {
-            const el = document.getElementById(
               `holo${layer.charAt(0).toUpperCase() + layer.slice(1)}`
             );
             if (el) {
@@ -4123,64 +4118,11 @@
       const aiResult = document.getElementById("aiResult");
       const aiText = document.getElementById("aiText");
 
-      // Función de pago específica para AI Synthesis (2.22 WLD)
+      // Función de pago simplificada (GRATIS/FREE)
       async function requestAIPayment() {
-        // 1. Si es modo amigos, pase directo
-        if (IS_FRIENDS_MODE) {
-          console.log("Modo Amigos: Pago IA omitido.");
-          await generateAIReading("sim_friends_bypass");
+          // Directamente generamos la lectura, sin cobro.
+          await generateAIReading("free_bypass_" + Date.now());
           return true;
-        }
-
-        // 2. Si no está en World App, fallback
-        if (!window.MiniKit || !window.MiniKit.isInstalled()) {
-          const isLocalhost =
-            window.location.hostname === "localhost" ||
-            window.location.hostname === "127.0.0.1";
-          if (isLocalhost) {
-            return confirm(
-              "💎 [DEV MODE] Simular pago de 2.22 WLD para Síntesis IA?"
-            );
-          }
-          alert(window.i18n.t("openInWorld"));
-          return false;
-        }
-
-        // 3. Solicitar Pago Real (2.22 WLD)
-        const paymentPayload = {
-          reference: "star_ai_" + Date.now(),
-          to: WALLET_ADDRESS,
-          tokens: [
-            {
-              symbol: "WLD",
-              token_amount: "2.22", // Cobro de 2.22 WLD para IA
-            },
-          ],
-          description: "⭐ Síntesis Numerológica IA - Star Oracle",
-        };
-
-        try {
-          const response = await window.MiniKit.commands.pay(paymentPayload);
-
-          if (!response || !response.finalPayload) {
-            throw new Error("Payment response invalid");
-          }
-
-          if (response.finalPayload.status === "success") {
-            // Pago exitoso! Procedemos a generar la lectura
-            // Importante: Pasamos el transaction_id para que el backend lo verifique
-            await generateAIReading(response.finalPayload.transaction_id);
-            return true; // Indicate success
-          } else {
-            throw new Error(
-              "Payment failed status: " + response.finalPayload.status
-            );
-          }
-        } catch (error) {
-          console.error("Error en el pago IA:", error);
-          alert(window.i18n.t("paymentError"));
-          return false;
-        }
       }
 
       // Función para generar la lectura de IA
@@ -4442,8 +4384,8 @@
           const cardImg = document.getElementById("cardImg");
           if (cardImg) {
             cardImg.style.background = `
-                    radial-gradient(circle at ${lightX}% ${lightY}%, 
-                        rgba(255,255,255,0.4) 0%, 
+                    radial-gradient(circle at ${lightX}% ${lightY}%,
+                        rgba(255,255,255,0.4) 0%,
                         rgba(255,255,255,0.1) 40%,
                         transparent 70%),
                     url(${cardImg.src})
