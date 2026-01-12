@@ -1,0 +1,68 @@
+/* === LA PIEL (Estilos Visuales) === */
+
+/* 1. Reset Básico (Para que se vea igual en todos los navegadores) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0a0a0a; /* Fondo oscuro elegante */
+  color: #e0e0e0; /* Texto claro suave */
+  font-family: "Inter", sans-serif; /* Tipografía moderna */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+}
+
+/* El contenedor central */
+.oraculo-container {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05); /* Cristal ahumado */
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px); /* Efecto cristal */
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #ffd700, #ffaa00); /* Oro alquímico */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+button {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  background: #222;
+  color: white;
+  border: 1px solid #444;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #333;
+  transform: scale(1.05); /* Pequeño zoom al pasar el mouse */
+  border-color: #ffd700;
+}
+/* --- LINEA 55 VACÍA (1 ENTER) --- */
+.carta-vacia {
+  width: 200px;           /* 2 ESPACIOS AQUÍ */
+  height: 300px;          /* 2 ESPACIOS AQUÍ */
+  background: #1a1a1a;
+  border: 2px solid #ffd700;
+  border-radius: 15px;
+  margin: 0 auto 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
