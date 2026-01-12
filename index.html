@@ -4010,9 +4010,10 @@
         }
 
         // ACCORDIONS: Sombra, Gnosis, Botanica
-        const expl = document.getElementById("seccionExploracion");
-        if (expl && datos) {
-          expl.innerHTML = `
+        const contenedorAcordeones =
+          document.getElementById("seccionExploracion");
+        if (contenedorAcordeones && datos) {
+          contenedorAcordeones.innerHTML = `
                 ${createAccordion(
                   "🌑 La Sombra",
                   { luz: datos.sombra, sombra: "", titulo: "" },
@@ -4030,28 +4031,6 @@
                 )}
             `;
         }
-
-        /* REMOVED OLD ASSIGNMENTS that were confused
-        textoAmpliado.innerHTML = getRandomItem("misticismo");
-        if (seccionAmpliado && textoAmpliado.innerHTML)
-          seccionAmpliado.style.display = "block";
-
-        textoNegativo.innerHTML = getRandomItem("arquetipo");
-        if (seccionNegativo && textoNegativo.innerHTML)
-          seccionNegativo.style.display = "block";
-
-        textoBotanica.innerHTML = getRandomItem("botanica");
-        if (seccionBotanica && textoBotanica.innerHTML)
-          seccionBotanica.style.display = "block";
-
-        textoCotidiano.innerHTML = getRandomItem("cotidiano");
-        if (seccionCotidiano && textoCotidiano.innerHTML)
-          seccionCotidiano.style.display = "block";
-
-        textoMistico.innerHTML = getRandomItem("gnosis");
-        if (seccionMistico && textoMistico.innerHTML)
-          seccionMistico.style.display = "block";
-        */
 
         // Actualizar versículo bíblico
         textoBiblico.innerHTML = getTemporalBiblicalVerse();
@@ -4595,10 +4574,15 @@
         const arrow = document.getElementById("moreContentIndicator");
         if (arrow) {
           arrow.addEventListener("click", () => {
-            const expl = document.getElementById("seccionExploracion");
-            if (expl) {
-              expl.style.display = "block";
-              expl.scrollIntoView({ behavior: "smooth", block: "start" });
+            console.log("🏹 ¡Flecha clickeada! Iniciando scroll...");
+            const contenedorAcordeones =
+              document.getElementById("seccionExploracion");
+            if (contenedorAcordeones) {
+              contenedorAcordeones.style.display = "block";
+              contenedorAcordeones.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
             }
           });
         }
